@@ -2,3 +2,4 @@ wordpress/
 data/
 plugins/akismet/
 plugins/hello.php
+.idea/
