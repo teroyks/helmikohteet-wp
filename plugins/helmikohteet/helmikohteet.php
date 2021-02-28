@@ -23,3 +23,34 @@ You should have received a copy of the GNU General Public License
 with this
 program. If not, visit: https://www.gnu.org/licenses/
 */
+
+/**
+ * Initializes the plugin on activation.
+ *
+ * - TODO: create the database table if it doesn’t exist
+ * - TODO: update database content
+ */
+function helmikohteet_on_activation()
+{
+    if (!current_user_can('activate_plugins')) {
+        return;
+    }
+
+    error_log('DEBUG: Helmikohteet plugin activated');
+}
+register_activation_hook(__FILE__, 'helmikohteet_on_activation');
+
+/**
+ * Cleans up when the plugin is deleted.
+ *
+ * - TODO: delete the database table.
+ */
+function helmikohteet_on_uninstall()
+{
+    if (!current_user_can('activate_plugins')) {
+        return;
+    }
+
+    error_log('DEBUG: Helmikohteet plugin uninstalled');
+}
+register_uninstall_hook(__FILE__, 'helmikohteet_on_uninstall');
