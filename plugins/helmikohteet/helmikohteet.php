@@ -62,11 +62,13 @@ function helmikohteet_on_uninstall()
 
 register_uninstall_hook(__FILE__, 'helmikohteet_on_uninstall');
 
-// if (is_admin()) {
-//     // include stuff only needed for the admin interface here
-//     // require_once(__FILE__.'/admin/...');
-// }
-//
+// include stuff only needed for the admin interface here
+if (is_admin()) {
+    // include dependencies
+    require_once plugin_dir_path(__FILE__) . 'admin/admin-menu.php';
+    require_once plugin_dir_path(__FILE__) . 'admin/settings-page.php';
+}
+
 // if (is_page()) {
 //     // ignore plugin stuff on posts
 // }
