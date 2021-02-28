@@ -71,6 +71,16 @@ if (is_admin()) {
     require_once plugin_dir_path(__FILE__) . 'admin/settings-callbacks.php';
 }
 
+/**
+ * Defines default options for the plugin.
+ */
+function helmikohteet_options_default(): array
+{
+    return [
+        'api_url' => 'https://raumalkv.fi/oikotie.php',
+    ];
+}
+
 // if (is_page()) {
 //     // ignore plugin stuff on posts
 // }

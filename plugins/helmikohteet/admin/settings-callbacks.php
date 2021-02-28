@@ -26,7 +26,7 @@ function helmikohteet_callback_parse_options($input)
  */
 function helmikohteet_callback_section_api()
 {
-    echo '<p>TODO: set up listings API</p>';
+    echo '<p>Asetukset kohteiden hakemiseksi Helmi-järjestelmästä</p>';
 }
 
 /**
@@ -36,5 +36,18 @@ function helmikohteet_callback_section_api()
  */
 function helmikohteet_callback_field_text(array $args)
 {
-    echo '<p>TODO: put a text field here</p>';
+    $options = get_option(
+        'helmikohteet_options', // option name given in register_setting
+        helmikohteet_options_default()
+    );
+
+    $id    = $args['id'] ?? '';
+    $label = $args['label'] ?? '';
+
+    $value = isset($options[$id]) ? sanitize_text_field($options[$id]) : '';
+
+    echo <<<FIELD
+        <input id="helmikohteet_options_{$id}" name="helmikohteet_options[{$id}]" type="text" size="40" value="{$value}"><br />
+        <label for="helmikohteet_options_{$id}">{$label}</label>
+        FIELD;
 }

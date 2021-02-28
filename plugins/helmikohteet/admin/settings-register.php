@@ -32,7 +32,7 @@ function helmikohteet_register_settings()
         'helmikohteet_callback_field_text', // callback function for setting markup
         'helmikohteet', // page slug
         'helmikohteet_section_api', // settings section
-        ['id' => 'api_url', 'label' => 'API-osoite'] // callback parameters
+        ['id' => 'api_url', 'label' => 'Osoite josta kohteet haetaan'] // callback parameters
     );
 }
 
