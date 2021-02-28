@@ -15,7 +15,7 @@ Wordpress-plugin asuntokohteiden näyttämiseen
 docker-compose up
 ```
 
-Wordpress asentuu projektihakemiston alihakemistoon `wordpress`.
+Wordpress asentuu projektihakemiston alihakemistoon `wordpress`. MySQL-tietokanta näkyy portissa 18766 (kirjautumistiedot löytyvät Docker-konfiguraatiotiedostosta).
 
 ### Wordpressin konfigurointi
 
