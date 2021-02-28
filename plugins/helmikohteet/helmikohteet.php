@@ -24,6 +24,11 @@ with this
 program. If not, visit: https://www.gnu.org/licenses/
 */
 
+// exit if file is called directly
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 /**
  * Initializes the plugin on activation.
  *
@@ -38,6 +43,7 @@ function helmikohteet_on_activation()
 
     error_log('DEBUG: Helmikohteet plugin activated');
 }
+
 register_activation_hook(__FILE__, 'helmikohteet_on_activation');
 
 /**
@@ -53,4 +59,14 @@ function helmikohteet_on_uninstall()
 
     error_log('DEBUG: Helmikohteet plugin uninstalled');
 }
+
 register_uninstall_hook(__FILE__, 'helmikohteet_on_uninstall');
+
+// if (is_admin()) {
+//     // include stuff only needed for the admin interface here
+//     // require_once(__FILE__.'/admin/...');
+// }
+//
+// if (is_page()) {
+//     // ignore plugin stuff on posts
+// }
