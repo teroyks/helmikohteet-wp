@@ -24,3 +24,7 @@ Wordpress asentuu projektihakemiston alihakemistoon `wordpress`.
    1. kieli: suomi
    2. sivuston nimi, käyttäjätunnus, salasana: vapaavalintaiset
    3. sähköpostiosoite: anna toimiva osoite
+
+### Pluginin käyttöönotto
+
+Pluginin koodi on kehitysympäristössä valmiiksi hakemustossa `plugins/helmikohteet`. Käyttöönotto: ks. [pluginin ohje](doc/plugin.md).
