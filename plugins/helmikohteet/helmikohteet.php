@@ -63,6 +63,31 @@ function helmikohteet_on_uninstall()
     error_log('DEBUG: Helmikohteet plugin uninstalled');
 }
 
+function helmikohteet_loop_shortcode_get_listings()
+{
+    // DEBUG: use global posts variable until there are listings to fetch
+    global $posts;
+    $listings_list = get_posts();
+
+    $output = '<div>Filtering here</div>';
+    foreach ($listings_list as $listing) {
+        setup_postdata($listing); // DEBUG, not needed for listings
+        $property_name = get_the_title($listing);
+        $property_description = get_the_content($listing);
+        $output .= <<<END
+            <div class="helmik-listing">
+              <div class="helmik-listing-title">{$property_name}</div>
+              <div class="helmik-listing-description">{$property_description}</div>
+            </div>
+            END;
+    }
+
+    wp_reset_postdata(); // DEBUG
+
+    return $output;
+}
+add_shortcode('helmikohteet', 'helmikohteet_loop_shortcode_get_listings');
+
 register_uninstall_hook(__FILE__, 'helmikohteet_on_uninstall');
 
 // include stuff only needed for the admin interface here
