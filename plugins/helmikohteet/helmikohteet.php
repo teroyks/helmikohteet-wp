@@ -57,6 +57,9 @@ function helmikohteet_on_uninstall()
         return;
     }
 
+    // clean up plugin options
+    delete_option('helmikohteet_options');
+
     error_log('DEBUG: Helmikohteet plugin uninstalled');
 }
 
