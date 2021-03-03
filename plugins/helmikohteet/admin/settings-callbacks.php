@@ -9,19 +9,6 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Parses the set up options.
- *
- * @param $input
- *
- * @return mixed
- */
-function helmikohteet_callback_parse_options($input)
-{
-    // TODO add parser functionality
-    return $input;
-}
-
-/**
  * Outputs info text for the API settings section.
  */
 function helmikohteet_callback_section_api()
