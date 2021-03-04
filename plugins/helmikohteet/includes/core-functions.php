@@ -30,4 +30,7 @@ function helmikohteet_custom_styles()
     );
 }
 
-add_action('wp_enqueue_scripts', 'helmikohteet_custom_styles');
+add_action(
+    'wp_enqueue_scripts', // hook to add scripts & styles to public pages
+    'helmikohteet_custom_styles'
+);
