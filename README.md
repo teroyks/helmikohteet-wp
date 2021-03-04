@@ -28,3 +28,7 @@ Wordpress asentuu projektihakemiston alihakemistoon `wordpress`. MySQL-tietokant
 ### Pluginin käyttöönotto
 
 Pluginin koodi on kehitysympäristössä valmiiksi hakemustossa `plugins/helmikohteet`. Käyttöönotto: ks. [pluginin ohje](doc/plugin.md).
+
+### Ulkoasun muokkaus
+
+Kohdelistauksen HTML-koodi luodaan pluginin päätiedostossa `helmikohteet.php`. Tyylimääritykset ovat `helmikohteet.css`-tiedostossa.

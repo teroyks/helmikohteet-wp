@@ -1,4 +1,45 @@
+/* listings container */
+.helmik-listing-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 20px;
+}
+
 /* listing item in a list */
 .helmik-listing {
-    background-color: #9ebaa0;
+    background-color: #fafafa;
+    border: 1px solid #d3d3d3;
+    border-radius: .25rem;
+    line-height: 1.2em;
+    font-size: .85em;
+}
+
+/* property image */
+.helmik-listing-bg-img {
+    background-color: #ccc;
+    background-position: center;
+    background-size: cover;
+    min-height: 180px;
+}
+
+/* property info */
+.helmik-listing-content {
+    padding: 15px;
+}
+
+.helmik-listing-content * {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.helmik-listing-title {
+    font-size: 1.25em;
+    font-weight: bold;
+}
+
+.helmik-listing button {
+    border: 1px solid #2196F3;
+    padding: .5rem 1rem;
+    cursor: pointer;
+    border-radius: .25rem;
 }

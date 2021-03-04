@@ -73,19 +73,29 @@ function helmikohteet_loop_shortcode_get_listings(): string
     // DEBUG: use global posts variable until there are listings to fetch
     $listings_list = get_posts();
 
-    $output = '<div>Filtering here</div>';
+    $output = <<<END
+        <div>Filtering here</div>
+        <div class="helmik-listing-container">        
+        END;
+
     foreach ($listings_list as $listing) {
         setup_postdata($listing); // DEBUG, not needed for listings
         $property_name        = get_the_title($listing);
         $property_description = get_the_content($listing);
 
         $output .= <<<END
-            <div class="helmik-listing">
-              <div class="helmik-listing-title">{$property_name}</div>
-              <div class="helmik-listing-description">{$property_description}</div>
-            </div>
+            <section class="helmik-listing">
+              <div class="helmik-listing-bg-img"></div>
+              <div class="helmik-listing-content">
+                  <h1 class="helmik-listing-title">{$property_name}</h1>
+                  <div class="helmik-listing-description">{$property_description}</div>
+                  <button>Näytä</button>
+              </div>
+            </section>
             END;
     }
+
+    $output .= '</div>';
 
     wp_reset_postdata(); // DEBUG
 
