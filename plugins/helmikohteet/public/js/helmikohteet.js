@@ -1,0 +1,4 @@
+/**
+ * Helmikohteet plugin scripts
+ */
+
