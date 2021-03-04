@@ -63,10 +63,14 @@ function helmikohteet_on_uninstall()
     error_log('DEBUG: Helmikohteet plugin uninstalled');
 }
 
-function helmikohteet_loop_shortcode_get_listings()
+/**
+ * Builds the page listings component.
+ *
+ * @return string Listings HTML
+ */
+function helmikohteet_loop_shortcode_get_listings(): string
 {
     // DEBUG: use global posts variable until there are listings to fetch
-    global $posts;
     $listings_list = get_posts();
 
     $output = '<div>Filtering here</div>';
@@ -86,6 +90,7 @@ function helmikohteet_loop_shortcode_get_listings()
 
     return $output;
 }
+
 add_shortcode('helmikohteet', 'helmikohteet_loop_shortcode_get_listings');
 
 register_uninstall_hook(__FILE__, 'helmikohteet_on_uninstall');
