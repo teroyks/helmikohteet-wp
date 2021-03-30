@@ -27,6 +27,9 @@ program. If not, visit: https://www.gnu.org/licenses/
 /** @noinspection PhpIncludeInspection Ignore plugin_dir not found warnings */
 
 // exit if file is called directly
+use Helmikohteet\ListingsList\Listing;
+use Helmikohteet\ListingsList\ListParser;
+
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -72,25 +75,45 @@ function helmikohteet_on_uninstall()
  */
 function helmikohteet_loop_shortcode_get_listings(): string
 {
-    // DEBUG: use global posts variable until there are listings to fetch
-    $listings_list = get_posts();
+    // use cached values if available
+    if (false === ($listings = get_transient('helmikohteet_listings'))) {
+        // cached values have expired
+
+        // fetch new listings, and save as JSON data
+        $listing_values_raw = file_get_contents(plugin_dir_path(__FILE__) . '/oikotie.php.xml');
+        $listing_values_xml = simplexml_load_string($listing_values_raw);
+        $listings           = json_encode($listing_values_xml);
+
+        // $args           = ['listing_content' => $listing_values_json, 'updated_at' => new DateTime()];
+        set_transient('helmikohteet_listings', $listings, 30);
+    }
+
+    // convert JSON to an associative array
+    $all_listings = (new ListParser($listings))->getApartments(Listing::STATUS_FOR_SALE);
+    // echo '<pre>';
+    // var_dump($all_listings[0]); // first apartment
+    // echo '</pre>';
+
+    // format decimal numbers
+    $format_number = fn($nr) => is_numeric($nr) ? number_format($nr, 2, ',', ' ') : '';
 
     $output = <<<END
         <div>Filtering here</div>
-        <div class="helmik-listing-container">        
+        <div class="helmik-listing-container">
         END;
 
-    foreach ($listings_list as $listing) {
-        setup_postdata($listing); // DEBUG, not needed for listings
-        $property_name        = get_the_title($listing);
-        $property_description = get_the_content($listing);
-
+    // list all the properties
+    foreach ($all_listings as $listing) {
         $output .= <<<END
             <section class="helmik-listing">
               <div class="helmik-listing-bg-img"></div>
               <div class="helmik-listing-content">
-                  <h1 class="helmik-listing-title">{$property_name}</h1>
-                  <div class="helmik-listing-description">{$property_description}</div>
+                  <h1 class="helmik-listing-title">{$listing->type}, {$listing->city}</h1>
+                  <div class="helmik-listing-description">{$listing->address}</div>
+                  <div class="helmik-listing-description">Valmistui </div>
+                  <div class="helmik-listing-description">{$listing->rooms}</div>
+                  <div class="helmik-listing-description">Hinta {$format_number($listing->price)}&nbsp;€</div>
+                  <div class="helmik-listing-description">Pinta-ala {$format_number($listing->area)}&nbsp;m²</div>
                   <button>Näytä</button>
               </div>
             </section>
@@ -98,8 +121,6 @@ function helmikohteet_loop_shortcode_get_listings(): string
     }
 
     $output .= '</div>';
-
-    wp_reset_postdata(); // DEBUG
 
     return $output;
 }
