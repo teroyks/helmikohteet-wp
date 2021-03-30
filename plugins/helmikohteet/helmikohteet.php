@@ -124,6 +124,37 @@ if (is_admin()) {
 require_once plugin_dir_path(__FILE__) . 'includes/core-functions.php'; // common core functionality
 
 /**
+ * Includes used classes from the namespace directory automatically.
+ *
+ * NOTE: All classes must be defined under the 'Helmikohteet\' namespace.
+ *
+ * @param string $class_name Fully qualified class name
+ */
+function helmikohteet_autoload(string $class_name)
+{
+    // parse a fully qualified name
+    $namespace_parts = explode('\\', $class_name);
+    $main_namespace  = array_shift($namespace_parts);
+
+    // only apply to the 'Helmikohteet' namespace
+    if ('Helmikohteet' !== $main_namespace) {
+        return;
+    }
+
+    // build the class file path
+    array_unshift($namespace_parts, plugin_dir_path(__FILE__) . 'Helmikohteet');
+    $file_path = implode(DIRECTORY_SEPARATOR, $namespace_parts) . '.php';
+
+    if (!file_exists($file_path)) {
+        wp_die(esc_html("Cannot load $class_name: file not found"));
+    }
+
+    include_once($file_path);
+}
+
+spl_autoload_register('helmikohteet_autoload');
+
+/**
  * Defines default options for the plugin.
  */
 function helmikohteet_options_default(): array
