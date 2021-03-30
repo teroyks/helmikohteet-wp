@@ -24,6 +24,8 @@ with this
 program. If not, visit: https://www.gnu.org/licenses/
 */
 
+/** @noinspection PhpIncludeInspection Ignore plugin_dir not found warnings */
+
 // exit if file is called directly
 if (!defined('ABSPATH')) {
     exit;
@@ -108,15 +110,17 @@ register_uninstall_hook(__FILE__, 'helmikohteet_on_uninstall');
 
 // include stuff only needed for the admin interface here
 if (is_admin()) {
+    $admin_dir = plugin_dir_path(__FILE__) . 'admin';
     // admin dependencies
-    require_once plugin_dir_path(__FILE__) . 'admin/admin-menu.php'; // add plugin settings to the admin menu
-    require_once plugin_dir_path(__FILE__) . 'admin/settings-page.php'; // settings page template
-    require_once plugin_dir_path(__FILE__) . 'admin/settings-register.php'; // register settings
-    require_once plugin_dir_path(__FILE__) . 'admin/settings-callbacks.php'; // implement settings functionality
-    require_once plugin_dir_path(__FILE__) . 'admin/settings-parser.php'; // parse submitted settings values
+    require_once "$admin_dir/admin-menu.php"; // add plugin settings to the admin menu
+    require_once "$admin_dir/settings-page.php"; // settings page template
+    require_once "$admin_dir/settings-register.php"; // register settings
+    require_once "$admin_dir/settings-callbacks.php"; // implement settings functionality
+    require_once "$admin_dir/settings-parser.php"; // parse submitted settings values
 }
 
 // dependencies for both admin and public site
+/** @noinspection PhpIncludeInspection */
 require_once plugin_dir_path(__FILE__) . 'includes/core-functions.php'; // common core functionality
 
 /**
