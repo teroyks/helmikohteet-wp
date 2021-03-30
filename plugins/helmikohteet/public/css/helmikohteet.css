@@ -7,11 +7,21 @@
 
 /* listing item in a list */
 .helmik-listing {
-    background-color: #fafafa;
+    background-color: orange; /* should be overridden */
     border: 1px solid #d3d3d3;
     border-radius: .25rem;
     line-height: 1.2em;
     font-size: .85em;
+}
+
+/* listing type "for sale" */
+.helmik-listing-type-sale {
+    background-color: #fafafa;
+}
+
+/* listing type "to let" */
+.helmik-listing-type-rental {
+    background-color: #ceead0; /* just to differentiate a bit */
 }
 
 /* property image */
