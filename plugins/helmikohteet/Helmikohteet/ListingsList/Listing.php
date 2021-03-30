@@ -14,6 +14,11 @@ class Listing
     public const STATUS_FOR_SALE    = 'Myynnissä';
     public const STATUS_WANT_TO_BUY = 'Hankinnassa';
 
+    public const TYPE_SALE   = 'Myydään';
+    public const TYPE_RENTAL = 'Vuokrataan';
+
+    public const HABITATION_MODE_RENTAL = 'VU';
+
     public string $city;
     public string $address;
     public string $salesPrice;
@@ -23,22 +28,31 @@ class Listing
     public ?array $attributes;
     public string $status;
     public string $apartmentType;
+    public string $listingType;
 
     public function __construct(array $data)
     {
-        $parse = fn($propName) => isset($data[$propName])
-            ? (!empty($data[$propName]) ? $data[$propName] : 'ℹ️ EMPTY')
-            : '⚠️ *** UNKNOWN ***';
+        // parse the array property value into a string
+        $parse = fn($propName, $allowNoValue = false) => isset($data[$propName])
+            ? (!empty($data[$propName]) ? $data[$propName] : '')
+            : ($allowNoValue ? '' : '⚠️ *** UNKNOWN ***');
+
+        // determine whether this is a sale or rental listing
+        $parseListingType = fn($habitationType) => self::HABITATION_MODE_RENTAL == $habitationType
+            ? self::TYPE_RENTAL : self::TYPE_SALE;
 
         $this->city       = $parse('City');
         $this->address    = $parse('StreetAddress');
-        $this->salesPrice = $parse('SalesPrice');
-        $this->rentAmount = $parse('RentPerMonth');
+        $this->salesPrice = $parse('SalesPrice', true);
+        $this->rentAmount = $parse('RentPerMonth', true);
         $this->rooms      = $parse('RoomTypes');
         $this->area       = $parse('LivingArea');
         $this->attributes = $data['@attributes'] ?? ['type' => '⚠️ NO ATTRIBUTES'];
         $this->status     = $parse('Status');
 
         $this->apartmentType = ApartmentType::get($this->attributes['type'] ?? '');
+
+        $habitationType    = $data['ModeOfHabitation']['@attributes']['type'] ?? '';
+        $this->listingType = $parseListingType($habitationType);
     }
 }
