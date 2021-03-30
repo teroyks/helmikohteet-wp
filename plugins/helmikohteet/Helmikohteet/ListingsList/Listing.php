@@ -29,6 +29,7 @@ class Listing
     public string $status;
     public string $apartmentType;
     public string $listingType;
+    public ?int $yearOfBuilding;
 
     public function __construct(array $data)
     {
@@ -40,6 +41,9 @@ class Listing
         // determine whether this is a sale or rental listing
         $parseListingType = fn($habitationType) => self::HABITATION_MODE_RENTAL == $habitationType
             ? self::TYPE_RENTAL : self::TYPE_SALE;
+
+        // determine a year value: invalid value can be 0
+        $parseYear = fn($val): ?int => is_numeric($val) && $val > 0 ? (int)$val : null;
 
         $this->city       = $parse('City');
         $this->address    = $parse('StreetAddress');
@@ -54,5 +58,7 @@ class Listing
 
         $habitationType    = $data['ModeOfHabitation']['@attributes']['type'] ?? '';
         $this->listingType = $parseListingType($habitationType);
+
+        $this->yearOfBuilding = $parseYear($data['YearOfBuilding']['@attributes']['original'] ?? null);
     }
 }
