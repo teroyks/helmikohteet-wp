@@ -16,12 +16,13 @@ class Listing
 
     public string $city;
     public string $address;
-    public string $price;
+    public string $salesPrice;
+    public string $rentAmount;
     public string $rooms;
     public string $area;
     public ?array $attributes;
     public string $status;
-    public string $type;
+    public string $apartmentType;
 
     public function __construct(array $data)
     {
@@ -31,12 +32,13 @@ class Listing
 
         $this->city       = $parse('City');
         $this->address    = $parse('StreetAddress');
-        $this->price      = $parse('SalesPrice');
+        $this->salesPrice = $parse('SalesPrice');
+        $this->rentAmount = $parse('RentPerMonth');
         $this->rooms      = $parse('RoomTypes');
         $this->area       = $parse('LivingArea');
         $this->attributes = $data['@attributes'] ?? ['type' => '⚠️ NO ATTRIBUTES'];
         $this->status     = $parse('Status');
 
-        $this->type = ApartmentType::get($this->attributes['type'] ?? '');
+        $this->apartmentType = ApartmentType::get($this->attributes['type'] ?? '');
     }
 }

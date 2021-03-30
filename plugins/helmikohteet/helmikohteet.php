@@ -108,11 +108,12 @@ function helmikohteet_loop_shortcode_get_listings(): string
             <section class="helmik-listing">
               <div class="helmik-listing-bg-img"></div>
               <div class="helmik-listing-content">
-                  <h1 class="helmik-listing-title">{$listing->type}, {$listing->city}</h1>
+                  <h1 class="helmik-listing-title">{$listing->apartmentType}, {$listing->city}</h1>
                   <div class="helmik-listing-description">{$listing->address}</div>
                   <div class="helmik-listing-description">Valmistui </div>
                   <div class="helmik-listing-description">{$listing->rooms}</div>
-                  <div class="helmik-listing-description">Hinta {$format_number($listing->price)}&nbsp;€</div>
+                  <div class="helmik-listing-description">Hinta {$format_number($listing->salesPrice)}&nbsp;€</div>
+                  <div class="helmik-listing-description">Vuokra {$format_number($listing->rentAmount)} €/kk</div>
                   <div class="helmik-listing-description">Pinta-ala {$format_number($listing->area)}&nbsp;m²</div>
                   <button>Näytä</button>
               </div>
