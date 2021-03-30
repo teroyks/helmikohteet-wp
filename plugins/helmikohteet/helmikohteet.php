@@ -125,7 +125,9 @@ function helmikohteet_loop_shortcode_get_listings(): string
 
         $output .= <<<END
             <section class="helmik-listing {$listing_type_class($listing->listingType)}">
-              <div class="helmik-listing-bg-img"></div>
+              <div class="helmik-listing-img">
+                <img src="{$listing->imgUrl}" alt="" />
+              </div>
               <div class="helmik-listing-content">
                   <h1 class="helmik-listing-title">{$listing->apartmentType}, {$listing->city}</h1>
                   <div class="helmik-listing-description">{$listing->address}</div>

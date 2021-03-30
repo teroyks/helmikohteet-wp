@@ -29,7 +29,8 @@ class Listing
     public string $status;
     public string $apartmentType;
     public string $listingType;
-    public ?int $yearOfBuilding;
+    public ?int   $yearOfBuilding;
+    public string $imgUrl;
 
     public function __construct(array $data)
     {
@@ -53,6 +54,7 @@ class Listing
         $this->area       = $parse('LivingArea');
         $this->attributes = $data['@attributes'] ?? ['type' => '⚠️ NO ATTRIBUTES'];
         $this->status     = $parse('Status');
+        $this->imgUrl     = $parse('Picture1');
 
         $this->apartmentType = ApartmentType::get($this->attributes['type'] ?? '');
 
