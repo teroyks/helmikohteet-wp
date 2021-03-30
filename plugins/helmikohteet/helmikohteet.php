@@ -97,6 +97,10 @@ function helmikohteet_loop_shortcode_get_listings(): string
     // format decimal numbers
     $format_number = fn($nr) => is_numeric($nr) ? number_format($nr, 2, ',', ' ') : '';
 
+    // define listing type class
+    $listing_type_class = fn($type) => Listing::TYPE_SALE == $type
+        ? 'helmik-listing-type-sale' : 'helmik-listing-type-rental';
+
     $output = <<<END
         <div>Filtering here</div>
         <div class="helmik-listing-container">
@@ -104,16 +108,22 @@ function helmikohteet_loop_shortcode_get_listings(): string
 
     // list all the properties
     foreach ($all_listings as $listing) {
+        if (Listing::TYPE_SALE == $listing->listingType) {
+            $priceLabel = 'Hinta';
+            $price      = $listing->salesPrice;
+        } else {
+            $priceLabel = 'Vuokra/kk';
+            $price      = $listing->rentAmount;
+        }
         $output .= <<<END
-            <section class="helmik-listing">
+            <section class="helmik-listing {$listing_type_class($listing->listingType)}">
               <div class="helmik-listing-bg-img"></div>
               <div class="helmik-listing-content">
                   <h1 class="helmik-listing-title">{$listing->apartmentType}, {$listing->city}</h1>
                   <div class="helmik-listing-description">{$listing->address}</div>
                   <div class="helmik-listing-description">Valmistui </div>
                   <div class="helmik-listing-description">{$listing->rooms}</div>
-                  <div class="helmik-listing-description">Hinta {$format_number($listing->salesPrice)}&nbsp;€</div>
-                  <div class="helmik-listing-description">Vuokra {$format_number($listing->rentAmount)} €/kk</div>
+                  <div class="helmik-listing-description">{$priceLabel} {$format_number($price)}&nbsp;€</div>
                   <div class="helmik-listing-description">Pinta-ala {$format_number($listing->area)}&nbsp;m²</div>
                   <button>Näytä</button>
               </div>
