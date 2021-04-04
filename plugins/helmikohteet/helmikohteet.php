@@ -29,6 +29,7 @@ program. If not, visit: https://www.gnu.org/licenses/
 // exit if file is called directly
 use Helmikohteet\ListingsList\Listing;
 use Helmikohteet\ListingsList\ListParser;
+use Helmikohteet\PluginConfig;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -78,14 +79,18 @@ function helmikohteet_loop_shortcode_get_listings(): string
     // use cached values if available
     if (false === ($listings = get_transient('helmikohteet_listings'))) {
         // cached values have expired
+        error_log('Helmikohteet listing has expired; fetching from API...');
 
         // fetch new listings, and save as JSON data
-        $listing_values_raw = file_get_contents(plugin_dir_path(__FILE__) . '/oikotie.php.xml');
+        $api_url            = PluginConfig::apiUrl();
+        $args               = ['user-agent' => 'Helmikohteet Plugin; ' . home_url()];
+        $response           = wp_safe_remote_get($api_url, $args);
+        $listing_values_raw = wp_remote_retrieve_body($response);
         $listing_values_xml = simplexml_load_string($listing_values_raw);
         $listings           = json_encode($listing_values_xml);
 
         // $args           = ['listing_content' => $listing_values_json, 'updated_at' => new DateTime()];
-        set_transient('helmikohteet_listings', $listings, 30);
+        set_transient('helmikohteet_listings', $listings, 30000);
     }
 
     // convert JSON to an associative array
