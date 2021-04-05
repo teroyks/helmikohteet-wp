@@ -152,6 +152,8 @@ function helmikohteet_listing_details()
 
     $rawListings = HelmiClient::getListingsJson();
     $listingId = sanitize_key($_GET[PluginConfig::DETAILS_KEY_PARAM]);
+    $listingFinder = new Helmikohteet\ListingDetails\Finder($rawListings);
+    $rawData = $listingFinder->getListingData($listingId);
     include plugin_dir_path(__FILE__) . 'templates/listing_details.php';
     die();
 }
