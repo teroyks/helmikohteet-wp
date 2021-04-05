@@ -30,5 +30,8 @@ function helmikohteet_display_settings_page()
             ?>
         </form>
     </div>
+  <div class="wrap">
+    <p>Kohdeluettelon vanhenemisaika: <?= \Helmikohteet\PluginConfig::LISTINGS_EXPIRATION_HOURS ?> tuntia</p>
+  </div>
     <?php
 }

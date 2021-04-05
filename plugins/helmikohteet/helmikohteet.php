@@ -90,7 +90,7 @@ function helmikohteet_loop_shortcode_get_listings(): string
         $listings           = json_encode($listing_values_xml);
 
         // $args           = ['listing_content' => $listing_values_json, 'updated_at' => new DateTime()];
-        set_transient('helmikohteet_listings', $listings, 30000);
+        set_transient('helmikohteet_listings', $listings, PluginConfig::listingsExpirationInternal());
     }
 
     // convert JSON to an associative array
