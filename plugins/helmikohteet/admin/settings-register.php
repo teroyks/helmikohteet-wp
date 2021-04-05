@@ -34,6 +34,15 @@ function helmikohteet_register_settings()
         'helmikohteet_section_api', // settings section
         ['id' => 'api_url', 'label' => 'Osoite josta kohteet haetaan'] // callback parameters
     );
+
+    add_settings_field(
+        'google_api_key', // db setting id
+        'Google Maps API Key', // field title
+        'helmikohteet_callback_field_text', // callback function for setting markup
+        'helmikohteet', // page slug
+        'helmikohteet_section_api', // settings section
+        ['id' => 'google_api_key', 'label' => 'Google Maps API-tunnus'] // callback parameters
+    );
 }
 
 add_action('admin_init', 'helmikohteet_register_settings');

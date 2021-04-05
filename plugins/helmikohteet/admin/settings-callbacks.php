@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
  */
 function helmikohteet_callback_section_api()
 {
-    echo '<p>Asetukset kohteiden hakemiseksi Helmi-järjestelmästä</p>';
+    echo '<p>Asetukset tietojen hakemiseksi Helmi-järjestelmästä ja muista järjestelmistä</p>';
 }
 
 /**

@@ -33,6 +33,17 @@ class PluginConfig
     }
 
     /**
+     * @return string Google Maps URL with API key from settings
+     */
+    public static function googleApiUrl(): string
+    {
+        $options = get_option(self::OPTIONS_GROUP);
+        $apiKey  = !empty($options['google_api_key']) ? esc_url_raw($options['google_api_key']) : '';
+
+        return "https://maps.googleapis.com/maps/api/js?key={$apiKey}&callback=initMap&libraries=&v=weekly";
+    }
+
+    /**
      * @return int Internal representation of the listings expiration time.
      */
     public static function listingsExpirationInternal(): int

@@ -30,10 +30,13 @@ class Finder
      */
     public function getListingData(string $listingKey): array
     {
-        // if found, array_filter has exactly one element, i.e. the listing data
-        return array_filter(
-                $this->apartments,
-                fn($listing) => $listingKey == $listing['Key']
+        // if found, array_filter returns exactly one element, i.e. the listing data
+        return
+            array_values(
+                array_filter(
+                    $this->apartments,
+                    fn($listing) => $listingKey == $listing['Key']
+                )
             )[0] ?? [];
     }
 }
