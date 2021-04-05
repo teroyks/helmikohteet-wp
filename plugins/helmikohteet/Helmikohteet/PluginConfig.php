@@ -14,6 +14,9 @@ class PluginConfig
     /** @var string Options table key for plygin settings */
     public const OPTIONS_GROUP = 'helmikohteet_options';
 
+    /** @var string URL parameter for displaying the listing details */
+    public const DETAILS_KEY_PARAM = 'helmikohteet_id';
+
     /** @var int Amount of time until fetched listings data expires */
     public const LISTINGS_EXPIRATION_HOURS = 12;
 

@@ -153,6 +153,22 @@ function helmikohteet_loop_shortcode_get_listings(): string
 
 add_shortcode('helmikohteet', 'helmikohteet_loop_shortcode_get_listings');
 
+/**
+ * Replaces page HTML with the listing details.
+ *
+ * @todo can a page template be used here?
+ */
+function helmikohteet_listing_details()
+{
+    if (isset($_GET[PluginConfig::DETAILS_KEY_PARAM])) {
+        $listingId = sanitize_key($_GET[PluginConfig::DETAILS_KEY_PARAM]);
+        include plugin_dir_path(__FILE__) . 'templates/listing_details.php';
+        die();
+    }
+}
+
+add_filter('init', 'helmikohteet_listing_details');
+
 register_uninstall_hook(__FILE__, 'helmikohteet_on_uninstall');
 
 // include stuff only needed for the admin interface here
