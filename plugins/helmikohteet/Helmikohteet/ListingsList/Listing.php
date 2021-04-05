@@ -19,6 +19,7 @@ class Listing
 
     public const HABITATION_MODE_RENTAL = 'VU';
 
+    public string $key;
     public string $city;
     public string $address;
     public string $salesPrice;
@@ -46,6 +47,7 @@ class Listing
         // determine a year value: invalid value can be 0
         $parseYear = fn($val): ?int => is_numeric($val) && $val > 0 ? (int)$val : null;
 
+        $this->key        = sanitize_key($parse('Key'));
         $this->city       = $parse('City');
         $this->address    = $parse('StreetAddress');
         $this->salesPrice = $parse('SalesPrice', true);
