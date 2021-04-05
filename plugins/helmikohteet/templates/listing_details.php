@@ -7,6 +7,5 @@
 
 ?>
 <h1>Kohteen <?= $listingId ?> tiedot</h1>
-<p>data tähän…</p>
 
-<pre><? var_dump($rawData[0]) ?></pre>
+<pre><? var_dump($rawData) ?></pre>

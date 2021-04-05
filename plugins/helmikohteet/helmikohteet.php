@@ -114,6 +114,9 @@ function helmikohteet_loop_shortcode_get_listings(): string
             $yearOfBuildingIfDefined = ''; // don't show year unless it is included
         }
 
+        // link to the details page
+        $detailsLink = get_site_url() . '?' . http_build_query([PluginConfig::DETAILS_KEY_PARAM => $listing->key]);
+
         $output .= <<<END
             <section class="helmik-listing {$listing_type_class($listing->listingType)}">
               <div class="helmik-listing-img">
@@ -126,7 +129,7 @@ function helmikohteet_loop_shortcode_get_listings(): string
                   <div class="helmik-listing-description">{$listing->rooms}</div>
                   <div class="helmik-listing-description">{$priceLabel} {$format_number($price)}&nbsp;€</div>
                   <div class="helmik-listing-description">Pinta-ala {$format_number($listing->area)}&nbsp;m²</div>
-                  <button>Näytä</button>
+                  <div><a href="{$detailsLink}">Näytä</a></div>
               </div>
             </section>
             END;
@@ -150,10 +153,10 @@ function helmikohteet_listing_details()
         return;
     }
 
-    $rawListings = HelmiClient::getListingsJson();
-    $listingId = sanitize_key($_GET[PluginConfig::DETAILS_KEY_PARAM]);
+    $rawListings   = HelmiClient::getListingsJson();
+    $listingId     = sanitize_key($_GET[PluginConfig::DETAILS_KEY_PARAM]);
     $listingFinder = new Helmikohteet\ListingDetails\Finder($rawListings);
-    $rawData = $listingFinder->getListingData($listingId);
+    $rawData       = $listingFinder->getListingData($listingId);
     include plugin_dir_path(__FILE__) . 'templates/listing_details.php';
     die();
 }
