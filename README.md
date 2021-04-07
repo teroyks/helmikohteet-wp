@@ -32,3 +32,11 @@ Pluginin koodi on kehitysympäristössä valmiiksi hakemistossa [`plugins/helmik
 ### Ulkoasun muokkaus
 
 Kohdelistauksen HTML-koodi luodaan pluginin päätiedostossa `helmikohteet.php`. Tyylimääritykset ovat [`helmikohteet.css`](plugins/helmikohteet/public/css/helmikohteet.css)-tiedostossa.
+
+### Testit
+
+Yksikkötestit ajetaan komennolla
+
+```
+docker-compose run --rm phpunit
+```

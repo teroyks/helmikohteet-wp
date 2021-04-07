@@ -26,3 +26,12 @@ services:
     volumes:
       - './wordpress:/var/www/html'
       - './plugins:/var/www/html/wp-content/plugins'
+  phpunit:
+    image: 'jitesoft/phpunit:7.4-9'
+    volumes:
+      - './plugins/helmikohteet:/app/src'
+      - './tests:/app/tests'
+      - './phpunit.xml:/app/phpunit.xml'
+    entrypoint:
+      - phpunit
+      - tests
