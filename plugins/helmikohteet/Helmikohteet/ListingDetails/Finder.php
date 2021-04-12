@@ -6,37 +6,35 @@
 
 namespace Helmikohteet\ListingDetails;
 
+use SimpleXMLElement;
+
 /**
  * Listing finder.
  */
 class Finder
 {
-    /** @var array All listings */
-    private array $apartments;
+    private SimpleXMLElement $apartments;
 
-    private const DECODE_ASSOC = true;
-
-    public function __construct(string $jsonApartments)
+    public function __construct(SimpleXMLElement $apartments)
     {
-        $this->apartments = json_decode($jsonApartments, self::DECODE_ASSOC)['Apartment'];
+        $this->apartments = $apartments->Apartment;
     }
 
     /**
-     * Filters the list to a single listing that matches given key.
+     * Filters the list to the first listing that matches given key.
      *
      * @param string $listingKey
      *
-     * @return array Listing data, or empty array if not found.
+     * @return SimpleXMLElement|null Listing data, or null if not found.
      */
-    public function getListingData(string $listingKey): array
+    public function getListingData(string $listingKey): ?SimpleXMLElement
     {
-        // if found, array_filter returns exactly one element, i.e. the listing data
-        return
-            array_values(
-                array_filter(
-                    $this->apartments,
-                    fn($listing) => $listingKey == $listing['Key']
-                )
-            )[0] ?? [];
+        foreach ($this->apartments as $apartment) {
+            if ($listingKey == $apartment->Key) {
+                return $apartment;
+            }
+        }
+
+        return null;
     }
 }
