@@ -28,6 +28,8 @@ program. If not, visit: https://www.gnu.org/licenses/
 
 // exit if file is called directly
 use Helmikohteet\HelmiApi\Client as HelmiClient;
+use Helmikohteet\ListingDetails\Finder as ListingFinder;
+use Helmikohteet\ListingDetails\Listing as DetailedListing;
 use Helmikohteet\ListingsList\Listing;
 use Helmikohteet\ListingsList\ListParser;
 use Helmikohteet\PluginConfig;
@@ -146,6 +148,7 @@ add_shortcode('helmikohteet', 'helmikohteet_loop_shortcode_get_listings');
  * Replaces page HTML with the listing details.
  *
  * @todo can a page template be used here?
+ * @todo handle the 'Not Found' error
  */
 function helmikohteet_listing_details()
 {
@@ -153,11 +156,14 @@ function helmikohteet_listing_details()
         return;
     }
 
-    $rawListings   = HelmiClient::getListingsJson();
+    $allListings   = HelmiClient::getListingsXml();
     $listingId     = sanitize_key($_GET[PluginConfig::DETAILS_KEY_PARAM]);
-    $listingFinder = new Helmikohteet\ListingDetails\Finder($rawListings);
+    $listingFinder = new ListingFinder($allListings);
     $rawData       = $listingFinder->getListingData($listingId);
-    include plugin_dir_path(__FILE__) . 'templates/listing_details.php';
+    if ($rawData) {
+        $listing = new DetailedListing($rawData);
+        include plugin_dir_path(__FILE__) . 'templates/listing_details.php';
+    }
     die();
 }
 
