@@ -6,16 +6,19 @@
 
 namespace Helmikohteet\ListingsList;
 
+use SimpleXMLElement;
+
 /**
  * Parser for a list of apartments.
  */
 class ListParser
 {
-    private array $apartments;
+    /** @var SimpleXMLElement Traversable container for all apartment data */
+    private SimpleXMLElement $apartments;
 
-    public function __construct(string $jsonApartments)
+    public function __construct(SimpleXMLElement $listings)
     {
-        $this->apartments = json_decode($jsonApartments, true)['Apartment'];
+        $this->apartments = $listings->Apartment;
     }
 
     /**
@@ -27,15 +30,15 @@ class ListParser
      */
     public function getApartments(string $statusToInclude): array
     {
-        // determines whether to include the apartment
-        $includeApartment = fn($apartmentData) => $statusToInclude == $apartmentData['Status'];
+        $listings = [];
+        foreach ($this->apartments as $apartment) {
+            // only include listings of the requested type
+            if ($statusToInclude != $apartment->Status) {
+                continue; // ignore this one
+            }
+            $listings[] = new Listing($apartment);
+        }
 
-        // parses the apartment data
-        $createListing = fn($apartmentData) => new Listing($apartmentData);
-
-        return array_map(
-            $createListing,
-            array_filter($this->apartments, $includeApartment)
-        );
+        return $listings;
     }
 }

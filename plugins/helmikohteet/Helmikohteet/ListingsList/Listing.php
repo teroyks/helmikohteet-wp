@@ -6,6 +6,8 @@
 
 namespace Helmikohteet\ListingsList;
 
+use SimpleXMLElement;
+
 /**
  * Listing data parser for listings list.
  */
@@ -33,13 +35,8 @@ class Listing
     public ?int   $yearOfBuilding;
     public string $imgUrl;
 
-    public function __construct(array $data)
+    public function __construct(SimpleXMLElement $data)
     {
-        // parse the array property value into a string
-        $parse = fn($propName, $allowNoValue = false) => isset($data[$propName])
-            ? (!empty($data[$propName]) ? $data[$propName] : '')
-            : ($allowNoValue ? '' : '⚠️ *** UNKNOWN ***');
-
         // determine whether this is a sale or rental listing
         $parseListingType = fn($habitationType) => self::HABITATION_MODE_RENTAL == $habitationType
             ? self::TYPE_RENTAL : self::TYPE_SALE;
@@ -47,22 +44,22 @@ class Listing
         // determine a year value: invalid value can be 0
         $parseYear = fn($val): ?int => is_numeric($val) && $val > 0 ? (int)$val : null;
 
-        $this->key        = sanitize_key($parse('Key'));
-        $this->city       = $parse('City');
-        $this->address    = $parse('StreetAddress');
-        $this->salesPrice = $parse('SalesPrice', true);
-        $this->rentAmount = $parse('RentPerMonth', true);
-        $this->rooms      = $parse('RoomTypes');
-        $this->area       = $parse('LivingArea');
-        $this->attributes = $data['@attributes'] ?? ['type' => '⚠️ NO ATTRIBUTES'];
-        $this->status     = $parse('Status');
-        $this->imgUrl     = $parse('Picture1');
+        $this->key        = sanitize_key($data->Key);
+        $this->city       = $data->City;
+        $this->address    = $data->StreetAddress;
+        $this->salesPrice = $data->SalesPrice;
+        $this->rentAmount = $data->RentPerMonth;
+        $this->rooms      = $data->RoomTypes;
+        $this->area       = $data->LivingArea;
+        $this->status     = $data->Status;
+        $this->imgUrl     = $data->Picture1;
 
-        $this->apartmentType = ApartmentType::get($this->attributes['type'] ?? '');
+        $apartmentTypeCode   = $data['type'];
+        $this->apartmentType = ApartmentType::get($apartmentTypeCode);
 
-        $habitationType    = $data['ModeOfHabitation']['@attributes']['type'] ?? '';
+        $habitationType    = $data->ModeOfHabitation['type'];
         $this->listingType = $parseListingType($habitationType);
 
-        $this->yearOfBuilding = $parseYear($data['YearOfBuilding']['@attributes']['original'] ?? null);
+        $this->yearOfBuilding = $parseYear($data->YearOfBuilding['original']);
     }
 }

@@ -7,18 +7,23 @@
 namespace Helmikohteet\HelmiApi;
 
 use Helmikohteet\PluginConfig;
+use SimpleXMLElement;
 
 /**
  * Fetches and caches data from the Helmi API.
  */
 class Client
 {
+    /** @var string Settings key for the cached listings XML data */
+    private const LISTINGS_KEY = 'helmikohteet_listings';
+
     /**
      * Fetches the raw listings data cached in transients.
      *
      * Updates the cached value if it has expired.
      *
      * @return string All listings (JSON)
+     * @deprecated use XML listing instead
      */
     public static function getListingsJson(): string
     {
@@ -38,5 +43,34 @@ class Client
         }
 
         return $listings;
+    }
+
+    /**
+     * Fetches the apartments data cached in transients.
+     *
+     * Updates the cached value if it has expired.
+     *
+     * @return SimpleXMLElement All listings Apartments->[Apartment, ...]
+     */
+    public static function getListingsXml(): SimpleXMLElement
+    {
+        if (false === ($listings = get_transient(self::LISTINGS_KEY))) {
+            // cached values have expired
+            error_log('Helmikohteet listings XML expired; fetching from API...');
+
+            // fetch new listings and save the raw XML data
+            $api_url  = PluginConfig::apiUrl();
+            $args     = ['user-agent' => 'Helmikohteet Plugin; ' . home_url()];
+            $response = wp_safe_remote_get($api_url, $args);
+            $listings = wp_remote_retrieve_body($response);
+
+            set_transient(
+                self::LISTINGS_KEY,
+                $listings,
+                PluginConfig::listingsExpirationInternal()
+            );
+        }
+
+        return simplexml_load_string($listings);
     }
 }

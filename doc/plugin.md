@@ -2,6 +2,13 @@
 
 ## Asennus ja käyttöönotto
 
+### Vaatimukset
+
+- PHP:n SimpleXML-laajennus asennettu (asetettu oletuksena PHP:n mukana)
+- PHP-versio vähintään 7.4
+
+### Asennus
+
 Asenna pluginin tiedostot WordPressin `plugins`-hakemiston alle omaan hakemistoonsa.
 
 Aktivoi plugin WordPress-asetussivulta (Lisäosat > Helmikohteet).

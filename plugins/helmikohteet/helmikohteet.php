@@ -77,10 +77,10 @@ function helmikohteet_on_uninstall()
  */
 function helmikohteet_loop_shortcode_get_listings(): string
 {
-    $listings = HelmiClient::getListingsJson();
+    $xml = HelmiClient::getListingsXml();
 
-    // convert JSON to an associative array
-    $all_listings = (new ListParser($listings))->getApartments(Listing::STATUS_FOR_SALE);
+    // convert XML to an array of Listing objects
+    $all_listings = (new ListParser($xml))->getApartments(Listing::STATUS_FOR_SALE);
     // echo '<pre>';
     // var_dump($all_listings[0]); // first apartment
     // echo '</pre>';
