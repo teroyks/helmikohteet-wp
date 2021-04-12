@@ -1,0 +1,139 @@
+<Apartments xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:noNamespaceSchemaLocation="docs/ecg/apartments/OT-apartments.xsd">
+    <Apartment type="KT" newHouses="E" realEstateType="OSAKE">
+        <Key>12345</Key>
+        <Status>Myynnissä</Status>
+        <StreetAddress>Katuosoite 1</StreetAddress>
+        <PostalCode>26100</PostalCode>
+        <City>Rauma</City>
+        <RealEstateID>123-123-4-123</RealEstateID>
+        <Region>Lajo</Region>
+        <pdx_region>Satakunta</pdx_region>
+        <LivingArea unit="m2">58.50</LivingArea>
+        <TotalArea unit="m2">275.00</TotalArea>
+        <TotalAreaDescription>varasto</TotalAreaDescription>
+        <NumberOfRooms>2</NumberOfRooms>
+        <RoomTypes>2h+k</RoomTypes>
+        <BuildingRights>318.00</BuildingRights>
+        <BuildingRightsDescription>Kaupungin rakennusvalvonta</BuildingRightsDescription>
+        <FloorLocation count="3">1</FloorLocation>
+        <Lift value="E"/>
+        <Balcony value="K">Lasitettu parveke</Balcony>
+        <GeneralCondition level="3">Hyvä</GeneralCondition>
+        <YearOfBuilding original="1981"/>
+        <Heating>Kaukolämpö</Heating>
+        <Floor>
+            Keittiö: laminaatti Makuuhuone: laminaatti Kylpyhuone: laatta Olohuone: laminaatti
+        </Floor>
+        <BedroomFloor>parketti</BedroomFloor>
+        <KitchenFloor>laminaatti</KitchenFloor>
+        <LivingRoomFloor>laminaatti</LivingRoomFloor>
+        <BathroomFloor>laatta</BathroomFloor>
+        <KitchenAppliances>jääkaappi, pakastin, liesi, liesituuletin.</KitchenAppliances>
+        <BedroomAppliances>Kaksi makuuhuonetta</BedroomAppliances>
+        <LivingRoomAppliances>Valoisa tilava olohuone</LivingRoomAppliances>
+        <BedroomWall>tapetti</BedroomWall>
+        <KitchenWall>maalattu</KitchenWall>
+        <LivingRoomWall>tapetti</LivingRoomWall>
+        <BathroomWall>laatta</BathroomWall>
+        <BathroomAppliances>
+            suihku, pesukoneliitäntä. Kylpyhuone remontoitu ja laatoitettu lokakuu 2019.
+        </BathroomAppliances>
+        <BecomesAvailable>Sopimuksen mukaan</BecomesAvailable>
+        <BuildingMaterial>Betonielementti</BuildingMaterial>
+        <RealEstateManagement>Kiinteistöt Oy</RealEstateManagement>
+        <RoofType>Harja, huopa</RoofType>
+        <Services>Kauppa lähellä</Services>
+        <Estate type="E"/>
+        <Sauna own="K">kaksi saunaa</Sauna>
+        <StorageSpace>Vaatehuone, kaapistot</StorageSpace>
+        <ParkingSpace>Autokatos</ParkingSpace>
+        <MoreInfoUrl>https://example.com/etusivu.php?kohdeid=1</MoreInfoUrl>
+        <HonoringClause/>
+        <Site type="V"/>
+        <SiteArea unit="m2">3450,5</SiteArea>
+        <LeaseHolder>Rauman kaupunki</LeaseHolder>
+        <SiteRent>0,00 € / v</SiteRent>
+        <SiteRentContractEndDate>31.03.2035</SiteRentContractEndDate>
+        <BuildingPlanSituation>Asemakaava</BuildingPlanSituation>
+        <BuildingPlanInformation/>
+        <HousingCompanyFee unit="EUR/kk">234.56</HousingCompanyFee>
+        <FinancingFee unit="EUR/kk"/>
+        <MaintenanceFee unit="EUR/kk">234.56</MaintenanceFee>
+        <DebtPart/>
+        <WaterFee unit="EUR/kk">17.00</WaterFee>
+        <WaterFeeExplanation/>
+        <ElectricityConsumption>1480€/vuosi</ElectricityConsumption>
+        <EstateTax>186.00 EUR/v</EstateTax>
+        <OtherFees>Taloussähkö</OtherFees>
+        <asbestos_mapping>Ei</asbestos_mapping>
+        <VendorIdentifier>arasunnot</VendorIdentifier>
+        <ModifiedDate>11.04.2021 17:00</ModifiedDate>
+        <MunicipalDevelopment>Vesi- ja sähköliittymät tontin rajalla</MunicipalDevelopment>
+        <Description>
+            Tilava, hyvänmallinen kaksio lähellä keskustaa. Hyvä taloyhtiö.
+        </Description>
+        <BasicRenovations>
+            TALOYHTIÖ: Porraskäytävien ulkoseinät ja ikkunat 1990, asuntojen ikkunat lukuunottamatta parvekkeiden ovia
+            ja ikkunoita 2000, huopakatto uusittu 2010, bauer-vedenkäsittelylaitteet asennettu käyttöveteen ja
+            lämmitysverkostoon 2013, molok domino jäteastiat 2015 ASUNTO: Kylpyhuoneremontti juuri valmistunut. Laatat
+            kokonaan uusittu.
+        </BasicRenovations>
+        <FutureRenovations>
+            Elementien kunnostus ja saumaus, parvekkeiden betonipaikkaus ja maalaus, pihamaan sadevesijärjestelmän teko.
+        </FutureRenovations>
+        <ElectricUse/>
+        <property_name/>
+        <SupplementaryInformation>Ostaja on tietoinen, että kylpyhuonetta on osittain purettu ja se vaatii täydellisen remontin.</SupplementaryInformation>
+        <AntennaSystem>KTV</AntennaSystem>
+        <FlatNumber>A 3</FlatNumber>
+        <EstateNameAndNumber>Heikkilä</EstateNameAndNumber>
+        <CommonAreas/>
+        <Mortgages/>
+        <pdx_property_extra>Pohjoisranta on syvempää. Ei kaivoa.</pdx_property_extra>
+        <UnencumberedSalesPrice currency="EUR">65000.00</UnencumberedSalesPrice>
+        <SalesPrice currency="EUR">65000.00</SalesPrice>
+        <Picture1 isFloorPlan="E">
+            https://example.com/upload/images/1234567890_IMG_5480.jpg
+        </Picture1>
+        <Picture2>
+            https://example.com/upload/images/1234567890_IMG_5511.jpg
+        </Picture2>
+        <Picture3>
+            https://example.com/upload/images/1234567890_20191215_141859_resized.jpg
+        </Picture3>
+        <Picture4>
+            https://example.com/upload/images/1234567890_20191215_141528_resized.jpg
+        </Picture4>
+        <Picture5>
+            https://example.com/upload/images/1234567890_20191215_142415_resized.jpg
+        </Picture5>
+        <NumberOfApartments>17</NumberOfApartments>
+        <ModeOfHabitation type="OM"/>
+        <EstateAgentContactPerson>Erkki Edustaja</EstateAgentContactPerson>
+        <EstateAgentContactPersonEmail>erkki.edustaja@example.com</EstateAgentContactPersonEmail>
+        <ContactRequestEmail>erkki.edustaja@example.com</ContactRequestEmail>
+        <EstateAgentTelephone>040 123 4567</EstateAgentTelephone>
+        <EstateAgentContactPersonPictureUrl>
+            https://example.com/upload/valittajat/123erkki.jpg
+        </EstateAgentContactPersonPictureUrl>
+        <Connections>Linja-autoasema 0,3 km</Connections>
+        <VentilationSystem>Painovoimainen</VentilationSystem>
+        <rc-energyclass>Energialuokka: F</rc-energyclass>
+        <HousingCompanyName>ASUNTO OY HYVÄKOTI</HousingCompanyName>
+        <HousingCompanyDescription/>
+        <BusinessId>1234567-1</BusinessId>
+        <Disponent>Talokeskus Oy</Disponent>
+        <Latitude>61.1340271463</Latitude>
+        <Longitude>22.160233</Longitude>
+        <Company>
+            <Name>Talot LKV</Name>
+            <BusinessId>1234567-3</BusinessId>
+            <City>Rauma</City>
+            <Phone>050 123 4567</Phone>
+            <Email>koti-lkv@example.com</Email>
+        </Company>
+        <Shore type="OR"/>
+        <ShoresDescription>Meri</ShoresDescription>
+    </Apartment>
+</Apartments>
