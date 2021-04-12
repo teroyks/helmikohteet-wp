@@ -8,9 +8,13 @@
  * returns 'baz'.
  *
  * @see PropertyParserTest for examples.
+ *
+ * @deprecated direct XML parsing used instead
  */
 
 namespace Helmikohteet\Utilities;
+
+use Helmikohteet\ListingsList\ApartmentType;
 
 /**
  * Parses a value from a multidimensional array.
@@ -25,6 +29,13 @@ class PropertyParser
      */
     public function parseProperty($property, array $data): string
     {
+        switch ($property) {
+            case ['@attributes', 'type']:
+                $code = $data['@attributes']['type'] ?? '';
+
+                return ApartmentType::get($code);
+        }
+
         return is_array($property)
             ? $this->parseArrayProperty($property, $data)
             : $this->parseStringProperty($property, $data);
@@ -43,6 +54,11 @@ class PropertyParser
         $rest = array_values($property);
         $key  = array_shift($rest);
 
+        // error_log(print_r($rest, true));
+// error_log(print_r($data, true));
+// error_log(print_r($key, true));
+
+
         return empty($rest)
             ? $this->parseStringProperty($key, $data)
             : $this->parseArrayProperty($rest, $data[$key] ?? []);
@@ -58,6 +74,11 @@ class PropertyParser
      */
     private function parseStringProperty($property, array $data): string
     {
-        return $data[$property] ?? '';
+        $toString =  fn(array $arr) => '[' . implode(':', $arr) . ']';
+        $getValue = fn() => $data[$property] ?? '';
+
+        $val = $getValue();
+
+        return is_array($val) ? $toString($val) : $val;
     }
 }
