@@ -8,4 +8,6 @@
 ?>
 <h1>Kohteen <?= $listingId ?> tiedot</h1>
 
+<pre><? var_dump($listing) ?></pre>
+<hr>
 <pre><? var_dump($rawData) ?></pre>
