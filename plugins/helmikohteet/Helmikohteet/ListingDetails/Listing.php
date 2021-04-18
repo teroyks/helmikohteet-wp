@@ -107,14 +107,16 @@ class Listing
         // removes a '0' as indicator for a missing year value
         $year = fn($d) => $d != 0 ? $d : '';
 
+        $this->id                      = $str($ap->Key);
         $this->description             = $str($ap->Description);
         $this->apartmentType           = ApartmentType::get($ap['type']);
         $this->becomesAvailable        = $str($ap->BecomesAvailable);
         $this->salesPrice              = $float($ap->SalesPrice);
         $this->streetAddress           = $str($ap->StreetAddress);
         $this->postalCode              = $str($ap->PostalCode);
-        $this->region                  = $str($ap->pdx_region);
+        $this->region                  = $str($ap->Region);
         $this->city                    = $str($ap->City);
+        $this->pdxRegion               = $str($ap->pdx_region);
         $this->realEstateId            = $str($ap->RealEstateID);
         $this->siteArea                = $float($ap->SiteArea);
         $this->siteCode                = $str($ap->Site['type']);

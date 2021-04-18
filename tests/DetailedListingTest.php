@@ -61,14 +61,16 @@ class DetailedListingTest extends TestCase
     {
         $ls = new Listing($apartment);
 
+        $this->assertEquals('12345', $ls->id);
         $this->assertStringStartsWith('Tilava', $ls->description);
         $this->assertEquals('Kerrostalo', $ls->apartmentType);
         $this->assertEquals('Sopimuksen mukaan', $ls->becomesAvailable);
         $this->assertEquals(65_000.00, $ls->salesPrice);
         $this->assertEquals('Katuosoite 1', $ls->streetAddress);
         $this->assertEquals('26100', $ls->postalCode);
-        $this->assertEquals('Satakunta', $ls->region);
+        $this->assertEquals('Lajo', $ls->region);
         $this->assertEquals('Rauma', $ls->city);
+        $this->assertEquals('Satakunta', $ls->pdxRegion);
         $this->assertEquals('123-123-4-123', $ls->realEstateId);
         $this->assertEquals(3_450.50, $ls->siteArea);
         $this->assertEquals('V', $ls->siteCode);
