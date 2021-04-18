@@ -14,71 +14,73 @@ use SimpleXMLElement;
  */
 class Listing
 {
-    public string $description;
-    public string $apartmentType;
-    public string $becomesAvailable;
-    public float  $salesPrice;
-    public string $streetAddress;
-    public string $postalCode;
-    public string $region;
-    public string $city;
-    public string $realEstateId;
-    public float  $siteArea;
-    public string $siteCode;
-    public string $siteRentContractEndDate;
-    public string $buildingPlanSituation;
-    public string $buildingPlanInformation;
-    public float  $buildingRights;
-    public string $estateNameAndNumber;
-    public string $propertyAdditionalInfo;
-    public string $municipalDevelopment;
-    public string $shore;
-    public string $shoreDescription;
+    public string $id; // kohdenumero
+    public string $description; // kuvaus
+    public string $apartmentType; // kohdetyyppi
+    public string $becomesAvailable; // vapautuminen
+    public float  $salesPrice; // myyntihinta
+    public string $streetAddress; // osoite
+    public string $postalCode; // postinumero
+    public string $region; // kaupunginosa
+    public string $city; // kaupunki
+    public string $pdxRegion; // maakunta
+    public string $realEstateId; // kiinteistötunnus
+    public float  $siteArea; // tontin pinta-ala
+    public string $siteCode; // tontin omistus (koodi)
+    public string $siteRentContractEndDate; // tontin vuokrasopimus päättyy
+    public string $buildingPlanSituation; // kaavoitustilanne
+    public string $buildingPlanInformation; // lisätietoja kaavoituksesta
+    public float  $buildingRights; // rakennusoikeus
+    public string $estateNameAndNumber; // tilan nimi
+    public string $propertyAdditionalInfo; // kiinteistön lisätiedot
+    public string $municipalDevelopment; // liittymät
+    public string $shore; // ranta
+    public string $shoreDescription; // ranta-alueiden kuvaus
 
-    public string $yearOfBuilding;
-    public string $buildingMaterial;
-    public string $roofType;
-    public string $roomTypes;
-    public string $heating;
-    public string $ventilationSystem;
-    public float  $livingArea;
-    public float  $totalArea;
-    public string $totalAreaDescription;
-    public string $generalConditionLevel;
-    public string $generalCondition;
-    public string $energyClass;
-    public string $supplementaryInformation;
-    public string $basicRenovations;
-    public string $floorLocation;
-    public string $balcony;
-    public string $balconyDescription;
-    public string $asbestosMapping;
+    public string $yearOfBuilding; // rakennusvuosi
+    public string $buildingMaterial; // rakennusmateriaali
+    public string $roofType; // kattotyyppi
+    public string $roomTypes; // huonekuvaus
+    public string $heating; // lämmitys
+    public string $ventilationSystem; // ilmanvaihto
+    public float  $livingArea; // pinta-ala
+    public float  $totalArea; // kokonaispinta-ala
+    public string $totalAreaDescription; // lisätietoja pinta-alasta
+    public string $generalConditionLevel; // kunto
+    public string $generalCondition; // kunnon lisätiedot
+    public string $energyClass; // energialuokka
+    public string $supplementaryInformation; // rakennuksen lisätiedot
+    public string $basicRenovations; // tehdyt korjaukset
+    public string $floorLocation; // kerrosmäärä
+    public string $balcony; // parveke
+    public string $balconyDescription; // parvekkeen lisätiedot
+    public string $asbestosMapping; // asbestikartoitus tehty
 
-    public string $kitchenAppliances;
-    public string $kitchenWall;
-    public string $kitchenFloor;
-    public string $bedroomAppliances;
-    public string $bedroomWall;
-    public string $bedroomFloor;
-    public string $livingRoomAppliances;
-    public string $livingRoomFloor;
-    public string $livingRoomWall;
-    public string $bathroomAppliances;
-    public string $bathroomWall;
-    public string $bathroomFloor;
-    public string $floor;
-    public string $sauna;
+    public string $kitchenAppliances; // keittiö
+    public string $kitchenWall; // keittiön seinät
+    public string $kitchenFloor; // keittiön lattia
+    public string $bedroomAppliances; // makuuhuoneet
+    public string $bedroomWall; // makuuhuoneiden seinät
+    public string $bedroomFloor; // makuuhuoneiden lattiat
+    public string $livingRoomAppliances; // olohuone
+    public string $livingRoomFloor; // olohuoneen lattia
+    public string $livingRoomWall; // olohuoneen seinät
+    public string $bathroomAppliances; // kylpyhuone
+    public string $bathroomWall; // kylpyhuoneen seinät
+    public string $bathroomFloor; // kylpyhuoneen lattia
+    public string $floor; // muiden tilojen lattiat
+    public string $sauna; // sauna (tyyppi & kuvaus)
+    public string $storageSpace; // säilytystilat
+    public string $parkingSpace; // auton säilytys
 
-    public string $storageSpace;
-    public string $parkingSpace;
+    public string $connections; // liikenneyhteydet
+    public string $services; // palvelut
 
-    public string $connections;
-    public string $services;
-    public string $electricityConsumption;
-    public string $estateTax;
-    public string $otherFees;
+    public string $electricityConsumption; // energiankulutus
+    public string $estateTax; // kiinteistövero
+    public string $otherFees; // muut maksut
 
-    public array $pictureUrls = [];
+    public array $pictureUrls = []; // asunnon kuvat
 
     public function __construct(SimpleXMLElement $data)
     {
@@ -176,6 +178,8 @@ class Listing
      * Parses all the tags in the form of 'PictureNN' where 'NN' is an integer
      *
      * @param SimpleXMLElement $ap
+     *
+     * @return string[] List of image URLs
      */
     private function parsePictureUrls(SimpleXMLElement $ap): array
     {
