@@ -149,6 +149,7 @@ add_shortcode('helmikohteet', 'helmikohteet_loop_shortcode_get_listings');
  *
  * @todo can a page template be used here?
  * @todo handle the 'Not Found' error
+ * @noinspection PhpUnusedLocalVariableInspection
  */
 function helmikohteet_listing_details()
 {
@@ -161,7 +162,7 @@ function helmikohteet_listing_details()
     $listingFinder = new ListingFinder($allListings);
     $rawData       = $listingFinder->getListingData($listingId);
     if ($rawData) {
-        $listing = new DetailedListing($rawData);
+        $ls = new DetailedListing($rawData); // pass values to the template
         include plugin_dir_path(__FILE__) . 'templates/listing_details.php';
     }
     die();
