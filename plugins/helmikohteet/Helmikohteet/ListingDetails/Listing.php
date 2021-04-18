@@ -50,6 +50,8 @@ class Listing
     public string $supplementaryInformation;
     public string $basicRenovations;
     public string $floorLocation;
+    public string $balcony;
+    public string $balconyDescription;
     public string $asbestosMapping;
 
     public string $kitchenAppliances;
@@ -66,12 +68,12 @@ class Listing
     public string $bathroomFloor;
     public string $floor;
     public string $sauna;
+
     public string $storageSpace;
     public string $parkingSpace;
 
     public string $connections;
     public string $services;
-
     public string $electricityConsumption;
     public string $estateTax;
     public string $otherFees;
@@ -93,6 +95,10 @@ class Listing
 
         // sanitizes a float-like string with unknown decimal separator and possible thousands separator formatting
         $float = fn($str): float => round((float)preg_replace('/[^\d.]/', '', str_replace(',', '.', $str)), 2);
+
+        // assumes the balcony value is valid, either 'K' or 'E'
+        $yesOrNo = fn($s): string => 'K' == trim($s) ? 'Kyllä' : 'Ei';
+
 
         // removes a '0' as indicator for a missing year value
         $year = fn($d) => $d != 0 ? $d : '';
@@ -133,6 +139,8 @@ class Listing
         $this->supplementaryInformation = $str($ap->SupplementaryInformation);
         $this->basicRenovations         = $str($ap->BasicRenovations);
         $this->floorLocation            = $str($ap->FloorLocation);
+        $this->balcony                  = $yesOrNo($ap->Balcony['value']);
+        $this->balconyDescription       = $str($ap->Balcony);
         $this->asbestosMapping          = $str($ap->asbestos_mapping);
 
         $this->kitchenAppliances    = $str($ap->KitchenAppliances);

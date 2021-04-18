@@ -96,6 +96,8 @@ class DetailedListingTest extends TestCase
         $this->assertStringStartsWith('Ostaja on', $ls->supplementaryInformation);
         $this->assertStringStartsWith('TALOYHTIÖ:', $ls->basicRenovations);
         $this->assertEquals('1', $ls->floorLocation);
+        $this->assertEquals('Kyllä', $ls->balcony);
+        $this->assertEquals('Lasitettu parveke', $ls->balconyDescription);
         $this->assertEquals('Ei', $ls->asbestosMapping);
 
         $this->assertStringStartsWith('jääkaappi', $ls->kitchenAppliances);
