@@ -78,6 +78,8 @@ class Listing
     public string $estateTax;
     public string $otherFees;
 
+    public array $pictureUrls = [];
+
     public function __construct(SimpleXMLElement $data)
     {
         $this->parseData($data);
@@ -166,5 +168,27 @@ class Listing
         $this->electricityConsumption = $str($ap->ElectricityConsumption);
         $this->estateTax              = $str($ap->EstateTax);
         $this->otherFees              = $str($ap->OtherFees);
+
+        $this->pictureUrls = $this->parsePictureUrls($ap);
+    }
+
+    /**
+     * Parses all the tags in the form of 'PictureNN' where 'NN' is an integer
+     *
+     * @param SimpleXMLElement $ap
+     */
+    private function parsePictureUrls(SimpleXMLElement $ap): array
+    {
+        $urls = [];
+        // loop through all the apartment properties to find the pictures
+        foreach ($ap->children() as $name => $node) {
+            // add value of children that match given tag name pattern
+            if (preg_match('/^Picture\d+$/', $name)) {
+                // convert node value to a string
+                $urls[] = trim((string)$node);
+            }
+        }
+
+        return $urls;
     }
 }
