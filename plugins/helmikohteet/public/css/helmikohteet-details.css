@@ -1,0 +1,35 @@
+/* Styles for the listing details page */
+
+/* main container */
+.helmik-details-container {
+    margin: auto;
+    width: 80%;
+}
+
+/* listing heading */
+.helmik-details-heading {
+    background-color: #ceead0;
+    margin-bottom: 1em;
+}
+
+/* picture carousel */
+.helmik-details-pictures {
+    font-size: 50%;
+    margin-bottom: 1rem;
+}
+
+/* properties section */
+.helmik-details-props {
+    background-color: #fafafa;
+    border: 1px solid #d3d3d3;
+    border-radius: .25rem;
+    line-height: 1.2em;
+    margin-bottom: 1em;
+    padding: .5em;
+}
+
+/* property table */
+.helmik-details-label,
+.helmik-details-property {
+    font-size: 85%;
+}

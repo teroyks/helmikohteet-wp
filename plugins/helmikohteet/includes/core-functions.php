@@ -13,9 +13,19 @@ if (!defined('ABSPATH')) {
  */
 function helmikohteet_custom_styles()
 {
+    // listings list styles
     wp_enqueue_style(
         'helmikohteet', // stylesheet link id handle
         plugin_dir_url(dirname(__FILE__)) . 'public/css/helmikohteet.css', // CSS URL
+        [], // dependencies that need to be loaded before this file
+        null, // version query string parameter value
+        'screen' // media
+    );
+
+    // listing details styles
+    wp_enqueue_style(
+        'helmikohteet_details', // stylesheet link id handle
+        plugin_dir_url(dirname(__FILE__)) . 'public/css/helmikohteet-details.css', // CSS URL
         [], // dependencies that need to be loaded before this file
         null, // version query string parameter value
         'screen' // media

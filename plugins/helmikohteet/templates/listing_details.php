@@ -12,8 +12,8 @@ use Helmikohteet\ListingDetails\Listing;
 // builds a data table row
 $tr = fn($label, $value, $suffix = '') => $value ? <<<EOF
 <tr>
-  <td>$label</td>
-  <td>$value$suffix</td>
+  <td class="helmik-details-label">$label</td>
+  <td class="helmik-details-property">$value$suffix</td>
 </tr>
 EOF : '';
 
@@ -24,8 +24,8 @@ $float = fn($val) => $val ? number_format($val, 2, ',', ' ') : '';
 
 <?php get_header(); // site theme header ?>
 
-<main class="helmi-listing">
-  <section class="helmi-heading">
+<main class="helmik-details-container">
+  <section class="helmik-details-heading">
     <h1><?= $ls->streetAddress ?></h1>
     <div>
       <?= $ls->postalCode ?>
@@ -38,12 +38,12 @@ $float = fn($val) => $val ? number_format($val, 2, ',', ' ') : '';
       <?= $ls->roomTypes ?>
     </div>
   </section>
-  <section class="helmi-pictures">
+  <section class="helmik-details-pictures">
     <?php foreach ($ls->pictureUrls as $url): ?>
       <div><?= $url ?></div>
     <?php endforeach ?>
   </section>
-  <section class="helmi-details">
+  <section class="helmik-details-props">
     <h2>Perustiedot</h2>
     <table>
       <tbody>
@@ -71,16 +71,16 @@ $float = fn($val) => $val ? number_format($val, 2, ',', ' ') : '';
       </tbody>
     </table>
   </section>
-  <section class="helmi-details">
+  <section class="helmik-details-props">
 
   </section>
-  <section class="helmi-details">
+  <section class="helmik-details-props">
 
   </section>
-  <section class="helmi-details">
+  <section class="helmik-details-props">
 
   </section>
-  <section class="helmi-details">
+  <section class="helmik-details-props">
 
   </section>
 </main>
