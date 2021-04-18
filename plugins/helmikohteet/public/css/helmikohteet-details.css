@@ -20,7 +20,7 @@
 
 /* properties section */
 .helmik-details-props {
-    background-color: #fafafa;
+    background-color: #ebebeb;
     border: 1px solid #d3d3d3;
     border-radius: .25rem;
     line-height: 1.2em;
@@ -31,5 +31,10 @@
 /* property table */
 .helmik-details-label,
 .helmik-details-property {
+    background-color: #fafafa;
+    border: 1px solid #d3d3d3;
     font-size: 85%;
+    width: 50%;
+    /* no line break inside a word */
+    word-break: normal;
 }

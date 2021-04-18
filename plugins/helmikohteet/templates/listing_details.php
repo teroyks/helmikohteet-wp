@@ -72,20 +72,70 @@ $float = fn($val) => $val ? number_format($val, 2, ',', ' ') : '';
     </table>
   </section>
   <section class="helmik-details-props">
-
+    <table>
+      <tbody>
+      <?= $tr('Rakennusvuosi', $ls->yearOfBuilding) ?>
+      <?= $tr('Rakennusmateriaali', $ls->buildingMaterial) ?>
+      <?= $tr('Kattotyyppi', $ls->roofType) ?>
+      <?= $tr('Huonekuvaus', $ls->roomTypes) ?>
+      <?= $tr('Lämmitys', $ls->heating) ?>
+      <?= $tr('Ilmanvaihto', $ls->ventilationSystem) ?>
+      <?= $tr('Pinta-ala', $float($ls->livingArea), ' m<sup>2</sup>') ?>
+      <?= $tr('Kokonaispinta-ala', $float($ls->totalArea), ' m<sup>2</sup>') ?>
+      <?= $tr('Lisätietoja pinta-alasta', $ls->totalAreaDescription) ?>
+      <?= $tr('Kunto', $ls->generalConditionLevel) ?>
+      <?= $tr('Kunnon lisätiedot', $ls->generalCondition) ?>
+      <?= $tr('Energialuokka', $ls->energyClass) ?>
+      <?= $tr('Rakennuksen lisätiedot', $ls->supplementaryInformation) ?>
+      <?= $tr('Tehdyt korjaukset', $ls->basicRenovations) ?>
+      <?= $tr('Kerrosmäärä', $ls->floorLocation) ?>
+      <?= $tr('Parveke', $ls->balcony) ?>
+      <?= $tr('Parvekkeen lisätiedot', $ls->balconyDescription) ?>
+      <?= $tr('Asbestikartoitus tehty', $ls->asbestosMapping) ?>
+      </tbody>
+    </table>
   </section>
   <section class="helmik-details-props">
-
+    <table>
+      <tbody>
+      <?= $tr('Keittiö', $ls->kitchenAppliances) ?>
+      <?= $tr('Keittiön seinät', $ls->kitchenWall) ?>
+      <?= $tr('Keittiön lattia', $ls->kitchenFloor) ?>
+      <?= $tr('Makuuhuoneet', $ls->bedroomAppliances) ?>
+      <?= $tr('Makuuhuoneiden seinät', $ls->bedroomWall) ?>
+      <?= $tr('Makuuhuoneiden lattiat', $ls->bedroomFloor) ?>
+      <?= $tr('Olohuone', $ls->livingRoomAppliances) ?>
+      <?= $tr('Olohuoneen lattia', $ls->livingRoomFloor) ?>
+      <?= $tr('Olohuoneen seinät', $ls->livingRoomWall) ?>
+      <?= $tr('Kylpyhuone', $ls->bathroomAppliances) ?>
+      <?= $tr('Kylpyhuoneen seinät', $ls->bathroomWall) ?>
+      <?= $tr('Kylpyhuoneen lattia', $ls->bathroomFloor) ?>
+      <?= $tr('Muiden tilojen lattiat', $ls->floor) ?>
+      <?= $tr('Sauna', $ls->sauna) ?>
+      <?= $tr('Säilytystilat', $ls->storageSpace) ?>
+      <?= $tr('Auton säilytys', $ls->parkingSpace) ?>
+      </tbody>
+    </table>
   </section>
   <section class="helmik-details-props">
-
+    <table>
+      <tbody>
+      <?= $tr('Liikenneyhteydet', $ls->connections) ?>
+      <?= $tr('Palvelut', $ls->services) ?>
+      </tbody>
+    </table>
   </section>
   <section class="helmik-details-props">
-
+    <table>
+      <tbody>
+      <?= $tr('Energiankulutus', $float($ls->electricityConsumption)) ?>
+      <?= $tr('Kiinteistövero', $float($ls->estateTax), ' €/kk') ?>
+      <?= $tr('Muut maksut', $float($ls->otherFees), ' €/kk') ?>
+      </tbody>
+    </table>
   </section>
 </main>
 
-<pre><?php var_dump($ls) ?></pre>
 <!--
 <?php var_dump($ls) ?>
 -->
