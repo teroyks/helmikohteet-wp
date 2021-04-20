@@ -6,20 +6,11 @@
 /** @var string $listingId Listing key */
 
 use Helmikohteet\ListingDetails\Listing;
+use Helmikohteet\Utilities\Format;
 
 /** @var Listing $ls Listing details */
 
-// builds a data table row
-$tr = fn($label, $value, $suffix = '') => $value ? <<<EOF
-<tr>
-  <td class="helmik-details-label">$label</td>
-  <td class="helmik-details-property">$value$suffix</td>
-</tr>
-EOF : '';
-
-// formats a non-empty value as float
-$float = fn($val) => $val ? number_format($val, 2, ',', ' ') : '';
-
+/** @var Format $fmt Formatter */
 ?>
 
 <?php get_header(); // site theme header ?>
@@ -49,90 +40,90 @@ $float = fn($val) => $val ? number_format($val, 2, ',', ' ') : '';
     <h2>Perustiedot</h2>
     <table>
       <tbody>
-      <?= $tr('Kohdenumero', $ls->id) ?>
-      <?= $tr('Kohdetyyppi', $ls->apartmentType) ?>
-      <?= $tr('Vapautuminen', $ls->becomesAvailable) ?>
-      <?= $tr('Myyntihinta', $float($ls->salesPrice), ' €') ?>
-      <?= $tr('Osoite', $ls->streetAddress) ?>
-      <?= $tr('Postinumero', $ls->postalCode) ?>
-      <?= $tr('Kaupunginosa', $ls->region) ?>
-      <?= $tr('Kaupunki', $ls->city) ?>
-      <?= $tr('Maakunta', $ls->pdxRegion) ?>
-      <?= $tr('Kiinteistötunnus', $ls->realEstateId) ?>
-      <?= $tr('Tontin pinta-ala', $float($ls->siteArea), ' m<sup>2</sup>') ?>
-      <?= $tr('Tontin omistus', $ls->siteCode) ?>
-      <?= $tr('Tontin vuokrasopimus päättyy', $ls->siteRentContractEndDate) ?>
-      <?= $tr('Kaavoitustilanne', $ls->buildingPlanSituation) ?>
-      <?= $tr('Lisätietoja kaavoituksesta', $ls->buildingPlanInformation) ?>
-      <?= $tr('Rakennusoikeus', $ls->buildingRights) ?>
-      <?= $tr('Tilan nimi', $ls->estateNameAndNumber) ?>
-      <?= $tr('Kiinteistön lisätiedot', $ls->propertyAdditionalInfo) ?>
-      <?= $tr('Liittymät', $ls->municipalDevelopment) ?>
-      <?= $tr('Ranta', $ls->shore) ?>
-      <?= $tr('Ranta-alueiden kuvaus', $ls->shoreDescription) ?>
+      <?= $fmt->tr('Kohdenumero', $ls->id) ?>
+      <?= $fmt->tr('Kohdetyyppi', $ls->apartmentType) ?>
+      <?= $fmt->tr('Vapautuminen', $ls->becomesAvailable) ?>
+      <?= $fmt->tr('Myyntihinta', $fmt->float($ls->salesPrice), ' €') ?>
+      <?= $fmt->tr('Osoite', $ls->streetAddress) ?>
+      <?= $fmt->tr('Postinumero', $ls->postalCode) ?>
+      <?= $fmt->tr('Kaupunginosa', $ls->region) ?>
+      <?= $fmt->tr('Kaupunki', $ls->city) ?>
+      <?= $fmt->tr('Maakunta', $ls->pdxRegion) ?>
+      <?= $fmt->tr('Kiinteistötunnus', $ls->realEstateId) ?>
+      <?= $fmt->tr('Tontin pinta-ala', $fmt->float($ls->siteArea), ' m<sup>2</sup>') ?>
+      <?= $fmt->tr('Tontin omistus', $ls->siteCode) ?>
+      <?= $fmt->tr('Tontin vuokrasopimus päättyy', $ls->siteRentContractEndDate) ?>
+      <?= $fmt->tr('Kaavoitustilanne', $ls->buildingPlanSituation) ?>
+      <?= $fmt->tr('Lisätietoja kaavoituksesta', $ls->buildingPlanInformation) ?>
+      <?= $fmt->tr('Rakennusoikeus', $ls->buildingRights) ?>
+      <?= $fmt->tr('Tilan nimi', $ls->estateNameAndNumber) ?>
+      <?= $fmt->tr('Kiinteistön lisätiedot', $ls->propertyAdditionalInfo) ?>
+      <?= $fmt->tr('Liittymät', $ls->municipalDevelopment) ?>
+      <?= $fmt->tr('Ranta', $ls->shore) ?>
+      <?= $fmt->tr('Ranta-alueiden kuvaus', $ls->shoreDescription) ?>
       </tbody>
     </table>
   </section>
   <section class="helmik-details-props">
     <table>
       <tbody>
-      <?= $tr('Rakennusvuosi', $ls->yearOfBuilding) ?>
-      <?= $tr('Rakennusmateriaali', $ls->buildingMaterial) ?>
-      <?= $tr('Kattotyyppi', $ls->roofType) ?>
-      <?= $tr('Huonekuvaus', $ls->roomTypes) ?>
-      <?= $tr('Lämmitys', $ls->heating) ?>
-      <?= $tr('Ilmanvaihto', $ls->ventilationSystem) ?>
-      <?= $tr('Pinta-ala', $float($ls->livingArea), ' m<sup>2</sup>') ?>
-      <?= $tr('Kokonaispinta-ala', $float($ls->totalArea), ' m<sup>2</sup>') ?>
-      <?= $tr('Lisätietoja pinta-alasta', $ls->totalAreaDescription) ?>
-      <?= $tr('Kunto', $ls->generalConditionLevel) ?>
-      <?= $tr('Kunnon lisätiedot', $ls->generalCondition) ?>
-      <?= $tr('Energialuokka', $ls->energyClass) ?>
-      <?= $tr('Rakennuksen lisätiedot', $ls->supplementaryInformation) ?>
-      <?= $tr('Tehdyt korjaukset', $ls->basicRenovations) ?>
-      <?= $tr('Kerrosmäärä', $ls->floorLocation) ?>
-      <?= $tr('Parveke', $ls->balcony) ?>
-      <?= $tr('Parvekkeen lisätiedot', $ls->balconyDescription) ?>
-      <?= $tr('Asbestikartoitus tehty', $ls->asbestosMapping) ?>
+      <?= $fmt->tr('Rakennusvuosi', $ls->yearOfBuilding) ?>
+      <?= $fmt->tr('Rakennusmateriaali', $ls->buildingMaterial) ?>
+      <?= $fmt->tr('Kattotyyppi', $ls->roofType) ?>
+      <?= $fmt->tr('Huonekuvaus', $ls->roomTypes) ?>
+      <?= $fmt->tr('Lämmitys', $ls->heating) ?>
+      <?= $fmt->tr('Ilmanvaihto', $ls->ventilationSystem) ?>
+      <?= $fmt->tr('Pinta-ala', $fmt->float($ls->livingArea), ' m<sup>2</sup>') ?>
+      <?= $fmt->tr('Kokonaispinta-ala', $fmt->float($ls->totalArea), ' m<sup>2</sup>') ?>
+      <?= $fmt->tr('Lisätietoja pinta-alasta', $ls->totalAreaDescription) ?>
+      <?= $fmt->tr('Kunto', $ls->generalConditionLevel) ?>
+      <?= $fmt->tr('Kunnon lisätiedot', $ls->generalCondition) ?>
+      <?= $fmt->tr('Energialuokka', $ls->energyClass) ?>
+      <?= $fmt->tr('Rakennuksen lisätiedot', $ls->supplementaryInformation) ?>
+      <?= $fmt->tr('Tehdyt korjaukset', $ls->basicRenovations) ?>
+      <?= $fmt->tr('Kerrosmäärä', $ls->floorLocation) ?>
+      <?= $fmt->tr('Parveke', $ls->balcony) ?>
+      <?= $fmt->tr('Parvekkeen lisätiedot', $ls->balconyDescription) ?>
+      <?= $fmt->tr('Asbestikartoitus tehty', $ls->asbestosMapping) ?>
       </tbody>
     </table>
   </section>
   <section class="helmik-details-props">
     <table>
       <tbody>
-      <?= $tr('Keittiö', $ls->kitchenAppliances) ?>
-      <?= $tr('Keittiön seinät', $ls->kitchenWall) ?>
-      <?= $tr('Keittiön lattia', $ls->kitchenFloor) ?>
-      <?= $tr('Makuuhuoneet', $ls->bedroomAppliances) ?>
-      <?= $tr('Makuuhuoneiden seinät', $ls->bedroomWall) ?>
-      <?= $tr('Makuuhuoneiden lattiat', $ls->bedroomFloor) ?>
-      <?= $tr('Olohuone', $ls->livingRoomAppliances) ?>
-      <?= $tr('Olohuoneen lattia', $ls->livingRoomFloor) ?>
-      <?= $tr('Olohuoneen seinät', $ls->livingRoomWall) ?>
-      <?= $tr('Kylpyhuone', $ls->bathroomAppliances) ?>
-      <?= $tr('Kylpyhuoneen seinät', $ls->bathroomWall) ?>
-      <?= $tr('Kylpyhuoneen lattia', $ls->bathroomFloor) ?>
-      <?= $tr('Muiden tilojen lattiat', $ls->floor) ?>
-      <?= $tr('Sauna', $ls->sauna) ?>
-      <?= $tr('Säilytystilat', $ls->storageSpace) ?>
-      <?= $tr('Auton säilytys', $ls->parkingSpace) ?>
+      <?= $fmt->tr('Keittiö', $ls->kitchenAppliances) ?>
+      <?= $fmt->tr('Keittiön seinät', $ls->kitchenWall) ?>
+      <?= $fmt->tr('Keittiön lattia', $ls->kitchenFloor) ?>
+      <?= $fmt->tr('Makuuhuoneet', $ls->bedroomAppliances) ?>
+      <?= $fmt->tr('Makuuhuoneiden seinät', $ls->bedroomWall) ?>
+      <?= $fmt->tr('Makuuhuoneiden lattiat', $ls->bedroomFloor) ?>
+      <?= $fmt->tr('Olohuone', $ls->livingRoomAppliances) ?>
+      <?= $fmt->tr('Olohuoneen lattia', $ls->livingRoomFloor) ?>
+      <?= $fmt->tr('Olohuoneen seinät', $ls->livingRoomWall) ?>
+      <?= $fmt->tr('Kylpyhuone', $ls->bathroomAppliances) ?>
+      <?= $fmt->tr('Kylpyhuoneen seinät', $ls->bathroomWall) ?>
+      <?= $fmt->tr('Kylpyhuoneen lattia', $ls->bathroomFloor) ?>
+      <?= $fmt->tr('Muiden tilojen lattiat', $ls->floor) ?>
+      <?= $fmt->tr('Sauna', $ls->sauna) ?>
+      <?= $fmt->tr('Säilytystilat', $ls->storageSpace) ?>
+      <?= $fmt->tr('Auton säilytys', $ls->parkingSpace) ?>
       </tbody>
     </table>
   </section>
   <section class="helmik-details-props">
     <table>
       <tbody>
-      <?= $tr('Liikenneyhteydet', $ls->connections) ?>
-      <?= $tr('Palvelut', $ls->services) ?>
+      <?= $fmt->tr('Liikenneyhteydet', $ls->connections) ?>
+      <?= $fmt->tr('Palvelut', $ls->services) ?>
       </tbody>
     </table>
   </section>
   <section class="helmik-details-props">
     <table>
       <tbody>
-      <?= $tr('Energiankulutus', $float($ls->electricityConsumption)) ?>
-      <?= $tr('Kiinteistövero', $float($ls->estateTax), ' €/kk') ?>
-      <?= $tr('Muut maksut', $float($ls->otherFees), ' €/kk') ?>
+      <?= $fmt->tr('Energiankulutus', $fmt->float($ls->electricityConsumption)) ?>
+      <?= $fmt->tr('Kiinteistövero', $fmt->float($ls->estateTax), ' €/kk') ?>
+      <?= $fmt->tr('Muut maksut', $fmt->float($ls->otherFees), ' €/kk') ?>
       </tbody>
     </table>
   </section>

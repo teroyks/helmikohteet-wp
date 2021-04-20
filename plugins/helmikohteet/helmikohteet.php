@@ -33,6 +33,7 @@ use Helmikohteet\ListingDetails\Listing as DetailedListing;
 use Helmikohteet\ListingsList\Listing;
 use Helmikohteet\ListingsList\ListParser;
 use Helmikohteet\PluginConfig;
+use Helmikohteet\Utilities\Format;
 
 if (!defined('ABSPATH')) {
     exit;
@@ -162,6 +163,9 @@ function helmikohteet_listing_details()
     $listingFinder = new ListingFinder($allListings);
     $rawData       = $listingFinder->getListingData($listingId);
     if ($rawData) {
+        // template formatting helper
+        $fmt = new Format();
+
         $ls = new DetailedListing($rawData); // pass values to the template
         include plugin_dir_path(__FILE__) . 'templates/listing_details.php';
     }
