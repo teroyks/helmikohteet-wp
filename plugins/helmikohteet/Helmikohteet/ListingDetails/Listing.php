@@ -79,6 +79,8 @@ class Listing
     public string $electricityConsumption; // energiankulutus
     public string $estateTax; // kiinteistövero
     public string $otherFees; // muut maksut
+    public string $latitude; // sijainti latitude
+    public string $longitude; // sijainti longitude
 
     public array $pictureUrls = []; // asunnon kuvat
 
@@ -172,6 +174,8 @@ class Listing
         $this->electricityConsumption = $str($ap->ElectricityConsumption);
         $this->estateTax              = $str($ap->EstateTax);
         $this->otherFees              = $str($ap->OtherFees);
+        $this->latitude              = $str($ap->Latitude);
+        $this->longitude              = $str($ap->Longitude);
 
         $this->pictureUrls = $this->parsePictureUrls($ap);
     }

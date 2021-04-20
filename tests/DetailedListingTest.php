@@ -125,6 +125,8 @@ class DetailedListingTest extends TestCase
         $this->assertEquals('1480€/vuosi', $ls->electricityConsumption);
         $this->assertEquals('186.00 EUR/v', $ls->estateTax);
         $this->assertEquals('Taloussähkö', $ls->otherFees);
+        $this->assertEquals('61.1340271463', $ls->latitude);
+        $this->assertEquals('22.160233', $ls->longitude);
 
         $this->assertCount(5, $ls->pictureUrls, 'Should have added all the pictures');
         foreach ($ls->pictureUrls as $url) {

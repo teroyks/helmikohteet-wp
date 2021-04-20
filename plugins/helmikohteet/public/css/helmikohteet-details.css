@@ -38,3 +38,9 @@
     /* no line break inside a word */
     word-break: normal;
 }
+
+.helmi-map {
+    height: 800px;
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+}
