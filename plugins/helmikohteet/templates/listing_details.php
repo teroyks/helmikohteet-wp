@@ -39,9 +39,11 @@ $float = fn($val) => $val ? number_format($val, 2, ',', ' ') : '';
     </div>
   </section>
   <section class="helmik-details-pictures">
-    <?php foreach ($ls->pictureUrls as $url): ?>
-      <div><?= $url ?></div>
-    <?php endforeach ?>
+    <div class="fotorama" data-nav="thumbs" data-width="100%">
+      <?php foreach ($ls->pictureUrls as $url): ?>
+        <img src=<?= $url ?>>
+      <?php endforeach ?>
+    </div>
   </section>
   <section class="helmik-details-props">
     <h2>Perustiedot</h2>
@@ -135,6 +137,10 @@ $float = fn($val) => $val ? number_format($val, 2, ',', ' ') : '';
     </table>
   </section>
 </main>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
 
 <!--
 <?php var_dump($ls) ?>
