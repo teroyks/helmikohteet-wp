@@ -6,6 +6,7 @@
 /** @var string $listingId Listing key */
 
 use Helmikohteet\ListingDetails\Listing;
+use Helmikohteet\PluginConfig;
 use Helmikohteet\Utilities\Format;
 
 /** @var Listing $ls Listing details */
@@ -132,10 +133,15 @@ use Helmikohteet\Utilities\Format;
       </tbody>
     </table>
   </section>
+  <?php if (!empty(PluginConfig::googleApiUrl())): ?>
+    <section class="helmik-details-map">
+      <?= PluginConfig::googleApiUrl() ?>
+    </section>
+  <?php endif ?>
 </main>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<link  href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
 
 <!--
