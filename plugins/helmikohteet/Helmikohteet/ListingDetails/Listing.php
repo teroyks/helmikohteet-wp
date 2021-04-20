@@ -17,6 +17,7 @@ class Listing
     public string $id; // kohdenumero
     public string $description; // kuvaus
     public string $apartmentType; // kohdetyyppi
+    public string $realEstateType; // kiinteistötyyppi
     public string $becomesAvailable; // vapautuminen
     public float  $salesPrice; // myyntihinta
     public string $streetAddress; // osoite
@@ -110,6 +111,7 @@ class Listing
         $this->id                      = $str($ap->Key);
         $this->description             = $str($ap->Description);
         $this->apartmentType           = ApartmentType::get($ap['type']);
+        $this->realEstateType          = $str($ap['realEstateType']);
         $this->becomesAvailable        = $str($ap->BecomesAvailable);
         $this->salesPrice              = $float($ap->SalesPrice);
         $this->streetAddress           = $str($ap->StreetAddress);

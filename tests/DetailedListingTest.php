@@ -64,6 +64,7 @@ class DetailedListingTest extends TestCase
         $this->assertEquals('12345', $ls->id);
         $this->assertStringStartsWith('Tilava', $ls->description);
         $this->assertEquals('Kerrostalo', $ls->apartmentType);
+        $this->assertEquals('OSAKE', $ls->realEstateType);
         $this->assertEquals('Sopimuksen mukaan', $ls->becomesAvailable);
         $this->assertEquals(65_000.00, $ls->salesPrice);
         $this->assertEquals('Katuosoite 1', $ls->streetAddress);
