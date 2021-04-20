@@ -71,6 +71,7 @@ use Helmikohteet\Utilities\Format;
     </table>
   </section>
   <section class="helmik-details-props">
+    <h2>Rakennuksen tiedot</h2>
     <table>
       <tbody>
       <?= $fmt->tr('Rakennusvuosi', $ls->yearOfBuilding) ?>
@@ -95,6 +96,7 @@ use Helmikohteet\Utilities\Format;
     </table>
   </section>
   <section class="helmik-details-props">
+    <h2>Tilat ja materiaalit</h2>
     <table>
       <tbody>
       <?= $fmt->tr('Keittiö', $ls->kitchenAppliances) ?>
@@ -117,14 +119,16 @@ use Helmikohteet\Utilities\Format;
     </table>
   </section>
   <section class="helmik-details-props">
+    <h2>Palvelut ja liikenneyhteydet</h2>
     <table>
       <tbody>
-      <?= $fmt->tr('Liikenneyhteydet', $ls->connections) ?>
       <?= $fmt->tr('Palvelut', $ls->services) ?>
+      <?= $fmt->tr('Liikenneyhteydet', $ls->connections) ?>
       </tbody>
     </table>
   </section>
   <section class="helmik-details-props">
+    <h2>Kustannukset</h2>
     <table>
       <tbody>
       <?= $fmt->tr('Energiankulutus', $fmt->float($ls->electricityConsumption)) ?>
@@ -133,16 +137,38 @@ use Helmikohteet\Utilities\Format;
       </tbody>
     </table>
   </section>
-  <?php if (!empty(PluginConfig::googleApiUrl())): ?>
-    <section class="helmik-details-map">
-      <?= PluginConfig::googleApiUrl() ?>
-    </section>
-  <?php endif ?>
 </main>
+<?php if (!empty(PluginConfig::googleApiUrl())): ?>
+  <div id="map" class="helmi-map"></div>
+<?php endif ?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
+
+<?php if (!empty(PluginConfig::googleApiUrl())): ?>
+  <script src="<?= PluginConfig::googleApiUrl() ?>" async></script>
+  <script>
+    let map;
+    function initMap() {
+      const mapOptions = {
+        zoom: 16,
+        center: { lat: <?= $ls->latitude ?>, lng: <?= $ls->longitude ?> },
+      };
+      map = new google.maps.Map(document.getElementById("map"), mapOptions);
+      const marker = new google.maps.Marker({
+        position: { lat: <?= $ls->latitude ?>, lng: <?= $ls->longitude ?> },
+        map: map,
+      });
+      const infowindow = new google.maps.InfoWindow({
+        content: "<p><?= $ls->streetAddress ?></p>",
+      });
+      google.maps.event.addListener(marker, "click", () => {
+        infowindow.open(map, marker);
+      });
+    }
+  </script>
+<?php endif ?>
 
 <!--
 <?php var_dump($ls) ?>
