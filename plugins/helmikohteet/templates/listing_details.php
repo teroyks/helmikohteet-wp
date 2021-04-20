@@ -36,6 +36,11 @@ use Helmikohteet\Utilities\Format;
       <?php endforeach ?>
     </div>
   </section>
+  <section class="helmik-details-description">
+    <?php if ($ls->description): ?>
+      <?= $fmt->description($ls->description) ?>
+    <?php endif ?>
+  </section>
   <section class="helmik-details-props">
     <h2>Perustiedot</h2>
     <table>
