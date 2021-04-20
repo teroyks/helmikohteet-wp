@@ -35,11 +35,11 @@ class Format
      *
      * @param $val
      *
-     * @return string Float as a localized string
+     * @return string Float as a localized string, or original value is non-numeric
      */
     public function float($val): string
     {
-        return $val ? number_format($val, 2, ',', ' ') : '';
+        return is_numeric($val) ? number_format($val, 2, ',', ' ') : $val;
     }
 
     /**
