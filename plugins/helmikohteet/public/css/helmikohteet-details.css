@@ -28,6 +28,11 @@
     padding: .5em;
 }
 
+/* map section */
+.helmik-details-map {
+    background-color: #fff9c0;
+}
+
 /* property table */
 .helmik-details-label,
 .helmik-details-property {

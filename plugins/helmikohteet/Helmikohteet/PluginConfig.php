@@ -38,9 +38,9 @@ class PluginConfig
     public static function googleApiUrl(): string
     {
         $options = get_option(self::OPTIONS_GROUP);
-        $apiKey  = !empty($options['google_api_key']) ? esc_url_raw($options['google_api_key']) : '';
+        $apiKey  = !empty($options['google_api_key']) ? esc_attr($options['google_api_key']) : '';
 
-        return "https://maps.googleapis.com/maps/api/js?key={$apiKey}&callback=initMap&libraries=&v=weekly";
+        return $apiKey ? "https://maps.googleapis.com/maps/api/js?key=$apiKey&callback=initMap&libraries=&v=weekly" : '';
     }
 
     /**
