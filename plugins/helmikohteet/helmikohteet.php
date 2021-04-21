@@ -167,7 +167,11 @@ function helmikohteet_listing_details()
         $fmt = new Format();
 
         $ls = new DetailedListing($rawData); // pass values to the template
-        include plugin_dir_path(__FILE__) . 'templates/listing_details.php';
+
+        // determine the template to use based on the listing type
+        $detailsTemplate = $ls->realEstateType == 'KIINTEISTO' ? 'details_real_estate.php' : 'details_apartment.php';
+
+        include plugin_dir_path(__FILE__) . "templates/$detailsTemplate";
     }
     die();
 }
