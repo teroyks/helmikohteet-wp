@@ -31,7 +31,13 @@ Pluginin koodi on kehitysympäristössä valmiiksi hakemistossa [`plugins/helmik
 
 ### Ulkoasun muokkaus
 
-Kohdelistauksen HTML-koodi luodaan pluginin päätiedostossa `helmikohteet.php`. Tyylimääritykset ovat [`helmikohteet.css`](plugins/helmikohteet/public/css/helmikohteet.css)-tiedostossa.
+Kohdelistauksen HTML-koodi luodaan pluginin päätiedostossa `helmikohteet.php`.
+
+Yksittäisen listauksen tietojen näyttö määritellään templates-hakemistossa, jossa on erilliset pohjat kiinteistöille
+(`details_real_estate.php`) ja asunto-osakkeille (`details_apartment.php`).
+
+Listauksen tyylimääritykset ovat tiedostossa [`helmikohteet.css`](plugins/helmikohteet/public/css/helmikohteet.css) ja
+yksittäisen kohteen määritykset tiedostossa [`helmikohteet-details.css`](plugins/helmikohteet/public/css/helmikohteet-details.css).
 
 ### Testit
 
