@@ -154,9 +154,8 @@ use Helmikohteet\Utilities\Format;
   <div id="map" class="helmi-map"></div>
 <?php endif ?>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.js"></script>
+<script src="<?= plugin_dir_url(__DIR__) ?>public/js/jquery-1.11.1.min.js"></script>
+<script src="<?= plugin_dir_url(__DIR__) ?>public/js/fotorama.js"></script>
 
 <?php if (!empty(PluginConfig::googleApiUrl())): ?>
   <script src="<?= PluginConfig::googleApiUrl() ?>" async></script>

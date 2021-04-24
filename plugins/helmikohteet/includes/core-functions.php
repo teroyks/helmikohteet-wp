@@ -31,6 +31,15 @@ function helmikohteet_custom_styles()
         'screen' // media
     );
 
+    // listing pictures script styles
+    wp_enqueue_style(
+        'helmikohteet_details_pictures',
+        plugin_dir_url(dirname(__FILE__)) . 'public/css/fotorama.css',
+        [],
+        null,
+        'screen'
+    );
+
     wp_enqueue_script(
         'helmikohteet', // js script link id handle
         plugin_dir_url(dirname(__FILE__)) . 'public/js/helmikohteet.js', // script URL
