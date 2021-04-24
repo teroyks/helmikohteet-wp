@@ -46,11 +46,13 @@ use Helmikohteet\Utilities\Format;
     <h2>Perustiedot</h2>
     <table>
       <tbody>
-      <?= $fmt->tr('Kohdenumero', $ls->id) ?>
       <?= $fmt->tr('Kohdetyyppi', $ls->apartmentType) ?>
       <?= $fmt->tr('Vapautuminen', $ls->becomesAvailable) ?>
+      <?= $fmt->tr('Velaton hinta', $fmt->float($ls->unencumberedSalesPrice), ' €') ?>
+      <?= $fmt->tr('Velkaosuus', $fmt->float($ls->debtPart), ' €') ?>
       <?= $fmt->tr('Myyntihinta', $fmt->float($ls->salesPrice), ' €') ?>
       <?= $fmt->tr('Osoite', $ls->streetAddress) ?>
+      <?= $fmt->tr('Huoneistotarkenne', $ls->flatNumber) ?>
       <?= $fmt->tr('Postinumero', $ls->postalCode) ?>
       <?= $fmt->tr('Kaupunginosa', $ls->region) ?>
       <?= $fmt->tr('Kaupunki', $ls->city) ?>
@@ -58,6 +60,7 @@ use Helmikohteet\Utilities\Format;
       <?= $fmt->tr('Kiinteistötunnus', $ls->realEstateId) ?>
       <?= $fmt->tr('Tontin pinta-ala', $fmt->float($ls->siteArea), ' m<sup>2</sup>') ?>
       <?= $fmt->tr('Tontin omistus', $ls->siteCode) ?>
+      <?= $fmt->tr('Tontin vuokranantaja', $ls->leaseHolder) ?>
       <?= $fmt->tr('Tontin vuokrasopimus päättyy', $ls->siteRentContractEndDate) ?>
       <?= $fmt->tr('Kaavoitustilanne', $ls->buildingPlanSituation) ?>
       <?= $fmt->tr('Lisätietoja kaavoituksesta', $ls->buildingPlanInformation) ?>
@@ -71,13 +74,16 @@ use Helmikohteet\Utilities\Format;
     </table>
   </section>
   <section class="helmik-details-props">
-    <h2>Rakennuksen tiedot</h2>
+    <h2>Taloyhtiön tiedot</h2>
     <table>
       <tbody>
       <?= $fmt->tr('Rakennusvuosi', $ls->yearOfBuilding) ?>
       <?= $fmt->tr('Rakennusmateriaali', $ls->buildingMaterial) ?>
       <?= $fmt->tr('Kattotyyppi', $ls->roofType) ?>
+      <?= $fmt->tr('Kiinteistönhoito', $ls->realEstateManagement) ?>
       <?= $fmt->tr('Huonekuvaus', $ls->roomTypes) ?>
+      <?= $fmt->tr('TV-järjestelmä', $ls->antennaSystem) ?>
+      <?= $fmt->tr('Yhteiset tilat', $ls->commonAreas) ?>
       <?= $fmt->tr('Lämmitys', $ls->heating) ?>
       <?= $fmt->tr('Ilmanvaihto', $ls->ventilationSystem) ?>
       <?= $fmt->tr('Pinta-ala', $fmt->float($ls->livingArea), ' m<sup>2</sup>') ?>
@@ -88,6 +94,7 @@ use Helmikohteet\Utilities\Format;
       <?= $fmt->tr('Energialuokka', $ls->energyClass) ?>
       <?= $fmt->tr('Rakennuksen lisätiedot', $ls->supplementaryInformation) ?>
       <?= $fmt->tr('Tehdyt korjaukset', $ls->basicRenovations) ?>
+      <?= $fmt->tr('Lunastuslauseke', $ls->honoringClause) ?>
       <?= $fmt->tr('Kerrosmäärä', $ls->floorLocation) ?>
       <?= $fmt->tr('Parveke', $ls->balcony) ?>
       <?= $fmt->tr('Parvekkeen lisätiedot', $ls->balconyDescription) ?>
@@ -131,6 +138,11 @@ use Helmikohteet\Utilities\Format;
     <h2>Kustannukset</h2>
     <table>
       <tbody>
+      <?= $fmt->tr('Yhtiövastike', $fmt->float($ls->housingCompanyFee)) ?>
+      <?= $fmt->tr('Rahoitusvastike', $fmt->float($ls->financingFee)) ?>
+      <?= $fmt->tr('Hoitovastike', $fmt->float($ls->maintenanceFee)) ?>
+      <?= $fmt->tr('Vesimaksu', $fmt->float($ls->waterFee)) ?>
+      <?= $fmt->tr('Vesimaksun lisätiedot', $ls->waterFeeExplanation) ?>
       <?= $fmt->tr('Energiankulutus', $fmt->float($ls->electricityConsumption)) ?>
       <?= $fmt->tr('Kiinteistövero', $fmt->float($ls->estateTax), ' €/kk') ?>
       <?= $fmt->tr('Muut maksut', $fmt->float($ls->otherFees), ' €/kk') ?>

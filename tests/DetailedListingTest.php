@@ -67,7 +67,10 @@ class DetailedListingTest extends TestCase
         $this->assertEquals('OSAKE', $ls->realEstateType);
         $this->assertEquals('Sopimuksen mukaan', $ls->becomesAvailable);
         $this->assertEquals(65_000.00, $ls->salesPrice);
+        $this->assertEquals(65_000.00, $ls->unencumberedSalesPrice);
+        $this->assertEquals(0, $ls->debtPart);
         $this->assertEquals('Katuosoite 1', $ls->streetAddress);
+        $this->assertEquals('A 3', $ls->flatNumber);
         $this->assertEquals('26100', $ls->postalCode);
         $this->assertEquals('Lajo', $ls->region);
         $this->assertEquals('Rauma', $ls->city);
@@ -75,6 +78,8 @@ class DetailedListingTest extends TestCase
         $this->assertEquals('123-123-4-123', $ls->realEstateId);
         $this->assertEquals(3_450.50, $ls->siteArea);
         $this->assertEquals('V', $ls->siteCode);
+        $this->assertEquals('Rauman kaupunki', $ls->leaseHolder);
+        $this->assertEquals('0,00 € / v', $ls->siteRent);
         $this->assertEquals('31.03.2035', $ls->siteRentContractEndDate);
         $this->assertEquals('Asemakaava', $ls->buildingPlanSituation);
         $this->assertEquals(318.00, $ls->buildingRights);
@@ -86,6 +91,7 @@ class DetailedListingTest extends TestCase
 
         $this->assertEquals('1981', $ls->yearOfBuilding);
         $this->assertEquals('Betonielementti', $ls->buildingMaterial);
+        $this->assertEquals('Kiinteistöt Oy', $ls->realEstateManagement);
         $this->assertEquals('Harja, huopa', $ls->roofType);
         $this->assertEquals('2h+k', $ls->roomTypes);
         $this->assertEquals('Kaukolämpö', $ls->heating);
@@ -98,6 +104,7 @@ class DetailedListingTest extends TestCase
         $this->assertEquals('Energialuokka: F', $ls->energyClass);
         $this->assertStringStartsWith('Ostaja on', $ls->supplementaryInformation);
         $this->assertStringStartsWith('TALOYHTIÖ:', $ls->basicRenovations);
+        $this->assertStringStartsWith('Elementtien kunnostus', $ls->futureRenovations);
         $this->assertEquals('1', $ls->floorLocation);
         $this->assertEquals('Kyllä', $ls->balcony);
         $this->assertEquals('Lasitettu parveke', $ls->balconyDescription);
@@ -123,6 +130,11 @@ class DetailedListingTest extends TestCase
         $this->assertEquals('Linja-autoasema 0,3 km', $ls->connections);
         $this->assertEquals('Kauppa lähellä', $ls->services);
 
+        $this->assertEquals('234.56', $ls->housingCompanyFee);
+        $this->assertEquals('10.00', $ls->financingFee);
+        $this->assertEquals('234.56', $ls->maintenanceFee);
+        $this->assertEquals('17.00', $ls->waterFee);
+        $this->assertEquals('Hyvää vettä on', $ls->waterFeeExplanation);
         $this->assertEquals('1480€/vuosi', $ls->electricityConsumption);
         $this->assertEquals('186.00 EUR/v', $ls->estateTax);
         $this->assertEquals('Taloussähkö', $ls->otherFees);
