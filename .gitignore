@@ -4,3 +4,4 @@ plugins/akismet/
 plugins/hello.php
 plugins/transients-manager/
 .idea/
+.DS_Store
