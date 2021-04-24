@@ -58,11 +58,11 @@
         <BuildingPlanSituation>Asemakaava</BuildingPlanSituation>
         <BuildingPlanInformation/>
         <HousingCompanyFee unit="EUR/kk">234.56</HousingCompanyFee>
-        <FinancingFee unit="EUR/kk"/>
+        <FinancingFee unit="EUR/kk">10.00</FinancingFee>
         <MaintenanceFee unit="EUR/kk">234.56</MaintenanceFee>
         <DebtPart/>
         <WaterFee unit="EUR/kk">17.00</WaterFee>
-        <WaterFeeExplanation/>
+        <WaterFeeExplanation>Hyvää vettä on</WaterFeeExplanation>
         <ElectricityConsumption>1480€/vuosi</ElectricityConsumption>
         <EstateTax>186.00 EUR/v</EstateTax>
         <OtherFees>Taloussähkö</OtherFees>
@@ -80,7 +80,7 @@
             kokonaan uusittu.
         </BasicRenovations>
         <FutureRenovations>
-            Elementien kunnostus ja saumaus, parvekkeiden betonipaikkaus ja maalaus, pihamaan sadevesijärjestelmän teko.
+            Elementtien kunnostus ja saumaus, parvekkeiden betonipaikkaus ja maalaus, pihamaan sadevesijärjestelmän teko.
         </FutureRenovations>
         <ElectricUse/>
         <property_name/>

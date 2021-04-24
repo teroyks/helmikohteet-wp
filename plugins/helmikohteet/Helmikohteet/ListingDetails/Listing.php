@@ -20,7 +20,10 @@ class Listing
     public string $realEstateType; // kiinteistötyyppi
     public string $becomesAvailable; // vapautuminen
     public float  $salesPrice; // myyntihinta
+    public float  $debtPart; // velkaosuus
+    public float  $unencumberedSalesPrice; // velaton myyntihinta
     public string $streetAddress; // osoite
+    public string $flatNumber; // huoneistotarkenne
     public string $postalCode; // postinumero
     public string $region; // kaupunginosa
     public string $city; // kaupunki
@@ -28,7 +31,9 @@ class Listing
     public string $realEstateId; // kiinteistötunnus
     public float  $siteArea; // tontin pinta-ala
     public string $siteCode; // tontin omistus (koodi)
+    public string $leaseHolder; // tontin vuokranantaja
     public string $siteRentContractEndDate; // tontin vuokrasopimus päättyy
+    public string $siteRent;
     public string $buildingPlanSituation; // kaavoitustilanne
     public string $buildingPlanInformation; // lisätietoja kaavoituksesta
     public float  $buildingRights; // rakennusoikeus
@@ -40,8 +45,11 @@ class Listing
 
     public string $yearOfBuilding; // rakennusvuosi
     public string $buildingMaterial; // rakennusmateriaali
+    public string $realEstateManagement; // kiinteistönhoito
     public string $roofType; // kattotyyppi
     public string $roomTypes; // huonekuvaus
+    public string $antennaSystem; // tv-järjestelmä
+    public string $commonAreas; // yhteiset tilat
     public string $heating; // lämmitys
     public string $ventilationSystem; // ilmanvaihto
     public float  $livingArea; // pinta-ala
@@ -52,11 +60,13 @@ class Listing
     public string $energyClass; // energialuokka
     public string $supplementaryInformation; // rakennuksen lisätiedot
     public string $basicRenovations; // tehdyt korjaukset
+    public string $futureRenovations; // tulevat korjaukse
+    public string $honoringClause; // lunastuslauseke
     public string $floorLocation; // kerrosmäärä
     public string $balcony; // parveke
+
     public string $balconyDescription; // parvekkeen lisätiedot
     public string $asbestosMapping; // asbestikartoitus tehty
-
     public string $kitchenAppliances; // keittiö
     public string $kitchenWall; // keittiön seinät
     public string $kitchenFloor; // keittiön lattia
@@ -71,19 +81,24 @@ class Listing
     public string $bathroomFloor; // kylpyhuoneen lattia
     public string $floor; // muiden tilojen lattiat
     public string $sauna; // sauna (tyyppi & kuvaus)
+
     public string $storageSpace; // säilytystilat
     public string $parkingSpace; // auton säilytys
 
     public string $connections; // liikenneyhteydet
     public string $services; // palvelut
-
+    public string $housingCompanyFee; // Yhtiövastike
+    public string $financingFee; // Rahoitusvastike
+    public string $maintenanceFee; // Hoitovastike
+    public string $waterFee; // Vesimaksu
+    public string $waterFeeExplanation; // Vesimaksun lisätiedot
     public string $electricityConsumption; // energiankulutus
     public string $estateTax; // kiinteistövero
     public string $otherFees; // muut maksut
+
     public string $latitude; // sijainti latitude
     public string $longitude; // sijainti longitude
-
-    public array $pictureUrls = []; // asunnon kuvat
+    public array  $pictureUrls = []; // asunnon kuvat
 
     public function __construct(SimpleXMLElement $data)
     {
@@ -116,7 +131,10 @@ class Listing
         $this->realEstateType          = $str($ap['realEstateType']);
         $this->becomesAvailable        = $str($ap->BecomesAvailable);
         $this->salesPrice              = $float($ap->SalesPrice);
+        $this->unencumberedSalesPrice  = $float($ap->UnencumberedSalesPrice);
+        $this->debtPart                = $float($ap->DebtPart);
         $this->streetAddress           = $str($ap->StreetAddress);
+        $this->flatNumber              = $str($ap->FlatNumber);
         $this->postalCode              = $str($ap->PostalCode);
         $this->region                  = $str($ap->Region);
         $this->city                    = $str($ap->City);
@@ -124,6 +142,8 @@ class Listing
         $this->realEstateId            = $str($ap->RealEstateID);
         $this->siteArea                = $float($ap->SiteArea);
         $this->siteCode                = $str($ap->Site['type']);
+        $this->leaseHolder             = $str($ap->LeaseHolder);
+        $this->siteRent                = $str($ap->SiteRent);
         $this->siteRentContractEndDate = $ap->SiteRentContractEndDate;
         $this->buildingPlanSituation   = $str($ap->BuildingPlanSituation);
         $this->buildingPlanInformation = $str($ap->BuildingPlanInformation);
@@ -136,8 +156,11 @@ class Listing
 
         $this->yearOfBuilding           = $year($ap->YearOfBuilding['original']);
         $this->buildingMaterial         = $str($ap->BuildingMaterial);
+        $this->realEstateManagement     = $str($ap->RealEstateManagement);
         $this->roofType                 = $str($ap->RoofType);
         $this->roomTypes                = $str($ap->RoomTypes);
+        $this->antennaSystem            = $str($ap->AntennaSystem);
+        $this->commonAreas              = $str($ap->CommonAreas);
         $this->heating                  = $str($ap->Heating);
         $this->ventilationSystem        = $str($ap->VentilationSystem);
         $this->livingArea               = $float($ap->LivingArea);
@@ -148,6 +171,8 @@ class Listing
         $this->energyClass              = $str($ap->{'rc-energyclass'});
         $this->supplementaryInformation = $str($ap->SupplementaryInformation);
         $this->basicRenovations         = $str($ap->BasicRenovations);
+        $this->futureRenovations        = $str($ap->FutureRenovations);
+        $this->honoringClause           = $str($ap->HonoringClause);
         $this->floorLocation            = $str($ap->FloorLocation);
         $this->balcony                  = $yesOrNo($ap->Balcony['value']);
         $this->balconyDescription       = $str($ap->Balcony);
@@ -173,10 +198,15 @@ class Listing
         $this->connections = $str($ap->Connections);
         $this->services    = $str($ap->Services);
 
+        $this->housingCompanyFee      = $str($ap->HousingCompanyFee);
+        $this->financingFee           = $str($ap->FinancingFee);
+        $this->maintenanceFee         = $str($ap->MaintenanceFee);
+        $this->waterFee               = $str($ap->WaterFee);
+        $this->waterFeeExplanation    = $str($ap->WaterFeeExplanation);
         $this->electricityConsumption = $str($ap->ElectricityConsumption);
         $this->estateTax              = $str($ap->EstateTax);
         $this->otherFees              = $str($ap->OtherFees);
-        $this->latitude              = $str($ap->Latitude);
+        $this->latitude               = $str($ap->Latitude);
         $this->longitude              = $str($ap->Longitude);
 
         $this->pictureUrls = $this->parsePictureUrls($ap);
