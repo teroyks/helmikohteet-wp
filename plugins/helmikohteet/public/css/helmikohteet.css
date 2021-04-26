@@ -5,23 +5,30 @@
     grid-gap: 20px;
 }
 
+.helmik-listing-container a {
+    text-decoration: none !important;
+}
+
 /* listing item in a list */
 .helmik-listing {
-    background-color: orange; /* should be overridden */
+    /* background-color: orange;
     border: 1px solid #d3d3d3;
-    border-radius: .25rem;
+    border-radius: .25rem; */
+    border-radius: .50rem;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     line-height: 1.2em;
+    overflow: hidden;
     font-size: .85em;
 }
 
 /* listing type "for sale" */
 .helmik-listing-type-sale {
-    background-color: #fafafa;
+    /* background-color: #fafafa; */
 }
 
 /* listing type "to let" */
 .helmik-listing-type-rental {
-    background-color: #ceead0; /* just to differentiate a bit */
+    /* background-color: #ceead0; */
 }
 
 /* property image */
@@ -40,6 +47,10 @@
 /* property info */
 .helmik-listing-content {
     padding: 15px;
+}
+
+.helmik-listing-content * {
+    text-decoration: none !important;
 }
 
 .helmik-listing-content * {

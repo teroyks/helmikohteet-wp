@@ -96,18 +96,22 @@ function helmikohteet_loop_shortcode_get_listings(): string
         ? 'helmik-listing-type-sale' : 'helmik-listing-type-rental';
 
     $output = <<<END
-        <div>Filtering here</div>
         <div class="helmik-listing-container">
         END;
 
     // list all the properties
     foreach ($all_listings as $listing) {
         if (Listing::TYPE_SALE == $listing->listingType) {
-            $priceLabel = 'Hinta';
+            $priceLabel = 'Myyntihinta';
             $price      = $listing->salesPrice;
         } else {
             $priceLabel = 'Vuokra/kk';
             $price      = $listing->rentAmount;
+        }
+
+        $unencumberedSalesPrice = "";
+        if ($listing->realEstateType == 'OSAKE') {
+            $unencumberedSalesPrice = '<div class="helmik-listing-description">Velaton hinta ' . $format_number($listing->unencumberedSalesPrice) . '&nbsp;€</div>';
         }
 
         // year of building may not be listed
@@ -122,18 +126,20 @@ function helmikohteet_loop_shortcode_get_listings(): string
 
         $output .= <<<END
             <section class="helmik-listing {$listing_type_class($listing->listingType)}">
-              <div class="helmik-listing-img">
-                <img src="{$listing->imgUrl}" alt="" />
-              </div>
-              <div class="helmik-listing-content">
+              <a href="{$detailsLink}">
+                <div class="helmik-listing-img">
+                  <img src="{$listing->imgUrl}" alt="" />
+                </div>
+                <div class="helmik-listing-content">
                   <h1 class="helmik-listing-title">{$listing->apartmentType}, {$listing->city}</h1>
                   <div class="helmik-listing-description">{$listing->address}</div>
                   {$yearOfBuildingIfDefined}
                   <div class="helmik-listing-description">{$listing->rooms}</div>
+                  {$unencumberedSalesPrice}
                   <div class="helmik-listing-description">{$priceLabel} {$format_number($price)}&nbsp;€</div>
                   <div class="helmik-listing-description">Pinta-ala {$format_number($listing->area)}&nbsp;m²</div>
-                  <div><a href="{$detailsLink}">Näytä</a></div>
-              </div>
+                </div>
+              </a>
             </section>
             END;
     }

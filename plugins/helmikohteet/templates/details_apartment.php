@@ -59,7 +59,7 @@ use Helmikohteet\Utilities\Format;
       <?= $fmt->tr('Maakunta', $ls->pdxRegion) ?>
       <?= $fmt->tr('Kiinteistötunnus', $ls->realEstateId) ?>
       <?= $fmt->tr('Tontin pinta-ala', $fmt->float($ls->siteArea), ' m<sup>2</sup>') ?>
-      <?= $fmt->tr('Tontin omistus', $ls->siteCode) ?>
+      <?= $fmt->tr('Tontin omistus', $ls->siteCode == 'O' ? 'Oma' : 'Vuokra') ?>
       <?= $fmt->tr('Tontin vuokranantaja', $ls->leaseHolder) ?>
       <?= $fmt->tr('Tontin vuokrasopimus päättyy', $ls->siteRentContractEndDate) ?>
       <?= $fmt->tr('Kaavoitustilanne', $ls->buildingPlanSituation) ?>
@@ -102,7 +102,7 @@ use Helmikohteet\Utilities\Format;
       </tbody>
     </table>
   </section>
-  <section class="helmik-details-props">
+  <section id="helmik-spaces" class="helmik-details-props">
     <h2>Tilat ja materiaalit</h2>
     <table>
       <tbody>
@@ -125,7 +125,7 @@ use Helmikohteet\Utilities\Format;
       </tbody>
     </table>
   </section>
-  <section class="helmik-details-props">
+  <section id="helmik-services" class="helmik-details-props">
     <h2>Palvelut ja liikenneyhteydet</h2>
     <table>
       <tbody>
@@ -134,14 +134,14 @@ use Helmikohteet\Utilities\Format;
       </tbody>
     </table>
   </section>
-  <section class="helmik-details-props">
+  <section id="helmik-expenses" class="helmik-details-props">
     <h2>Kustannukset</h2>
     <table>
       <tbody>
-      <?= $fmt->tr('Yhtiövastike', $fmt->float($ls->housingCompanyFee)) ?>
-      <?= $fmt->tr('Rahoitusvastike', $fmt->float($ls->financingFee)) ?>
-      <?= $fmt->tr('Hoitovastike', $fmt->float($ls->maintenanceFee)) ?>
-      <?= $fmt->tr('Vesimaksu', $fmt->float($ls->waterFee)) ?>
+      <?= $fmt->tr('Yhtiövastike', $fmt->float($ls->housingCompanyFee), ' €/kk') ?>
+      <?= $fmt->tr('Rahoitusvastike', $fmt->float($ls->financingFee), ' €/kk') ?>
+      <?= $fmt->tr('Hoitovastike', $fmt->float($ls->maintenanceFee), ' €/kk') ?>
+      <?= $fmt->tr('Vesimaksu', $fmt->float($ls->waterFee), ' €/kk') ?>
       <?= $fmt->tr('Vesimaksun lisätiedot', $ls->waterFeeExplanation) ?>
       <?= $fmt->tr('Energiankulutus', $fmt->float($ls->electricityConsumption)) ?>
       <?= $fmt->tr('Kiinteistövero', $fmt->float($ls->estateTax), ' €/kk') ?>
@@ -151,9 +151,17 @@ use Helmikohteet\Utilities\Format;
   </section>
 </main>
 <?php if (!empty(PluginConfig::googleApiUrl())): ?>
-  <div id="map" class="helmi-map"></div>
+  <div id="map" class="helmik-map"></div>
 <?php endif ?>
 
+<script>
+  var tables = ['#helmik-spaces', '#helmik-services', '#helmik-expenses']
+  tables.forEach(table => {
+    if (!document.querySelectorAll(table + ' td').length && document.querySelector(table)) {
+      document.querySelector(table).remove();
+    }
+  });
+</script>
 <script src="<?= plugin_dir_url(__DIR__) ?>public/js/jquery-1.11.1.min.js"></script>
 <script src="<?= plugin_dir_url(__DIR__) ?>public/js/fotorama.js"></script>
 

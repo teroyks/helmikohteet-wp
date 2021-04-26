@@ -25,6 +25,7 @@ class Listing
     public string $city;
     public string $address;
     public string $salesPrice;
+    public string $unencumberedSalesPrice;
     public string $rentAmount;
     public string $rooms;
     public string $area;
@@ -44,15 +45,17 @@ class Listing
         // determine a year value: invalid value can be 0
         $parseYear = fn($val): ?int => is_numeric($val) && $val > 0 ? (int)$val : null;
 
-        $this->key        = sanitize_key($data->Key);
-        $this->city       = $data->City;
-        $this->address    = $data->StreetAddress;
-        $this->salesPrice = $data->SalesPrice;
-        $this->rentAmount = $data->RentPerMonth;
-        $this->rooms      = $data->RoomTypes;
-        $this->area       = $data->LivingArea;
-        $this->status     = $data->Status;
-        $this->imgUrl     = $data->Picture1;
+        $this->key                      = sanitize_key($data->Key);
+        $this->city                     = $data->City;
+        $this->address                  = $data->StreetAddress;
+        $this->salesPrice               = $data->SalesPrice;
+        $this->unencumberedSalesPrice   = $data->UnencumberedSalesPrice;
+        $this->rentAmount               = $data->RentPerMonth;
+        $this->rooms                    = $data->RoomTypes;
+        $this->area                     = $data->LivingArea;
+        $this->status                   = $data->Status;
+        $this->imgUrl                   = str_replace('/images/', '/images/thumbs/', $data->Picture1);
+        $this->realEstateType           = $data['realEstateType'];
 
         $apartmentTypeCode   = $data['type'];
         $this->apartmentType = ApartmentType::get($apartmentTypeCode);
