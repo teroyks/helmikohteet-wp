@@ -95,8 +95,25 @@ function helmikohteet_loop_shortcode_get_listings(): string
     $listing_type_class = fn($type) => Listing::TYPE_SALE == $type
         ? 'helmik-listing-type-sale' : 'helmik-listing-type-rental';
 
-    $filter_value_sale = Listing::TYPE_SALE;
+    // modifies a string into one that can be used as element id
+    $str2id = fn($str) => preg_replace('/[^a-z0-9]/', '', strtolower($str));
+
+    $filter_value_sale   = Listing::TYPE_SALE;
     $filter_value_rental = Listing::TYPE_RENTAL;
+
+    $apartment_types = array_map(fn($listing) => $listing->apartmentType, $all_listings);
+    sort($apartment_types);
+    $uniq_apartment_types   = array_unique($apartment_types);
+    $filter_apartment_types = implode(
+        "\n",
+        array_map(
+            fn($type) => '<span style="white-space: nowrap;"><input id="helmik-' . $str2id(
+                    $type
+                ) . '" type="checkbox" value="' . $type . '" />'
+                . '<label for="helmik-' . $str2id($type) . '"> ' . $type . '</label></span>',
+            $uniq_apartment_types
+        )
+    );
 
     $output = <<<END
         <div class="helmik-listing-filters">
@@ -107,6 +124,9 @@ function helmikohteet_loop_shortcode_get_listings(): string
               <label for="helmik-filter-type-for-sale">Myydään</label>
               <input type="checkbox" id="helmik-filter-type-for-rent" value="$filter_value_rental" />
               <label for="helmik-filter-type-for-rent">Vuokrataan</label>
+            </fieldset>
+            <fieldset id="helmik-filter-apartment-type">
+              $filter_apartment_types
             </fieldset>
             <button type="submit">Rajaa</button>
           </form>
@@ -120,21 +140,36 @@ function helmikohteet_loop_shortcode_get_listings(): string
           window.addEventListener('load', () => {
             document.getElementById('helmik-filter-form')
               .addEventListener('submit', (event) => {
-                // filter based on selected listing type
+                // filter based on selected listing types
                 
-                const listingTypeCheckboxes = Array.from(document.getElementById('helmik-filter-listing-type').getElementsByTagName('input'))
-                const showListingTypes = listingTypeCheckboxes.filter(checkbox => checkbox.checked).map(checkbox => checkbox.value)
-                console.log(showListingTypes)
+                const listingTypeCheckboxes = Array.from(document.getElementById('helmik-filter-listing-type')
+                  .getElementsByTagName('input'))
+                const showListingTypes = listingTypeCheckboxes
+                  .filter(checkbox => checkbox.checked)
+                  .map(checkbox => checkbox.value)
+                
+                // filter based on selected apartment types
+                
+                const apartmentTypeCheckboxes = Array.from(document.getElementById('helmik-filter-apartment-type')
+                  .getElementsByTagName('input'))
+                const showApartmentTypes = apartmentTypeCheckboxes
+                  .filter(checkbox => checkbox.checked)
+                  .map(checkbox => checkbox.value)
                 
                 // only show matching listings
                 
                 const listings = document.getElementsByClassName('helmik-listing')
-                console.log('listings', listings)
                 for (const lst of listings) {
-                  console.log(lst.dataset.listingType)
-                  if (showListingTypes.includes(lst.dataset.listingType)) {
-                    lst.classList.remove('filtered-out')
-                  } else {
+                  // show all by default
+                  lst.classList.remove('filtered-out')
+
+                  // if any listing types selected, only show those                  
+                  if (showListingTypes.length && !showListingTypes.includes(lst.dataset.listingType)) {
+                    lst.classList.add('filtered-out')
+                  }
+                  
+                  // if any apartment types selected, only show those
+                  if (showApartmentTypes.length && !showApartmentTypes.includes(lst.dataset.apartmentType)) {
                     lst.classList.add('filtered-out')
                   }
                 }
@@ -175,7 +210,9 @@ function helmikohteet_loop_shortcode_get_listings(): string
         $detailsLink = get_site_url() . '?' . http_build_query([PluginConfig::DETAILS_KEY_PARAM => $listing->key]);
 
         $output .= <<<END
-            <section class="helmik-listing {$listing_type_class($listing->listingType)}" data-listing-type="$listing->listingType">
+            <section class="helmik-listing {$listing_type_class($listing->listingType)}"
+                     data-listing-type="$listing->listingType"
+                     data-apartment-type="$listing->apartmentType">
               <a href="{$detailsLink}">
                 <div class="helmik-listing-img">
                   <img src="{$listing->imgUrl}" alt="" />
@@ -214,10 +251,10 @@ function helmikohteet_listing_details()
         return;
     }
 
-    $allListings = HelmiClient::getListingsXml();
-    $listingId = sanitize_key($_GET[PluginConfig::DETAILS_KEY_PARAM]);
+    $allListings   = HelmiClient::getListingsXml();
+    $listingId     = sanitize_key($_GET[PluginConfig::DETAILS_KEY_PARAM]);
     $listingFinder = new ListingFinder($allListings);
-    $rawData = $listingFinder->getListingData($listingId);
+    $rawData       = $listingFinder->getListingData($listingId);
     if ($rawData) {
         // template formatting helper
         $fmt = new Format();
