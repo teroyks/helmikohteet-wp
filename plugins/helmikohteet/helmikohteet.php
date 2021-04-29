@@ -95,7 +95,55 @@ function helmikohteet_loop_shortcode_get_listings(): string
     $listing_type_class = fn($type) => Listing::TYPE_SALE == $type
         ? 'helmik-listing-type-sale' : 'helmik-listing-type-rental';
 
+    $filter_value_sale = Listing::TYPE_SALE;
+    $filter_value_rental = Listing::TYPE_RENTAL;
+
     $output = <<<END
+        <div class="helmik-listing-filters">
+          <h2>Rajaa tuloksia</h2>
+          <form method="get" action="#" id="helmik-filter-form">
+            <fieldset id="helmik-filter-listing-type">
+              <input type="checkbox" id="helmik-filter-type-for-sale" value="$filter_value_sale" />
+              <label for="helmik-filter-type-for-sale">Myydään</label>
+              <input type="checkbox" id="helmik-filter-type-for-rent" value="$filter_value_rental" />
+              <label for="helmik-filter-type-for-rent">Vuokrataan</label>
+            </fieldset>
+            <button type="submit">Rajaa</button>
+          </form>
+        </div>
+        <style>
+          .filtered-out {
+            display: none;
+          }
+        </style>
+        <script>
+          window.addEventListener('load', () => {
+            document.getElementById('helmik-filter-form')
+              .addEventListener('submit', (event) => {
+                // filter based on selected listing type
+                
+                const listingTypeCheckboxes = Array.from(document.getElementById('helmik-filter-listing-type').getElementsByTagName('input'))
+                const showListingTypes = listingTypeCheckboxes.filter(checkbox => checkbox.checked).map(checkbox => checkbox.value)
+                console.log(showListingTypes)
+                
+                // only show matching listings
+                
+                const listings = document.getElementsByClassName('helmik-listing')
+                console.log('listings', listings)
+                for (const lst of listings) {
+                  console.log(lst.dataset.listingType)
+                  if (showListingTypes.includes(lst.dataset.listingType)) {
+                    lst.classList.remove('filtered-out')
+                  } else {
+                    lst.classList.add('filtered-out')
+                  }
+                }
+                
+                // do not submit the form
+                event.preventDefault()
+              })
+          })
+        </script>
         <div class="helmik-listing-container">
         END;
 
@@ -111,7 +159,9 @@ function helmikohteet_loop_shortcode_get_listings(): string
 
         $unencumberedSalesPrice = "";
         if ($listing->realEstateType == 'OSAKE') {
-            $unencumberedSalesPrice = '<div class="helmik-listing-description">Velaton hinta ' . $format_number($listing->unencumberedSalesPrice) . '&nbsp;€</div>';
+            $unencumberedSalesPrice = '<div class="helmik-listing-description">Velaton hinta ' . $format_number(
+                    $listing->unencumberedSalesPrice
+                ) . '&nbsp;€</div>';
         }
 
         // year of building may not be listed
@@ -125,7 +175,7 @@ function helmikohteet_loop_shortcode_get_listings(): string
         $detailsLink = get_site_url() . '?' . http_build_query([PluginConfig::DETAILS_KEY_PARAM => $listing->key]);
 
         $output .= <<<END
-            <section class="helmik-listing {$listing_type_class($listing->listingType)}">
+            <section class="helmik-listing {$listing_type_class($listing->listingType)}" data-listing-type="$listing->listingType">
               <a href="{$detailsLink}">
                 <div class="helmik-listing-img">
                   <img src="{$listing->imgUrl}" alt="" />
@@ -154,8 +204,8 @@ add_shortcode('helmikohteet', 'helmikohteet_loop_shortcode_get_listings');
 /**
  * Replaces page HTML with the listing details.
  *
- * @todo can a page template be used here?
- * @todo handle the 'Not Found' error
+ * @todo         can a page template be used here?
+ * @todo         handle the 'Not Found' error
  * @noinspection PhpUnusedLocalVariableInspection
  */
 function helmikohteet_listing_details()
@@ -164,10 +214,10 @@ function helmikohteet_listing_details()
         return;
     }
 
-    $allListings   = HelmiClient::getListingsXml();
-    $listingId     = sanitize_key($_GET[PluginConfig::DETAILS_KEY_PARAM]);
+    $allListings = HelmiClient::getListingsXml();
+    $listingId = sanitize_key($_GET[PluginConfig::DETAILS_KEY_PARAM]);
     $listingFinder = new ListingFinder($allListings);
-    $rawData       = $listingFinder->getListingData($listingId);
+    $rawData = $listingFinder->getListingData($listingId);
     if ($rawData) {
         // template formatting helper
         $fmt = new Format();
