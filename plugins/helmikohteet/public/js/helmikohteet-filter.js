@@ -5,14 +5,35 @@
  * the listings is present on the page.
  */
 
+// Utility functions to fetch selected filter values
+const helmikohteetFunctions = {
+    // Input tags inside a given element ID as an array
+    inputsIn: (doc, id) => Array.from(
+        doc.getElementById(id)
+            .getElementsByTagName('input')
+    ),
+
+    // List of selected checkbox values
+    selectedValues: (inputs) => inputs
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value),
+}
+
 window.addEventListener('load', () => {
     document.getElementById('helmik-filter-form')
         .addEventListener('submit', (event) => {
+            // utility functions
+            const fn = helmikohteetFunctions
+
             // filter based on selected listing types
-            const selectedListingTypes = getHelmikohteetSelectedListingTypes()
+            const selectedListingTypes = fn.selectedValues(
+                fn.inputsIn(document, 'helmik-filter-listing-type')
+            )
 
             // filter based on selected apartment types
-            const selectedApartmentTypes = getHelmikohteetSelectedApartmentTypes()
+            const selectedApartmentTypes = fn.selectedValues(
+                fn.inputsIn(document, 'helmik-filter-apartment-type')
+            )
 
             // only show matching listings
 
@@ -36,29 +57,3 @@ window.addEventListener('load', () => {
             event.preventDefault()
         })
 })
-
-/**
- * Lists the checked "Listing type" values.
- * @returns {string[]}
- */
-function getHelmikohteetSelectedListingTypes() {
-    const listingTypeCheckboxes = Array.from(document.getElementById('helmik-filter-listing-type')
-        .getElementsByTagName('input'))
-
-    return listingTypeCheckboxes
-        .filter(checkbox => checkbox.checked)
-        .map(checkbox => checkbox.value)
-}
-
-/**
- * Lists the checked "Apartment type" values.
- * @returns {string[]}
- */
-function getHelmikohteetSelectedApartmentTypes() {
-    const apartmentTypeCheckboxes = Array.from(document.getElementById('helmik-filter-apartment-type')
-        .getElementsByTagName('input'))
-
-    return apartmentTypeCheckboxes
-        .filter(checkbox => checkbox.checked)
-        .map(checkbox => checkbox.value)
-}
