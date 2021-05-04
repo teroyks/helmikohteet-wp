@@ -80,6 +80,16 @@ function helmikohteet_on_uninstall()
  */
 function helmikohteet_loop_shortcode_get_listings(): string
 {
+    // include the script for filtering listings
+    wp_enqueue_script(
+        'helmikohteet-filter', // js script link id handle
+        plugin_dir_url(__FILE__) . 'public/js/helmikohteet-filter.js', // script URL
+        [], // dependencies that need to be loaded before this file
+        null, // version query string parameter value
+        true // put JS in the footer
+    );
+
+    // fetch the listings data
     $xml = HelmiClient::getListingsXml();
 
     // convert XML to an array of Listing objects
@@ -136,49 +146,6 @@ function helmikohteet_loop_shortcode_get_listings(): string
             display: none;
           }
         </style>
-        <script>
-          window.addEventListener('load', () => {
-            document.getElementById('helmik-filter-form')
-              .addEventListener('submit', (event) => {
-                // filter based on selected listing types
-                
-                const listingTypeCheckboxes = Array.from(document.getElementById('helmik-filter-listing-type')
-                  .getElementsByTagName('input'))
-                const showListingTypes = listingTypeCheckboxes
-                  .filter(checkbox => checkbox.checked)
-                  .map(checkbox => checkbox.value)
-                
-                // filter based on selected apartment types
-                
-                const apartmentTypeCheckboxes = Array.from(document.getElementById('helmik-filter-apartment-type')
-                  .getElementsByTagName('input'))
-                const showApartmentTypes = apartmentTypeCheckboxes
-                  .filter(checkbox => checkbox.checked)
-                  .map(checkbox => checkbox.value)
-                
-                // only show matching listings
-                
-                const listings = document.getElementsByClassName('helmik-listing')
-                for (const lst of listings) {
-                  // show all by default
-                  lst.classList.remove('filtered-out')
-
-                  // if any listing types selected, only show those                  
-                  if (showListingTypes.length && !showListingTypes.includes(lst.dataset.listingType)) {
-                    lst.classList.add('filtered-out')
-                  }
-                  
-                  // if any apartment types selected, only show those
-                  if (showApartmentTypes.length && !showApartmentTypes.includes(lst.dataset.apartmentType)) {
-                    lst.classList.add('filtered-out')
-                  }
-                }
-                
-                // do not submit the form
-                event.preventDefault()
-              })
-          })
-        </script>
         <div class="helmik-listing-container">
         END;
 
