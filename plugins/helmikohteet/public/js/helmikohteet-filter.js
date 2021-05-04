@@ -9,20 +9,10 @@ window.addEventListener('load', () => {
     document.getElementById('helmik-filter-form')
         .addEventListener('submit', (event) => {
             // filter based on selected listing types
-
-            const listingTypeCheckboxes = Array.from(document.getElementById('helmik-filter-listing-type')
-                .getElementsByTagName('input'))
-            const showListingTypes = listingTypeCheckboxes
-                .filter(checkbox => checkbox.checked)
-                .map(checkbox => checkbox.value)
+            const selectedListingTypes = getHelmikohteetSelectedListingTypes()
 
             // filter based on selected apartment types
-
-            const apartmentTypeCheckboxes = Array.from(document.getElementById('helmik-filter-apartment-type')
-                .getElementsByTagName('input'))
-            const showApartmentTypes = apartmentTypeCheckboxes
-                .filter(checkbox => checkbox.checked)
-                .map(checkbox => checkbox.value)
+            const selectedApartmentTypes = getHelmikohteetSelectedApartmentTypes()
 
             // only show matching listings
 
@@ -32,12 +22,12 @@ window.addEventListener('load', () => {
                 lst.classList.remove('filtered-out')
 
                 // if any listing types selected, only show those
-                if (showListingTypes.length && !showListingTypes.includes(lst.dataset.listingType)) {
+                if (selectedListingTypes.length && !selectedListingTypes.includes(lst.dataset.listingType)) {
                     lst.classList.add('filtered-out')
                 }
 
                 // if any apartment types selected, only show those
-                if (showApartmentTypes.length && !showApartmentTypes.includes(lst.dataset.apartmentType)) {
+                if (selectedApartmentTypes.length && !selectedApartmentTypes.includes(lst.dataset.apartmentType)) {
                     lst.classList.add('filtered-out')
                 }
             }
@@ -46,3 +36,29 @@ window.addEventListener('load', () => {
             event.preventDefault()
         })
 })
+
+/**
+ * Lists the checked "Listing type" values.
+ * @returns {string[]}
+ */
+function getHelmikohteetSelectedListingTypes() {
+    const listingTypeCheckboxes = Array.from(document.getElementById('helmik-filter-listing-type')
+        .getElementsByTagName('input'))
+
+    return listingTypeCheckboxes
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value)
+}
+
+/**
+ * Lists the checked "Apartment type" values.
+ * @returns {string[]}
+ */
+function getHelmikohteetSelectedApartmentTypes() {
+    const apartmentTypeCheckboxes = Array.from(document.getElementById('helmik-filter-apartment-type')
+        .getElementsByTagName('input'))
+
+    return apartmentTypeCheckboxes
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value)
+}
