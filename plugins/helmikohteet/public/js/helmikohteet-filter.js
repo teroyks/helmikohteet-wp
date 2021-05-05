@@ -24,10 +24,13 @@ const helmikohteetFunctions = {
         valueById: (id) => doc.getElementById(id).value,
 
         // elements with given class name
-        elementsByClassName: (className) => doc.getElementsByClassName(className),
+        classElements: (className) => doc.getElementsByClassName(className),
     }),
 }
 
+/**
+ * Updates listings list based on currently selected filters.
+ */
 const runHelmikFilters = () => {
     // utility functions
     const fn = helmikohteetFunctions
@@ -52,7 +55,7 @@ const runHelmikFilters = () => {
 
     // only show matching listings
 
-    const listings = docFn.elementsByClassName('helmik-listing')
+    const listings = docFn.classElements('helmik-listing')
     for (const lst of listings) {
         // show all by default
         lst.classList.remove('filtered-out')
@@ -94,19 +97,21 @@ const runHelmikFilters = () => {
     }
 }
 
+/**
+ * Adds an event listener to all the filter fields on initial
+ */
 window.addEventListener('load', () => {
-    const inputs = document.getElementsByClassName('helmik-filter-input');
+    const docFn = helmikohteetFunctions.documentFunctions(document)
 
-    for(let i = 0; i < inputs.length; i++) {
-        inputs[i].addEventListener('input', function() {
-            runHelmikFilters();
-        })
-    }
+    const inputs = [...docFn.classElements('helmik-filter-input')]
+        .map((element) => ({element, eventName: 'input'}))
 
-    const checkboxes = document.getElementsByClassName('helmik-filter-checkbox');
-    for(let i = 0; i < checkboxes.length; i++) {
-        checkboxes[i].addEventListener('click', function() {
-            runHelmikFilters();
+    const checkboxes = [...docFn.classElements('helmik-filter-checkbox')]
+        .map((element) => ({element, eventName: 'click'}))
+
+    for ({element, eventName} of inputs.concat(checkboxes)) {
+        element.addEventListener(eventName, () => {
+            runHelmikFilters()
         })
     }
 });
