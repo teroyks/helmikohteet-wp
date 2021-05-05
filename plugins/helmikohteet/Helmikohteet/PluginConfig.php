@@ -18,7 +18,7 @@ class PluginConfig
     public const DETAILS_KEY_PARAM = 'helmikohteet_id';
 
     /** @var int Amount of time until fetched listings data expires */
-    public const LISTINGS_EXPIRATION_HOURS = 12;
+    public const LISTINGS_EXPIRATION_HOURS = 1;
 
     /**
      * Listings API URL.
