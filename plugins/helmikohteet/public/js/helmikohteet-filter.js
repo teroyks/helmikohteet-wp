@@ -7,41 +7,52 @@
 
 // Utility functions to fetch selected filter values
 const helmikohteetFunctions = {
-    // Input tags inside a given element ID as an array
-    inputsIn: (doc, id) => Array.from(
-        doc.getElementById(id)
-            .getElementsByTagName('input')
-    ),
-
     // List of selected checkbox values
     selectedValues: (inputs) => inputs
         .filter(checkbox => checkbox.checked)
         .map(checkbox => checkbox.value),
+
+    // partial functions for document operations
+    documentFunctions: (doc) => ({
+        // Input tags inside a given element ID as an array
+        inputsIn: (id) => Array.from(
+            doc.getElementById(id)
+                .getElementsByTagName('input')
+        ),
+
+        // value of an element with given ID
+        valueById: (id) => doc.getElementById(id).value,
+
+        // elements with given class name
+        elementsByClassName: (className) => doc.getElementsByClassName(className),
+    }),
 }
 
 const runHelmikFilters = () => {
     // utility functions
     const fn = helmikohteetFunctions
+    // utility functions for document
+    const docFn = fn.documentFunctions(document)
 
     // filter based on selected listing types
     const selectedListingTypes = fn.selectedValues(
-        fn.inputsIn(document, 'helmik-filter-listing-type')
+        docFn.inputsIn('helmik-filter-listing-type')
     )
 
     // filter based on selected apartment types
     const selectedApartmentTypes = fn.selectedValues(
-        fn.inputsIn(document, 'helmik-filter-apartment-type')
+        docFn.inputsIn('helmik-filter-apartment-type')
     )
 
-    const searchString = document.getElementById('helmik-search').value;
-    const minPrice = document.getElementById('helmik-min-price').value;
-    const maxPrice = document.getElementById('helmik-max-price').value;
-    const minArea = document.getElementById('helmik-min-area').value;
-    const maxArea = document.getElementById('helmik-max-area').value;
+    const searchString = docFn.valueById('helmik-search');
+    const minPrice = docFn.valueById('helmik-min-price');
+    const maxPrice = docFn.valueById('helmik-max-price');
+    const minArea = docFn.valueById('helmik-min-area');
+    const maxArea = docFn.valueById('helmik-max-area');
 
     // only show matching listings
 
-    const listings = document.getElementsByClassName('helmik-listing')
+    const listings = docFn.elementsByClassName('helmik-listing')
     for (const lst of listings) {
         // show all by default
         lst.classList.remove('filtered-out')
