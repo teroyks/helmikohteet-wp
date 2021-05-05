@@ -141,6 +141,16 @@ class DetailedListingTest extends TestCase
         $this->assertEquals('61.1340271463', $ls->latitude);
         $this->assertEquals('22.160233', $ls->longitude);
 
+        $this->assertEquals('Erkki Edustaja', $ls->agentName);
+        $this->assertEquals('erkki.edustaja@example.com', $ls->agentEmail);
+        $this->assertEquals('040 123 4567', $ls->agentPhone);
+        $this->assertEquals('https://example.com/upload/valittajat/123erkki.jpg', $ls->agentPictureUrl);
+
+        $this->assertStringStartsWith('Tulethan', $ls->showingExplanation);
+        $this->assertEquals('15.05.2021', $ls->showingDate);
+        $this->assertEquals('12:00', $ls->showingStartTime);
+        $this->assertEquals('12:30', $ls->showingEndTime);
+
         $this->assertCount(5, $ls->pictureUrls, 'Should have added all the pictures');
         foreach ($ls->pictureUrls as $url) {
             $this->assertStringStartsWith('https', $url);

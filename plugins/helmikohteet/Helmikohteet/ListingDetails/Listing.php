@@ -100,6 +100,16 @@ class Listing
     public string $longitude; // sijainti longitude
     public array  $pictureUrls = []; // asunnon kuvat
 
+    public string $agentName; // esittelijän nimi
+    public string $agentEmail; // esittelijän email
+    public string $agentPhone; // esittelijän puhelinnumero
+    public string $agentPictureUrl; // esittelijän kuva
+
+    public string $showingExplanation; // näytön lisäteksti
+    public string $showingDate; // näyttöpvm dd.mm.yyyy
+    public string $showingStartTime; // näytön alkuaika HH:MM
+    public string $showingEndTime; // näytön päättymisaika HH:MM
+
     public function __construct(SimpleXMLElement $data)
     {
         $this->parseData($data);
@@ -208,6 +218,16 @@ class Listing
         $this->otherFees              = $str($ap->OtherFees);
         $this->latitude               = $str($ap->Latitude);
         $this->longitude              = $str($ap->Longitude);
+
+        $this->agentName       = $str($ap->EstateAgentContactPerson);
+        $this->agentEmail      = $str($ap->EstateAgentContactPersonEmail);
+        $this->agentPhone      = $str($ap->EstateAgentTelephone);
+        $this->agentPictureUrl = $str($ap->EstateAgentContactPersonPictureUrl);
+
+        $this->showingExplanation = $str($ap->ShowingDateExplanation1);
+        $this->showingDate        = $str($ap->ShowingDate1);
+        $this->showingStartTime   = $str($ap->ShowingStartTime1);
+        $this->showingEndTime     = $str($ap->ShowingEndTime1);
 
         $this->pictureUrls = $this->parsePictureUrls($ap);
     }

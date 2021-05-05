@@ -135,5 +135,9 @@
         </Company>
         <Shore type="OR"/>
         <ShoresDescription>Meri</ShoresDescription>
+        <ShowingDateExplanation1>Tulethan terveenä ja käytä maskia.</ShowingDateExplanation1>
+        <ShowingDate1>15.05.2021</ShowingDate1>
+        <ShowingStartTime1>12:00</ShowingStartTime1>
+        <ShowingEndTime1>12:30</ShowingEndTime1>
     </Apartment>
 </Apartments>
