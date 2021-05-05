@@ -117,28 +117,53 @@ function helmikohteet_loop_shortcode_get_listings(): string
     $filter_apartment_types = implode(
         "\n",
         array_map(
-            fn($type) => '<span style="white-space: nowrap;"><input id="helmik-' . $str2id(
-                    $type
-                ) . '" type="checkbox" value="' . $type . '" />'
-                . '<label for="helmik-' . $str2id($type) . '"> ' . $type . '</label></span>',
+            fn($type) => '
+            <label for="helmik-' . $str2id($type) . '">
+              <input id="helmik-' . $str2id($type) . '" type="checkbox" class="helmik-filter-checkbox" value="' . $type . '" />
+              <span>' . $type . '</span>
+            </label></span>',
             $uniq_apartment_types
         )
     );
 
     $output = <<<END
         <div class="helmik-listing-filters">
-          <h2>Rajaa tuloksia</h2>
           <form method="get" action="#" id="helmik-filter-form">
-            <fieldset id="helmik-filter-listing-type">
-              <input type="checkbox" id="helmik-filter-type-for-sale" value="$filter_value_sale" />
-              <label for="helmik-filter-type-for-sale">Myydään</label>
-              <input type="checkbox" id="helmik-filter-type-for-rent" value="$filter_value_rental" />
-              <label for="helmik-filter-type-for-rent">Vuokrataan</label>
-            </fieldset>
-            <fieldset id="helmik-filter-apartment-type">
-              $filter_apartment_types
-            </fieldset>
-            <button type="submit">Rajaa</button>
+            <div class="helmik-filter-row">
+              <div class="helmik-filter-column">
+                <label>Vapaasanahaku:</label>
+                <input type="text" class="helmik-filter-input" id="helmik-search">
+                <label>Hinta:</label>
+                <div class="helmik-range-row">
+                  <input type="number" class="helmik-filter-input" id="helmik-min-price"/>
+                  -
+                  <input type="number" class="helmik-filter-input" id="helmik-max-price"/>
+                </div>
+                <label>Pinta-ala:</label>
+                <div class="helmik-range-row">
+                  <input type="number" class="helmik-filter-input" id="helmik-min-area"/>
+                  -
+                  <input type="number" class="helmik-filter-input" id="helmik-max-area"/>
+                </div>
+                <fieldset id="helmik-filter-listing-type">
+                  <label>Asumismuoto:</label>
+                  <label for="helmik-filter-type-for-sale">
+                    <input type="checkbox" class="helmik-filter-checkbox" id="helmik-filter-type-for-sale" value="$filter_value_sale" />
+                    <span>Myydään</span>
+                  </label>
+                  <label for="helmik-filter-type-for-rent">
+                    <input type="checkbox" class="helmik-filter-checkbox" id="helmik-filter-type-for-rent" value="$filter_value_rental" />
+                    <span>Vuokrataan</span>
+                  </label>
+                </fieldset>
+              </div>
+              <div class="helmik-filter-column">
+                <fieldset id="helmik-filter-apartment-type">
+                  <label>Kohdetyyppi:</label>
+                  $filter_apartment_types
+                </fieldset>
+              </div>
+            </div>
           </form>
         </div>
         <style>
@@ -160,10 +185,12 @@ function helmikohteet_loop_shortcode_get_listings(): string
         }
 
         $unencumberedSalesPrice = "";
-        if ($listing->realEstateType == 'OSAKE') {
+        $dataPrice = $price;
+        if ($listing->realEstateType == 'OSAKE' && Listing::TYPE_SALE == $listing->listingType) {
             $unencumberedSalesPrice = '<div class="helmik-listing-description">Velaton hinta ' . $format_number(
                     $listing->unencumberedSalesPrice
                 ) . '&nbsp;€</div>';
+            $dataPrice = $listing->unencumberedSalesPrice;
         }
 
         // year of building may not be listed
@@ -177,9 +204,15 @@ function helmikohteet_loop_shortcode_get_listings(): string
         $detailsLink = get_site_url() . '?' . http_build_query([PluginConfig::DETAILS_KEY_PARAM => $listing->key]);
 
         $output .= <<<END
-            <section class="helmik-listing {$listing_type_class($listing->listingType)}"
-                     data-listing-type="$listing->listingType"
-                     data-apartment-type="$listing->apartmentType">
+            <section
+              class="helmik-listing {$listing_type_class($listing->listingType)}"
+              data-listing-type="$listing->listingType"
+              data-apartment-type="$listing->apartmentType"
+              data-apartment-address="$listing->address"
+              data-apartment-rooms="$listing->rooms"
+              data-apartment-area="$listing->area"
+              data-apartment-price="$dataPrice"
+            >
               <a href="{$detailsLink}">
                 <div class="helmik-listing-img">
                   <img src="{$listing->imgUrl}" alt="" />
