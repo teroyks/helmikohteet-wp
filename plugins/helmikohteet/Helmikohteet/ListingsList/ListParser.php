@@ -39,6 +39,10 @@ class ListParser
             $listings[] = new Listing($apartment);
         }
 
+        // sort the listings in reverse order by ID key -- newest to oldest
+        $keyToInt = fn (Listing $l): int => (int)$l->key;
+        usort($listings, fn($a, $b) => $keyToInt($b) <=> $keyToInt($a));
+
         return $listings;
     }
 }
