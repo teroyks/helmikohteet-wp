@@ -149,6 +149,27 @@ use Helmikohteet\Utilities\Format;
       </tbody>
     </table>
   </section>
+  <section id="helmik-agent-and-showing" class="helmik-details-props">
+    <div class="helmik-agent">
+      <div>
+        <h2 class="helmik-heading-agent">Lisätiedot</h2>
+        <div><?= $ls->agentName ?></div>
+        <div><?= $ls->agentEmail ?></div>
+        <div><?= $ls->agentPhone ?></div>
+      </div>
+      <div>
+        <img src="<?= $ls->agentPictureUrl ?>" alt=""/>
+      </div>
+    </div>
+    <?php if (!empty($ls->showingDate)): ?>
+      <div class="helmik-showing">
+        <h2 class="helmik-heading-showing">Esittelyt</h2>
+        <div><?= $ls->showingDate ?></div>
+        <div><?= $ls->showingStartTime ?>–<?= $ls->showingEndTime ?></div>
+        <div><?= $ls->showingExplanation ?></div>
+      </div>
+    <?php endif ?>
+  </section>
 </main>
 <?php if (!empty(PluginConfig::googleApiUrl())): ?>
   <div id="map" class="helmik-map"></div>
