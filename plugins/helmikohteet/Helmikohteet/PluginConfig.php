@@ -29,7 +29,8 @@ class PluginConfig
     {
         $options = get_option(self::OPTIONS_GROUP);
 
-        return !empty($options['api_url']) ? esc_url_raw($options['api_url']) : '';
+        $apiKey = esc_attr($options['api_url']);
+        return "https://rmr.fi/public/$apiKey/oikotie.php";
     }
 
     /**
