@@ -155,7 +155,7 @@ use Helmikohteet\Utilities\Format;
 <?php endif ?>
 
 <script>
-  var tables = ['#helmik-spaces', '#helmik-services', '#helmik-expenses']
+  const tables = ['#helmik-spaces', '#helmik-services', '#helmik-expenses']
   tables.forEach(table => {
     if (!document.querySelectorAll(table + ' td').length && document.querySelector(table)) {
       document.querySelector(table).remove();
@@ -170,14 +170,15 @@ use Helmikohteet\Utilities\Format;
   <!--suppress JSUnresolvedVariable, JSUnresolvedFunction -->
   <script>
     let map;
+
     function initMap() {
       const mapOptions = {
         zoom: 16,
-        center: { lat: <?= $ls->latitude ?>, lng: <?= $ls->longitude ?> },
+        center: {lat: <?= $ls->latitude ?>, lng: <?= $ls->longitude ?>},
       };
       map = new google.maps.Map(document.getElementById("map"), mapOptions);
       const marker = new google.maps.Marker({
-        position: { lat: <?= $ls->latitude ?>, lng: <?= $ls->longitude ?> },
+        position: {lat: <?= $ls->latitude ?>, lng: <?= $ls->longitude ?>},
         map: map,
       });
       const infowindow = new google.maps.InfoWindow({
