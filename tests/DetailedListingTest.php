@@ -86,7 +86,7 @@ class DetailedListingTest extends TestCase
         $this->assertEquals('Heikkilä', $ls->estateNameAndNumber);
         $this->assertStringStartsWith('Pohjoisranta', $ls->propertyAdditionalInfo);
         $this->assertStringStartsWith('Vesi-', $ls->municipalDevelopment);
-        $this->assertEquals('', $ls->shore); // TODO
+        $this->assertEquals('', $ls->shore);
         $this->assertEquals('Meri', $ls->shoreDescription);
 
         $this->assertEquals('1981', $ls->yearOfBuilding);

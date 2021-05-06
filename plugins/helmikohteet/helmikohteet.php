@@ -42,8 +42,7 @@ if (!defined('ABSPATH')) {
 /**
  * Initializes the plugin on activation.
  *
- * - TODO: create the database table if it doesn’t exist
- * - TODO: update database content
+ * - TODO: update transient content
  */
 function helmikohteet_on_activation()
 {
@@ -59,7 +58,7 @@ register_activation_hook(__FILE__, 'helmikohteet_on_activation');
 /**
  * Cleans up when the plugin is deleted.
  *
- * - TODO: delete the database table.
+ * - TODO: remove the transient data & settings.
  */
 function helmikohteet_on_uninstall()
 {
