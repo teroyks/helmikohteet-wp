@@ -324,7 +324,7 @@ spl_autoload_register('helmikohteet_autoload');
 function helmikohteet_options_default(): array
 {
     return [
-        'api_url' => '',
+        'api_key' => '',
     ];
 }
 

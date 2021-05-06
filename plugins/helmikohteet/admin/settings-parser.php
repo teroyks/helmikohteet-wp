@@ -18,8 +18,8 @@ if (!defined('ABSPATH')) {
 function helmikohteet_callback_parse_options($input)
 {
     // listings API URL
-    if (isset($input['api_url'])) {
-        $input['api_url'] = esc_attr($input['api_url']);
+    if (isset($input['api_key'])) {
+        $input['api_key'] = esc_attr($input['api_key']);
     }
 
     // Google Maps API key
