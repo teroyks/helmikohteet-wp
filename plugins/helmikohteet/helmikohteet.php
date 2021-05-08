@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: Helmikohteet
-Plugin URI: http://URI_Of_Page_Describing_Plugin_and_Updates
+Plugin URI: https://github.com/teroyks/helmikohteet-wp
 Description: Helmi-kohteiden haku ja selailu
-Version: 1.0
+Version: 0.8
 Author: Tero Ykspetäjä
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
