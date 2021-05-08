@@ -58,10 +58,10 @@ class Format
         }
 
         return <<<EOF
-            <tr>
-              <td class="helmik-details-label">$label</td>
-              <td class="helmik-details-property">$value$suffix</td>
-            </tr>
+            <div class="helmik-details-grid-row">
+              <div class="helmik-details-label">$label</div>
+              <div class="helmik-details-property">$value$suffix</div>
+            </div>
             EOF;
     }
 }

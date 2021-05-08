@@ -23,11 +23,21 @@
     grid-template-areas: "description description agent";
 }
 
+.helmik-details-grid-row {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+}
+
 @media (max-width: 800px) {
     .helmik-description-row {
         grid-template-areas:
             "description"
             "agent";
+    }
+
+    .helmik-details-props {
+        width: 84%;
+        overflow: auto;
     }
 }
 
@@ -76,15 +86,21 @@
 /* property table */
 .helmik-details-label,
 .helmik-details-property {
-    background-color: #fafafa;
-    border: 1px solid #d3d3d3;
-    font-size: 85%;
+    font-size: 80%;
     /* no line break inside a word */
-    word-break: normal;
+    padding: 4px;
+}
+
+#helmik-agent-and-showing {
+    width: 100%;
+}
+
+.helmik-details-property {
+    word-break: break-word;
 }
 
 .helmik-details-label {
-    width: 180px;
+    width: 170px;
     font-weight: 700;
 }
 
