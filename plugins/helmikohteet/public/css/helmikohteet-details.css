@@ -32,6 +32,7 @@
 }
 
 .helmik-details-description {
+    overflow: auto;
     grid-area: description;
     margin-top: 2.8em;
 }
