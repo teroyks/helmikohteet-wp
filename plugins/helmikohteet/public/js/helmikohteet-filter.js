@@ -114,4 +114,8 @@ window.addEventListener('load', () => {
             runHelmikFilters()
         })
     }
+
+    // Apply the filters on page load
+    // Helps Firefox & Chrome remember the filter when returning from the details page
+    runHelmikFilters()
 });
