@@ -199,8 +199,8 @@ function helmikohteet_loop_shortcode_get_listings(): string
             $yearOfBuildingIfDefined = ''; // don't show year unless it is included
         }
 
-        // link to the details page
-        $detailsLink = get_site_url() . '?' . http_build_query([PluginConfig::DETAILS_KEY_PARAM => $listing->key]);
+        // link to an external details page -- ignores the local Listing page
+        $detailsLink = $listing->moreInfoUrl;
 
         $output .= <<<END
             <section
