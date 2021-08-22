@@ -26,3 +26,12 @@ Luettelon myynnissä olevista kohteista saa upotettua haluamalleen sivulle lisä
 Kohdeluettelon ulkoasua voi muokata CSS:n avulla. Kohdeluettelon elementtien luokissa käytetään etuliitettä `helmik-`.
 
 Tarkempi kuvaus TBD.
+
+### Paketointi hakelua varten
+
+Paketoi plugin-hakemisto zip-paketiksi:
+
+```
+cd helmikohteet/plugins
+zip -r helmikohteet.zip helmikohteet
+```
