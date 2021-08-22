@@ -35,6 +35,7 @@ class Listing
     public string $listingType;
     public ?int   $yearOfBuilding;
     public string $imgUrl;
+    public string $moreInfoUrl;
 
     public function __construct(SimpleXMLElement $data)
     {
@@ -55,6 +56,7 @@ class Listing
         $this->area                     = $data->LivingArea;
         $this->status                   = $data->Status;
         $this->imgUrl                   = str_replace('/images/', '/images/thumbs/', $data->Picture1);
+        $this->moreInfoUrl              = $data->MoreInfoUrl;
         $this->realEstateType           = $data['realEstateType'];
 
         $apartmentTypeCode   = $data['type'];
