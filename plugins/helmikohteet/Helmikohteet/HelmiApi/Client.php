@@ -6,6 +6,7 @@
 
 namespace Helmikohteet\HelmiApi;
 
+use Exception;
 use Helmikohteet\PluginConfig;
 use SimpleXMLElement;
 
@@ -51,9 +52,17 @@ class Client
      * Updates the cached value if it has expired.
      *
      * @return SimpleXMLElement All listings Apartments->[Apartment, ...]
+     * @throws Exception if the API query doesn't return a valid XML file.
      */
     public static function getListingsXml(): SimpleXMLElement
     {
+        /**
+         * Parsed XML data -- prevents parsing the same data twice when refreshing the cache.
+         *
+         * @var SimpleXMLElement|bool $parsed_listings parsed XML data
+         */
+        $parsed_listings = false;
+
         if (false === ($listings = get_transient(self::LISTINGS_KEY))) {
             // cached values have expired
             error_log('Helmikohteet listings XML expired; fetching from API...');
@@ -64,6 +73,15 @@ class Client
             $response = wp_safe_remote_get($api_url, $args);
             $listings = wp_remote_retrieve_body($response);
 
+            // check that valid XML data was returned by the API
+            $parsed_listings = simplexml_load_string($listings);
+            if (!($parsed_listings)) {
+                error_log('ERROR: query did not return a valid result');
+                error_log(var_export($listings, true));
+                throw new Exception('Query did not return a valid result');
+            }
+
+            // only cache a valid result
             set_transient(
                 self::LISTINGS_KEY,
                 $listings,
@@ -71,6 +89,6 @@ class Client
             );
         }
 
-        return simplexml_load_string($listings);
+        return $parsed_listings ?: simplexml_load_string($listings);
     }
 }

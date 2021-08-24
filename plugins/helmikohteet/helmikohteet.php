@@ -89,7 +89,11 @@ function helmikohteet_loop_shortcode_get_listings(): string
     );
 
     // fetch the listings data
-    $xml = HelmiClient::getListingsXml();
+    try {
+        $xml = HelmiClient::getListingsXml();
+    } catch (Exception $e) {
+        return '<div class="helmik-error">Kohteiden haku epäonnistui</div>';
+    }
 
     // convert XML to an array of Listing objects
     $all_listings = (new ListParser($xml))->getApartments(Listing::STATUS_FOR_SALE);
@@ -250,7 +254,13 @@ function helmikohteet_listing_details()
         return;
     }
 
-    $allListings   = HelmiClient::getListingsXml();
+    try {
+        $allListings = HelmiClient::getListingsXml();
+    } catch (Exception $e) {
+        // could not load listing data
+        return;
+    }
+
     $listingId     = sanitize_key($_GET[PluginConfig::DETAILS_KEY_PARAM]);
     $listingFinder = new ListingFinder($allListings);
     $rawData       = $listingFinder->getListingData($listingId);
