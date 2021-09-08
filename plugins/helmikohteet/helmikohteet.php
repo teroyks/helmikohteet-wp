@@ -214,6 +214,7 @@ function helmikohteet_loop_shortcode_get_listings(): string
               data-apartment-address="$listing->address"
               data-apartment-rooms="$listing->rooms"
               data-apartment-area="$listing->area"
+              data-apartment-city="$listing->city"
               data-apartment-price="$dataPrice"
             >
               <a href="{$detailsLink}">
