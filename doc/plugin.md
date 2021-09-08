@@ -27,11 +27,13 @@ Kohdeluettelon ulkoasua voi muokata CSS:n avulla. Kohdeluettelon elementtien luo
 
 Tarkempi kuvaus TBD.
 
-### Paketointi hakelua varten
+### Paketointi jakelua varten
 
-Paketoi plugin-hakemisto zip-paketiksi:
+Jos kyseessä on asiakkaalle lähetettävä versio, päivitä versionumero ennen paketointia (tiedostossa [helmikohteet.php](../plugins/helmikohteet/helmikohteet.php)).
 
-```
+Paketoi plugin-hakemisto zip-paketiksi (versionumero kannattaa sisällyttää paketin nimeen):
+
+```console
 cd helmikohteet/plugins
-zip -r helmikohteet.zip helmikohteet
+zip -r helmikohteet_$VERSION.zip helmikohteet
 ```
