@@ -63,8 +63,11 @@ const runHelmikFilters = () => {
         // show only search string matching results
         if (
             searchString &&
-            !lst.dataset.apartmentAddress.toLowerCase().includes(searchString) &&
-            !lst.dataset.apartmentRooms.toLowerCase().includes(searchString)
+            !lst.dataset.apartmentAddress.toLowerCase().includes(searchString.toLowerCase()) &&
+            !lst.dataset.apartmentRooms.toLowerCase().includes(searchString.toLowerCase()) &&
+            !lst.dataset.apartmentCity.toLowerCase().includes(searchString.toLowerCase()) &&
+            !lst.dataset.apartmentType.toLowerCase().includes(searchString.toLowerCase()) &&
+            !lst.dataset.apartmentArea.toLowerCase().includes(searchString.toLowerCase())
         ) {
             lst.classList.add('filtered-out')
         }
