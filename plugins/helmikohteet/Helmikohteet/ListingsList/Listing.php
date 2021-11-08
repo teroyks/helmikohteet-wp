@@ -24,6 +24,7 @@ class Listing
     public string $key;
     public string $city;
     public string $address;
+    public string $onlineOffer;
     public string $salesPrice;
     public string $unencumberedSalesPrice;
     public string $rentAmount;
@@ -51,6 +52,7 @@ class Listing
         $this->address                  = $data->StreetAddress;
         $this->salesPrice               = $data->SalesPrice;
         $this->unencumberedSalesPrice   = $data->UnencumberedSalesPrice;
+        $this->onlineOffer              = $data->OnlineOffer;
         $this->rentAmount               = $data->RentPerMonth;
         $this->rooms                    = $data->RoomTypes;
         $this->area                     = $data->LivingArea;

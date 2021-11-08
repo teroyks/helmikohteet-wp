@@ -112,12 +112,13 @@
 
 /* agent and showing info */
 .helmik-agent,
+.helmik-offerbid,
 .helmik-showing {
     background-color: rgba(0,0,0,0.02);
     margin-top: 1em;
 }
 
-.helmik-agent-details, .helmik-showing {
+.helmik-agent-details, .helmik-showing, .helmik-offerbid {
     padding: 16px;
 }
 
@@ -141,8 +142,13 @@
     margin-bottom: 8px;
 }
 
+.helmik-offerbid-links {
+    margin: 8px;
+}
+
 /* use smaller heading */
 .helmik-heading-agent,
+.helmik-heading-offerbid,
 .helmik-heading-showing {
     font-size: 120%;
     color: #666;

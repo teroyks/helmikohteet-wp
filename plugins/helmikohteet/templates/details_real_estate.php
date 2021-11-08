@@ -15,19 +15,46 @@ use Helmikohteet\Utilities\Format;
 $lotTypes = ['Tontti', 'Omakotitalotontti', 'Rivitalotontti', 'Vapaa-ajan tontti'];
 ?>
 
-<?php get_header(); // site theme header ?>
+<?php
+$GLOBALS['helmi-meta'] = $ls;
+
+function helmi_title() {
+  $title = array();
+  $title['title'] = $GLOBALS['helmi-meta']->streetAddress;
+  return $title;
+}
+
+function helmi_header() {
+  $url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+  $description = $GLOBALS['helmi-meta']->apartmentType.' - '.$GLOBALS['helmi-meta']->livingArea.' m2 - '.$GLOBALS['helmi-meta']->roomTypes;
+  echo '<title>'.$GLOBALS['helmi-meta']->streetAddress.'</title>
+<meta name="description" content="'.$description.'">
+<meta name="robots" content="index, follow">
+<meta property="og:type" content="website">
+<meta property="og:url" content="'.$url.'">
+<meta property="og:title" content="'.$GLOBALS['helmi-meta']->streetAddress.'">
+<meta property="og:description" content="'.$description.'">  
+<meta property="og:image" content="'.$GLOBALS['helmi-meta']->pictureUrls[0].'">
+<meta name="twitter:title" content="'.$GLOBALS['helmi-meta']->streetAddress.'">
+<meta name="twitter:description" content="'.$description.'">
+<meta name="twitter:image" content="'.$GLOBALS['helmi-meta']->pictureUrls[0].'">';
+}
+
+add_filter('document_title_parts', 'helmi_title' );
+add_action('wp_head','helmi_header');
+get_header(); // site theme header ?>
 
 <main class="helmik-details-container">
   <section class="helmik-details-heading">
     <h1><?= $ls->streetAddress ?></h1>
     <div>
-      <?= $ls->postalCode ?>
-      <?= $ls->city ?>
-      <?= $ls->salesPrice ?>
+      <?= $ls->postalCode ?> - 
+      <?= $ls->city ?> - 
+      <?= $fmt->float($ls->salesPrice) ?> €
     </div>
     <div>
-      <?= $ls->apartmentType ?>
-      <?= $ls->livingArea ?>
+      <?= $ls->apartmentType ?> -
+      <?= $ls->livingArea ?> m&sup2; -
       <?= $ls->roomTypes ?>
     </div>
   </section>
@@ -54,6 +81,17 @@ $lotTypes = ['Tontti', 'Omakotitalotontti', 'Rivitalotontti', 'Vapaa-ajan tontti
         </div>
         <img src="<?= $ls->agentPictureUrl ?>" alt=""/>
       </div>
+      <?php if ($ls->onlineOffer == "K"): ?>
+        <div class="helmik-offerbid">
+          <h2 class="helmik-heading-offerbid">Tarjouskauppa</h2>
+          <?php if ($ls->onlineOfferHighestBid > 0) { ?>
+          <?= $fmt->tr('Korkein tarjous', $fmt->float($ls->onlineOfferHighestBid), ' €') ?>
+          <?php } 
+            else echo "Kohteesta ei ole vielä jätetty tarjouksia";
+          ?>
+          <div class="helmik-offerbid-links"><a href="<?= $ls->onlineOfferUrl ?>&offerbid">Seuraa kohteen tarjouskauppaa</a></div>
+        </div>
+      <?php endif ?>
       <?php if (!empty($ls->showingDate)): ?>
         <div class="helmik-showing">
           <h2 class="helmik-heading-showing">Esittelyt</h2>
@@ -67,17 +105,31 @@ $lotTypes = ['Tontti', 'Omakotitalotontti', 'Rivitalotontti', 'Vapaa-ajan tontti
   <div class="helmik-details-row">
     <section class="helmik-details-props">
       <h2>Perustiedot</h2>
-      <?= $fmt->tr('Kohdenumero', $ls->id) ?>
+      <?= $fmt->tr('Kohdenumero', $ls->oikotieID) ?>
       <?= $fmt->tr('Kohdetyyppi', $ls->apartmentType) ?>
-      <?= $fmt->tr('Vapautuminen', $ls->becomesAvailable) ?>
-      <?= $fmt->tr('Myyntihinta', $fmt->float($ls->salesPrice), ' €') ?>
       <?= $fmt->tr('Osoite', $ls->streetAddress) ?>
       <?= $fmt->tr('Postinumero', $ls->postalCode) ?>
-      <?= $fmt->tr('Kaupunginosa', $ls->region) ?>
       <?= $fmt->tr('Kaupunki', $ls->city) ?>
+      <?= $fmt->tr('Kaupunginosa', $ls->region) ?>
       <?= $fmt->tr('Maakunta', $ls->pdxRegion) ?>
       <?= $fmt->tr('Kiinteistötunnus', $ls->realEstateId) ?>
-      <?= $fmt->tr('Tontin pinta-ala', $fmt->float($ls->siteArea), ' m<sup>2</sup>') ?>
+      <?= $fmt->tr('Huonekuvaus', $ls->roomTypes) ?>
+      <?= $fmt->tr('Pinta-ala', $fmt->float($ls->livingArea), ' m<sup>2</sup>') ?>
+      <?= $fmt->tr('Lisätietoja pinta-alasta', $ls->totalAreaDescription) ?>
+      <?php if ($ls->totalArea > 0): ?>
+        <?= $fmt->tr('Kokonaispinta-ala', $fmt->float($ls->totalArea), ' m<sup>2</sup>') ?>
+      <?php endif ?>
+      <?= $fmt->tr('Lämmitys', $ls->heating) ?>
+      <?= $fmt->tr('Vapautuminen', $ls->becomesAvailable) ?>
+      <?php if ($ls->onlineOffer == "K"): ?>
+        <?= $fmt->tr('Lähtöhinta', $fmt->float($ls->salesPrice), ' €') ?>
+      <?php endif ?>
+      <?php if ($ls->onlineOffer != "K"): ?>
+        <?= $fmt->tr('Myyntihinta', $fmt->float($ls->salesPrice), ' €') ?>
+      <?php endif ?>
+      <?php if (!in_array($ls->apartmentType, $lotTypes)) { ?>
+        <?= $fmt->tr('Tontin pinta-ala', $fmt->float($ls->siteArea), ' m<sup>2</sup>') ?>
+      <?php } ?>
       <?= $fmt->tr('Tontin omistus', $ls->siteCode == 'O' ? 'Oma' : 'Vuokra') ?>
       <?= $fmt->tr('Tontin vuokrasopimus päättyy', $ls->siteRentContractEndDate) ?>
       <?= $fmt->tr('Kaavoitustilanne', $ls->buildingPlanSituation) ?>
@@ -96,12 +148,7 @@ $lotTypes = ['Tontti', 'Omakotitalotontti', 'Rivitalotontti', 'Vapaa-ajan tontti
       <?= $fmt->tr('Rakennusvuosi', $ls->yearOfBuilding) ?>
       <?= $fmt->tr('Rakennusmateriaali', $ls->buildingMaterial) ?>
       <?= $fmt->tr('Kattotyyppi', $ls->roofType) ?>
-      <?= $fmt->tr('Huonekuvaus', $ls->roomTypes) ?>
-      <?= $fmt->tr('Lämmitys', $ls->heating) ?>
       <?= $fmt->tr('Ilmanvaihto', $ls->ventilationSystem) ?>
-      <?= $fmt->tr('Pinta-ala', $fmt->float($ls->livingArea), ' m<sup>2</sup>') ?>
-      <?= $fmt->tr('Kokonaispinta-ala', $fmt->float($ls->totalArea), ' m<sup>2</sup>') ?>
-      <?= $fmt->tr('Lisätietoja pinta-alasta', $ls->totalAreaDescription) ?>
       <?= $fmt->tr('Kunto', $ls->generalConditionLevel) ?>
       <?= $fmt->tr('Kunnon lisätiedot', $ls->generalCondition) ?>
       <?= $fmt->tr('Energialuokka', $ls->energyClass) ?>
@@ -148,11 +195,14 @@ $lotTypes = ['Tontti', 'Omakotitalotontti', 'Rivitalotontti', 'Vapaa-ajan tontti
 <?php if (!empty(PluginConfig::googleApiUrl())): ?>
   <div id="map" class="helmik-map"></div>
 <?php endif ?>
+<?php if (!empty(PluginConfig::leafletMapsApiKey())): ?>
+  <div id="leafletmap" class="helmik-map"></div>
+<?php endif ?>
 
 <script>
   var tables = ['#helmik-spaces', '#helmik-services', '#helmik-expenses']
   tables.forEach(table => {
-    if (!document.querySelectorAll(table + ' td').length && document.querySelector(table)) {
+    if (!document.querySelectorAll(table + ' div.helmik-details-grid-row').length && document.querySelector(table)) {
       document.querySelector(table).remove();
     }
   });
@@ -184,8 +234,23 @@ $lotTypes = ['Tontti', 'Omakotitalotontti', 'Rivitalotontti', 'Vapaa-ajan tontti
   </script>
 <?php endif ?>
 
-<!--
-<?php var_dump($ls) ?>
--->
+<?php if (!empty(PluginConfig::leafletMapsApiKey())): ?>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="crossorigin=""></script>
+  <!--suppress JSUnresolvedVariable, JSUnresolvedFunction -->
+  <script>
+    var token = '<?= PluginConfig::leafletMapsApiKey() ?>';
+    var mymap = L.map('leafletmap').setView([<?= $ls->latitude ?>, <?= $ls->longitude ?>], 17);
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+        maxZoom: 18,
+        id: 'mapbox/streets-v11',
+        tileSize: 512,
+        zoomOffset: -1,
+        accessToken: token,
+    }).addTo(mymap);
+
+    var marker = L.marker([<?= $ls->latitude ?>, <?= $ls->longitude ?>]).addTo(mymap);
+  </script>
+<?php endif ?>
 
 <?php get_footer(); // site theme footer ?>

@@ -43,6 +43,15 @@ function helmikohteet_register_settings()
         'helmikohteet_section_api', // settings section
         ['id' => 'google_api_key', 'label' => 'Google Maps API-tunnus'] // callback parameters
     );
+
+    add_settings_field(
+        'leaflet_api_key', // db setting id
+        'Leaflet Maps API Key', // field title
+        'helmikohteet_callback_field_text', // callback function for setting markup
+        'helmikohteet', // page slug
+        'helmikohteet_section_api', // settings section
+        ['id' => 'leaflet_api_key', 'label' => 'Leaflet Maps API-tunnus'] // callback parameters
+    );
 }
 
 add_action('admin_init', 'helmikohteet_register_settings');

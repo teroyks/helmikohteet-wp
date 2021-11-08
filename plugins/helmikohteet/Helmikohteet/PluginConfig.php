@@ -45,6 +45,17 @@ class PluginConfig
     }
 
     /**
+     * @return string Leaflet maps API key
+     */
+    public static function leafletMapsApiKey(): string
+    {
+        $options = get_option(self::OPTIONS_GROUP);
+        $apiKey  = !empty($options['leaflet_api_key']) ? esc_attr($options['leaflet_api_key']) : '';
+
+        return $apiKey;
+    }
+
+    /**
      * @return int Internal representation of the listings expiration time.
      */
     public static function listingsExpirationInternal(): int

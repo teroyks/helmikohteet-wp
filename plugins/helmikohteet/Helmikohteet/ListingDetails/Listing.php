@@ -15,6 +15,10 @@ use SimpleXMLElement;
 class Listing
 {
     public string $id; // kohdenumero
+    public string $onlineOffer; // tarjouskauppa
+    public string $onlineOfferUrl; // tarjouskaupan seurannan url
+    public float  $onlineOfferHighestBid; // korkein tarjous
+    public string $oikotieID; // kohdenumero
     public string $description; // kuvaus
     public string $apartmentType; // kohdetyyppi
     public string $realEstateType; // kiinteistötyyppi
@@ -62,7 +66,9 @@ class Listing
     public string $basicRenovations; // tehdyt korjaukset
     public string $futureRenovations; // tulevat korjaukse
     public string $honoringClause; // lunastuslauseke
-    public string $floorLocation; // kerrosmäärä
+    public string $floorLocation; // asunnon kerros
+    public string $floorCount; // kerrosmäärä
+    public string $lift; // hissi
     public string $balcony; // parveke
 
     public string $balconyDescription; // parvekkeen lisätiedot
@@ -87,6 +93,7 @@ class Listing
 
     public string $connections; // liikenneyhteydet
     public string $services; // palvelut
+    public string $housingCompanyName; // Taloyhtiön nimi
     public string $housingCompanyFee; // Yhtiövastike
     public string $financingFee; // Rahoitusvastike
     public string $maintenanceFee; // Hoitovastike
@@ -136,6 +143,10 @@ class Listing
         $year = fn($d) => $d != 0 ? $d : '';
 
         $this->id                      = $str($ap->Key);
+        $this->oikotieID               = $str($ap->OikotieID);
+        $this->onlineOffer             = $str($ap->OnlineOffer);
+        $this->onlineOfferHighestBid   = $float($ap->OnlineOfferHighestBid);
+        $this->onlineOfferUrl          = $str($ap->OnlineOfferUrl);
         $this->description             = $str($ap->Description);
         $this->apartmentType           = ApartmentType::get($ap['type']);
         $this->realEstateType          = $str($ap['realEstateType']);
@@ -184,6 +195,8 @@ class Listing
         $this->futureRenovations        = $str($ap->FutureRenovations);
         $this->honoringClause           = $str($ap->HonoringClause);
         $this->floorLocation            = $str($ap->FloorLocation);
+        $this->floorCount               = $str($ap->FloorLocation['count']);
+        $this->lift                     = $yesOrNo($ap->Lift['value']);
         $this->balcony                  = $yesOrNo($ap->Balcony['value']);
         $this->balconyDescription       = $str($ap->Balcony);
         $this->asbestosMapping          = $str($ap->asbestos_mapping);
@@ -209,6 +222,7 @@ class Listing
         $this->services    = $str($ap->Services);
 
         $this->housingCompanyFee      = $str($ap->HousingCompanyFee);
+        $this->housingCompanyName      = $str($ap->HousingCompanyName);
         $this->financingFee           = $str($ap->FinancingFee);
         $this->maintenanceFee         = $str($ap->MaintenanceFee);
         $this->waterFee               = $str($ap->WaterFee);

@@ -27,5 +27,10 @@ function helmikohteet_callback_parse_options($input)
         $input['google_api_key'] = esc_attr($input['google_api_key']);
     }
 
+    // Leaflet maps API key
+    if (isset($input['leaflet_api_key'])) {
+        $input['leaflet_api_key'] = esc_attr($input['leaflet_api_key']);
+    }
+
     return $input;
 }

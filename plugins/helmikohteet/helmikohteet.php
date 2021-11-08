@@ -3,7 +3,7 @@
 Plugin Name: Helmikohteet
 Plugin URI: https://github.com/teroyks/helmikohteet-wp
 Description: Helmi-kohteiden haku ja selailu
-Version: 0.8.3
+Version: 0.8.4
 Author: Tero Ykspetäjä
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
@@ -181,6 +181,9 @@ function helmikohteet_loop_shortcode_get_listings(): string
     foreach ($all_listings as $listing) {
         if (Listing::TYPE_SALE == $listing->listingType) {
             $priceLabel = 'Myyntihinta';
+            if ($listing->onlineOffer == "K") {
+                $priceLabel = 'Lähtöhinta';
+            }
             $price      = $listing->salesPrice;
         } else {
             $priceLabel = 'Vuokra/kk';
@@ -193,6 +196,11 @@ function helmikohteet_loop_shortcode_get_listings(): string
             $unencumberedSalesPrice = '<div class="helmik-listing-description">Velaton hinta ' . $format_number(
                     $listing->unencumberedSalesPrice
                 ) . '&nbsp;€</div>';
+            if ($listing->onlineOffer == "K") {
+                $unencumberedSalesPrice = '<div class="helmik-listing-description">Lähtöhinta ilman velkaosuutta ' . $format_number(
+                      $listing->unencumberedSalesPrice
+                  ) . '&nbsp;€</div>';
+            }
             $dataPrice = $listing->unencumberedSalesPrice;
         }
 
