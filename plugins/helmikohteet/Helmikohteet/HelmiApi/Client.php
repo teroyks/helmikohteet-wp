@@ -33,12 +33,12 @@ class Client
             error_log('Helmikohteet listing has expired; fetching from API...');
 
             // fetch new listings, and save as JSON data
-            $api_url            = PluginConfig::apiUrl();
-            $args               = ['user-agent' => 'Helmikohteet Plugin; ' . home_url()];
-            $response           = wp_safe_remote_get($api_url, $args);
+            $api_url = PluginConfig::apiUrl();
+            $args = ['user-agent' => 'Helmikohteet Plugin; ' . home_url()];
+            $response = wp_safe_remote_get($api_url, $args);
             $listing_values_raw = wp_remote_retrieve_body($response);
             $listing_values_xml = simplexml_load_string($listing_values_raw);
-            $listings           = json_encode($listing_values_xml);
+            $listings = json_encode($listing_values_xml);
 
             set_transient('helmikohteet_listings', $listings, PluginConfig::listingsExpirationInternal());
         }
@@ -50,6 +50,7 @@ class Client
      * Fetches the apartments data cached in transients.
      *
      * Updates the cached value if it has expired.
+     * Updates the sitemap if new listings data is fetched.
      *
      * @return SimpleXMLElement All listings Apartments->[Apartment, ...]
      * @throws Exception if the API query doesn't return a valid XML file.
@@ -68,8 +69,8 @@ class Client
             error_log('Helmikohteet listings XML expired; fetching from API...');
 
             // fetch new listings and save the raw XML data
-            $api_url  = PluginConfig::apiUrl();
-            $args     = ['user-agent' => 'Helmikohteet Plugin; ' . home_url()];
+            $api_url = PluginConfig::apiUrl();
+            $args = ['user-agent' => 'Helmikohteet Plugin; ' . home_url()];
             $response = wp_safe_remote_get($api_url, $args);
             $listings = wp_remote_retrieve_body($response);
 
@@ -87,6 +88,19 @@ class Client
                 $listings,
                 PluginConfig::listingsExpirationInternal()
             );
+
+            // create a sitemap for updated listing
+
+            $sitemap = (new Sitemap($parsed_listings))
+                ->build();
+            file_put_contents(
+                ABSPATH . '/sitemap_helmi.xml',
+                $sitemap->asXML()
+            );
+
+            // TODO ping Google with sitemap
+            // TODO ping Google only if sitemap contents have changed
+            // TODO only ping if enabled in settings
         }
 
         return $parsed_listings ?: simplexml_load_string($listings);

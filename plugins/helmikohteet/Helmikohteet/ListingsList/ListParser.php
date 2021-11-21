@@ -40,9 +40,29 @@ class ListParser
         }
 
         // sort the listings in reverse order by ID key -- newest to oldest
-        $keyToInt = fn (Listing $l): int => (int)$l->key;
+        $keyToInt = fn(Listing $l): int => (int)$l->key;
         usort($listings, fn($a, $b) => $keyToInt($b) <=> $keyToInt($a));
 
         return $listings;
+    }
+
+    /**
+     * Fetches ID keys of apartments that match given status.
+     *
+     * @param string $statusToInclude Status to include in the results
+     *
+     * @return string[] List of apartment IDs
+     */
+    public function getAllKeys(string $statusToInclude): array
+    {
+        $keys = [];
+        foreach ($this->apartments as $apartment) {
+            if ($statusToInclude != $apartment->Status) {
+                continue;
+            }
+            $keys[] = sanitize_key($apartment->Key);
+        }
+
+        return $keys;
     }
 }
