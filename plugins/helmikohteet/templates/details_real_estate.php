@@ -114,22 +114,22 @@ get_header(); // site theme header ?>
       <?= $fmt->tr('Maakunta', $ls->pdxRegion) ?>
       <?= $fmt->tr('Kiinteistötunnus', $ls->realEstateId) ?>
       <?= $fmt->tr('Huonekuvaus', $ls->roomTypes) ?>
-      <?= $fmt->tr('Pinta-ala', $fmt->float($ls->livingArea), ' m<sup>2</sup>') ?>
+      <?= $fmt->tr('Pinta-ala', $fmt->float($ls->livingArea), ' m<sup>2</sup>') ?>
       <?= $fmt->tr('Lisätietoja pinta-alasta', $ls->totalAreaDescription) ?>
       <?php if ($ls->totalArea > 0): ?>
-        <?= $fmt->tr('Kokonaispinta-ala', $fmt->float($ls->totalArea), ' m<sup>2</sup>') ?>
+        <?= $fmt->tr('Kokonaispinta-ala', $fmt->float($ls->totalArea), ' m<sup>2</sup>') ?>
       <?php endif ?>
       <?= $fmt->tr('Lämmitys', $ls->heating) ?>
       <?= $fmt->tr('Vapautuminen', $ls->becomesAvailable) ?>
       <?php if ($ls->onlineOffer == "K"): ?>
-        <?= $fmt->tr('Lähtöhinta', $fmt->float($ls->salesPrice), ' €') ?>
+        <?= $fmt->tr('Lähtöhinta', $fmt->float($ls->salesPrice), ' €') ?>
       <?php endif ?>
       <?php if ($ls->onlineOffer != "K"): ?>
-        <?= $fmt->tr('Myyntihinta', $fmt->float($ls->salesPrice), ' €') ?>
+        <?= $fmt->tr('Myyntihinta', $fmt->float($ls->salesPrice), ' €') ?>
       <?php endif ?>
       <?php if (!in_array($ls->apartmentType, $lotTypes)) { ?>
-        <?= $fmt->tr('Tontin pinta-ala', $fmt->float($ls->siteArea), ' m<sup>2</sup>') ?>
-      <?php } ?>
+        <?= $fmt->tr('Tontin pinta-ala', $fmt->float($ls->siteArea), ' m<sup>2</sup>') ?>
+      <?php } ?>
       <?= $fmt->tr('Tontin omistus', $ls->siteCode == 'O' ? 'Oma' : 'Vuokra') ?>
       <?= $fmt->tr('Tontin vuokrasopimus päättyy', $ls->siteRentContractEndDate) ?>
       <?= $fmt->tr('Kaavoitustilanne', $ls->buildingPlanSituation) ?>

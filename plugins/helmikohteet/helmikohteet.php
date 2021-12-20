@@ -3,7 +3,7 @@
 Plugin Name: Helmikohteet
 Plugin URI: https://github.com/teroyks/helmikohteet-wp
 Description: Helmi-kohteiden haku ja selailu
-Version: 0.8.5
+Version: 0.8.7
 Author: Tero Ykspetäjä
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
@@ -38,6 +38,25 @@ use Helmikohteet\Utilities\Format;
 if (!defined('ABSPATH')) {
     exit;
 }
+
+
+function helmikohteet_query_rewrite() {
+  add_rewrite_rule(PluginConfig::DETAILS_KEY_PARAM . '/?([^/]*)', 'index.php?hmk_lid=$matches[1]', 'top');
+}
+
+
+function helmikohteet_set_query_vars($vars) {
+  $vars[] = PluginConfig::DETAILS_KEY_PARAM;
+  return $vars;
+}
+
+function helmikohteet_flush_rules() {
+  flush_rewrite_rules();
+}
+
+add_action('init', 'helmikohteet_query_rewrite');
+add_filter('query_vars', 'helmikohteet_set_query_vars');
+add_action('init', 'helmikohteet_flush_rules');
 
 /**
  * Initializes the plugin on activation.
@@ -212,7 +231,7 @@ function helmikohteet_loop_shortcode_get_listings(): string
         }
 
         // link to the details page
-        $detailsLink = get_site_url() . '?' . http_build_query([PluginConfig::DETAILS_KEY_PARAM => $listing->key]);
+        $detailsLink = get_site_url() . '/' . PluginConfig::DETAILS_KEY_PARAM . '/' . $listing->key;
 
         $output .= <<<END
             <section
@@ -259,7 +278,8 @@ add_shortcode('helmikohteet', 'helmikohteet_loop_shortcode_get_listings');
  */
 function helmikohteet_listing_details()
 {
-    if (!isset($_GET[PluginConfig::DETAILS_KEY_PARAM])) {
+    $rawListingId = get_query_var(PluginConfig::DETAILS_KEY_PARAM);
+    if (!$rawListingId) {
         return;
     }
 
@@ -270,7 +290,7 @@ function helmikohteet_listing_details()
         return;
     }
 
-    $listingId     = sanitize_key($_GET[PluginConfig::DETAILS_KEY_PARAM]);
+    $listingId     = sanitize_key($rawListingId);
     $listingFinder = new ListingFinder($allListings);
     $rawData       = $listingFinder->getListingData($listingId);
     if ($rawData) {
@@ -282,12 +302,12 @@ function helmikohteet_listing_details()
         // determine the template to use based on the listing type
         $detailsTemplate = $ls->realEstateType == 'KIINTEISTO' ? 'details_real_estate.php' : 'details_apartment.php';
 
-        include plugin_dir_path(__FILE__) . "templates/$detailsTemplate";
+        include_once plugin_dir_path(__FILE__) . "templates/$detailsTemplate";
     }
     die();
 }
 
-add_filter('init', 'helmikohteet_listing_details');
+add_filter('parse_query', 'helmikohteet_listing_details');
 
 register_uninstall_hook(__FILE__, 'helmikohteet_on_uninstall');
 
