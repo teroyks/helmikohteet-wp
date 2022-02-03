@@ -47,7 +47,7 @@ class Listing
         // determine a year value: invalid value can be 0
         $parseYear = fn($val): ?int => is_numeric($val) && $val > 0 ? (int)$val : null;
 
-        $this->key                      = sanitize_key($data->Key);
+        $this->key                      = $data->Key;
         $this->city                     = $data->City;
         $this->address                  = $data->StreetAddress;
         $this->salesPrice               = $data->SalesPrice;

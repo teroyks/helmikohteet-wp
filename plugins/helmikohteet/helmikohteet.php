@@ -3,7 +3,7 @@
 Plugin Name: Helmikohteet
 Plugin URI: https://github.com/teroyks/helmikohteet-wp
 Description: Helmi-kohteiden haku ja selailu
-Version: 0.8.7
+Version: 0.8.8
 Author: Tero Ykspetäjä
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.txt
@@ -290,7 +290,7 @@ function helmikohteet_listing_details()
         return;
     }
 
-    $listingId     = sanitize_key($rawListingId);
+    $listingId     = $rawListingId;
     $listingFinder = new ListingFinder($allListings);
     $rawData       = $listingFinder->getListingData($listingId);
     if ($rawData) {

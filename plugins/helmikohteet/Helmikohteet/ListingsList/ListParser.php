@@ -60,7 +60,7 @@ class ListParser
             if ($statusToInclude != $apartment->Status) {
                 continue;
             }
-            $keys[] = sanitize_key($apartment->Key);
+            $keys[] = $apartment->Key;
         }
 
         return $keys;
