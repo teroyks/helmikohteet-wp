@@ -19,6 +19,7 @@ class Listing
     public string $onlineOfferUrl; // tarjouskaupan seurannan url
     public float  $onlineOfferHighestBid; // korkein tarjous
     public string $oikotieID; // kohdenumero
+    public string $modeOfHabitation; // myynti vai vuokra
     public string $description; // kuvaus
     public string $apartmentType; // kohdetyyppi
     public string $realEstateType; // kiinteistötyyppi
@@ -26,6 +27,10 @@ class Listing
     public float  $salesPrice; // myyntihinta
     public float  $debtPart; // velkaosuus
     public float  $unencumberedSalesPrice; // velaton myyntihinta
+    public float  $rentAmount; // kuukausivuokra
+    public float  $rentDeposit; // vuokravakuus
+    public string $rentDepositText; // vuokravakuus
+    public string $rentingTerms; // vuokravakuus
     public string $streetAddress; // osoite
     public string $flatNumber; // huoneistotarkenne
     public string $postalCode; // postinumero
@@ -144,6 +149,8 @@ class Listing
 
         $this->id                      = $str($ap->Key);
         $this->oikotieID               = $str($ap->OikotieID);
+        $this->modeOfHabitation        = $str($ap->ModeOfHabitation['type']);
+        
         $this->onlineOffer             = $str($ap->OnlineOffer);
         $this->onlineOfferHighestBid   = $float($ap->OnlineOfferHighestBid);
         $this->onlineOfferUrl          = $str($ap->OnlineOfferUrl);
@@ -153,6 +160,10 @@ class Listing
         $this->becomesAvailable        = $str($ap->BecomesAvailable);
         $this->salesPrice              = $float($ap->SalesPrice);
         $this->unencumberedSalesPrice  = $float($ap->UnencumberedSalesPrice);
+        $this->rentAmount              = $float($ap->RentPerMonth);
+        $this->rentDeposit             = $float($ap->RentSecurityDeposit2);
+        $this->rentDepositText         = $str($ap->RentSecurityDeposit);
+        $this->rentingTerms            = $str($ap->RentingTerms);
         $this->debtPart                = $float($ap->DebtPart);
         $this->streetAddress           = $str($ap->StreetAddress);
         $this->flatNumber              = $str($ap->FlatNumber);

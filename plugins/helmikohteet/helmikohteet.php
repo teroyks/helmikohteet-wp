@@ -304,9 +304,8 @@ function helmikohteet_listing_details()
 
         include_once plugin_dir_path(__FILE__) . "templates/$detailsTemplate";
     }
-    die();
+    // die();
 }
-
 add_filter('parse_query', 'helmikohteet_listing_details');
 
 register_uninstall_hook(__FILE__, 'helmikohteet_on_uninstall');

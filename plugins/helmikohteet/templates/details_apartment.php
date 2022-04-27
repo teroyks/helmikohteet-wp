@@ -12,9 +12,6 @@ use Helmikohteet\Utilities\Format;
 /** @var Listing $ls Listing details */
 
 /** @var Format $fmt Formatter */
-?>
-
-<?php
 $GLOBALS['helmi-meta'] = $ls;
 
 function helmi_title() {
@@ -49,7 +46,12 @@ get_header(); // site theme header ?>
     <div>
       <?= $ls->postalCode ?> -
       <?= $ls->city ?> -
-      vh. <?= $fmt->float($ls->unencumberedSalesPrice).' €' ?>
+      <?php if ($ls->modeOfHabitation != "VU"): ?>
+      vh. <?= $fmt->float($ls->unencumberedSalesPrice).' €' ?>
+      <?php endif ?>
+      <?php if ($ls->modeOfHabitation == "VU"): ?>
+      Vuokra/kk <?= $fmt->float($ls->rentAmount).' €' ?>
+      <?php endif ?>
     </div>
     <div>
       <?= $ls->apartmentType ?> -
@@ -114,22 +116,28 @@ get_header(); // site theme header ?>
       <?= $fmt->tr('Maakunta', $ls->pdxRegion) ?>
       <?= $fmt->tr('Huoneiston kerros', $ls->floorLocation) ?>
       <?= $fmt->tr('Huonekuvaus', $ls->roomTypes) ?>
-      <?= $fmt->tr('Pinta-ala', $fmt->float($ls->livingArea), ' m<sup>2</sup>') ?>
+      <?= $fmt->tr('Pinta-ala', $fmt->float($ls->livingArea), ' m<sup>2</sup>') ?>
       <?= $fmt->tr('Lisätietoja pinta-alasta', $ls->totalAreaDescription) ?>
       <?php if ($ls->totalArea > 0): ?>
-        <?= $fmt->tr('Kokonaispinta-ala', $fmt->float($ls->totalArea), ' m<sup>2</sup>') ?>
+        <?= $fmt->tr('Kokonaispinta-ala', $fmt->float($ls->totalArea), ' m<sup>2</sup>') ?>
       <?php endif ?>
       <?= $fmt->tr('Lämmitys', $ls->heating) ?>
       <?= $fmt->tr('Vapautuminen', $ls->becomesAvailable) ?>
       <?php if ($ls->onlineOffer == "K"): ?>
-        <?= $fmt->tr('Lähtöhinta ilman velkaosuutta', $fmt->float($ls->salesPrice), ' €') ?>
-        <?= $fmt->tr('Velkaosuus', $fmt->float($ls->debtPart), ' €') ?>
-        <?= $fmt->tr('Velaton lähtöhinta', $fmt->float($ls->unencumberedSalesPrice), ' €') ?>
+        <?= $fmt->tr('Lähtöhinta ilman velkaosuutta', $fmt->float($ls->salesPrice), ' €') ?>
+        <?= $fmt->tr('Velkaosuus', $fmt->float($ls->debtPart), ' €') ?>
+        <?= $fmt->tr('Velaton lähtöhinta', $fmt->float($ls->unencumberedSalesPrice), ' €') ?>
       <?php endif ?>
-      <?php if ($ls->onlineOffer != "K"): ?>
-        <?= $fmt->tr('Velaton hinta', $fmt->float($ls->unencumberedSalesPrice), ' €') ?>
-        <?= $fmt->tr('Velkaosuus', $fmt->float($ls->debtPart), ' €') ?>
-        <?= $fmt->tr('Myyntihinta', $fmt->float($ls->salesPrice), ' €') ?>
+      <?php if ($ls->onlineOffer != "K" && $ls->modeOfHabitation != "VU"): ?>
+        <?= $fmt->tr('Velaton hinta', $fmt->float($ls->unencumberedSalesPrice), ' €') ?>
+        <?= $fmt->tr('Velkaosuus', $fmt->float($ls->debtPart), ' €') ?>
+        <?= $fmt->tr('Myyntihinta', $fmt->float($ls->salesPrice), ' €') ?>
+      <?php endif ?>
+      <?php if ($ls->modeOfHabitation == "VU"): ?>
+        <?= $fmt->tr('Vuokra/kk', $fmt->float($ls->rentAmount), ' €') ?>
+        <?= $fmt->tr('Vuokravakuus', $fmt->float($ls->rentDeposit), ' €') ?>
+        <?= $fmt->tr('Vuokravakuus (kuvaus)', $ls->rentDepositText) ?>
+        <?= $fmt->tr('Vuokrauksen erityisehdot', $ls->rentingTerms) ?>
       <?php endif ?>
       <?= $fmt->tr('Tehdyt korjaukset', $ls->basicRenovations) ?>
     </section>

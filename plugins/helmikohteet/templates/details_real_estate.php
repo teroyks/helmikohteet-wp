@@ -50,7 +50,12 @@ get_header(); // site theme header ?>
     <div>
       <?= $ls->postalCode ?> - 
       <?= $ls->city ?> - 
+      <?php if ($ls->modeOfHabitation != "VU"): ?>
       <?= $fmt->float($ls->salesPrice) ?> €
+      <?php endif ?>
+      <?php if ($ls->modeOfHabitation == "VU"): ?>
+      Vuokra/kk <?= $fmt->float($ls->rentAmount).' €' ?>
+      <?php endif ?>
     </div>
     <div>
       <?= $ls->apartmentType ?> -
@@ -124,8 +129,14 @@ get_header(); // site theme header ?>
       <?php if ($ls->onlineOffer == "K"): ?>
         <?= $fmt->tr('Lähtöhinta', $fmt->float($ls->salesPrice), ' €') ?>
       <?php endif ?>
-      <?php if ($ls->onlineOffer != "K"): ?>
+      <?php if ($ls->onlineOffer != "K" && $ls->modeOfHabitation != "VU"): ?>
         <?= $fmt->tr('Myyntihinta', $fmt->float($ls->salesPrice), ' €') ?>
+      <?php endif ?>
+      <?php if ($ls->modeOfHabitation == "VU"): ?>
+        <?= $fmt->tr('Vuokra/kk', $fmt->float($ls->rentAmount), ' €') ?>
+        <?= $fmt->tr('Vuokravakuus', $fmt->float($ls->rentDeposit), ' €') ?>
+        <?= $fmt->tr('Vuokravakuus (kuvaus)', $ls->rentDepositText) ?>
+        <?= $fmt->tr('Vuokrauksen erityisehdot', $ls->rentingTerms) ?>
       <?php endif ?>
       <?php if (!in_array($ls->apartmentType, $lotTypes)) { ?>
         <?= $fmt->tr('Tontin pinta-ala', $fmt->float($ls->siteArea), ' m<sup>2</sup>') ?>
