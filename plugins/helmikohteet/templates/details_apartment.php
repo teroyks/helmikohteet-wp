@@ -201,14 +201,15 @@ get_header(); // site theme header ?>
     </section>
     <section id="helmik-expenses" class="helmik-details-props">
       <h2>Kustannukset</h2>
-      <?= $fmt->tr('Yhtiövastike', $fmt->float($ls->housingCompanyFee), ' €/kk') ?>
-      <?= $fmt->tr('Rahoitusvastike', $fmt->float($ls->financingFee), ' €/kk') ?>
-      <?= $fmt->tr('Hoitovastike', $fmt->float($ls->maintenanceFee), ' €/kk') ?>
-      <?= $fmt->tr('Vesimaksu', $fmt->float($ls->waterFee), ' €/kk') ?>
+      <?= $fmt->tr('Yhtiövastike', $fmt->float($ls->housingCompanyFee), ' €/kk') ?>
+      <?= $fmt->tr('Rahoitusvastike', $fmt->float($ls->financingFee), ' €/kk') ?>
+      <?= $fmt->tr('Hoitovastike', $fmt->float($ls->maintenanceFee), ' €/kk') ?>
+      <?= $fmt->tr('Autopaikka', $fmt->float($ls->carParkingCharge), ' €/kk') ?>
+      <?= $fmt->tr('Vesimaksu', $fmt->float($ls->waterFee), ' €/kk') ?>
       <?= $fmt->tr('Vesimaksun lisätiedot', $ls->waterFeeExplanation) ?>
       <?= $fmt->tr('Energiankulutus', $fmt->float($ls->electricityConsumption)) ?>
-      <?= $fmt->tr('Kiinteistövero', $fmt->float($ls->estateTax), ' €/kk') ?>
-      <?= $fmt->tr('Muut maksut', $fmt->float($ls->otherFees), ' €/kk') ?>
+      <?= $fmt->tr('Kiinteistövero', $fmt->float($ls->estateTax), ' €/kk') ?>
+      <?= $fmt->tr('Muut maksut', $fmt->float($ls->otherFees), ' €/kk') ?>
     </section>
   </div>
 </main>

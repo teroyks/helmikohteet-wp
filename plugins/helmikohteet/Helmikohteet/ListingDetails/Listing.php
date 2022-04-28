@@ -102,6 +102,7 @@ class Listing
     public string $housingCompanyFee; // Yhtiövastike
     public string $financingFee; // Rahoitusvastike
     public string $maintenanceFee; // Hoitovastike
+    public string $carParkingCharge; // Autopaikka / kk
     public string $waterFee; // Vesimaksu
     public string $waterFeeExplanation; // Vesimaksun lisätiedot
     public string $electricityConsumption; // energiankulutus
@@ -236,6 +237,7 @@ class Listing
         $this->housingCompanyName      = $str($ap->HousingCompanyName);
         $this->financingFee           = $str($ap->FinancingFee);
         $this->maintenanceFee         = $str($ap->MaintenanceFee);
+        $this->carParkingCharge       = $str($ap->CarParkingCharge);
         $this->waterFee               = $str($ap->WaterFee);
         $this->waterFeeExplanation    = $str($ap->WaterFeeExplanation);
         $this->electricityConsumption = $str($ap->ElectricityConsumption);
