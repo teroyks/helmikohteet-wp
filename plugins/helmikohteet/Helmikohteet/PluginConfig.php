@@ -30,7 +30,7 @@ class PluginConfig
         $options = get_option(self::OPTIONS_GROUP);
 
         $apiKey = esc_attr($options['api_key']);
-        return "https://rmr.fi/public/$apiKey/oikotie.php";
+        return "https://rmr.fi/public/$apiKey/oikotie.php?all";
     }
 
     /**

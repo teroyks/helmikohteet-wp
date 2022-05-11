@@ -70,7 +70,7 @@ class Client
 
             // fetch new listings and save the raw XML data
             $api_url = PluginConfig::apiUrl();
-            $args = ['user-agent' => 'Helmikohteet Plugin; ' . home_url()];
+            $args = ['user-agent' => 'Helmikohteet Plugin; ' . home_url(), 'timeout' => 45];
             $response = wp_safe_remote_get($api_url, $args);
             $listings = wp_remote_retrieve_body($response);
 
