@@ -140,6 +140,7 @@ get_header(); // site theme header ?>
         <?= $fmt->tr('Vuokrauksen erityisehdot', $ls->rentingTerms) ?>
       <?php endif ?>
       <?= $fmt->tr('Tehdyt korjaukset', $ls->basicRenovations) ?>
+      <?= $fmt->tr('Tulevat korjaukset', $ls->futureRenovations) ?>
     </section>
     <section class="helmik-details-props">
       <h2>Taloyhtiön tiedot</h2>
