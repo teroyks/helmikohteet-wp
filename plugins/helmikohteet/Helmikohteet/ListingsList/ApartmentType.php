@@ -31,7 +31,7 @@ class ApartmentType
         'RAV'  => 'Ravintolatila',
         'RT'   => 'Rivitalo',
         'RTT'  => 'Rivitalotontti',
-        'TMUU' => 'Muu toimistotila',
+        'TMUU' => 'Muu toimitila',
         'TO'   => 'Tontti',
         'TOT'  => 'Toimistotila',
         'TUT'  => 'Tuotantotila',
